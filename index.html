@@ -11,7 +11,7 @@
     }
     body {
       margin: 0;
-      padding: 0 0 70px 0; /* Отступ снизу под нижнее меню */
+      padding: 0 0 70px 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--tg-theme-bg-color, #121212);
       color: var(--tg-theme-text-color, #ffffff);
@@ -58,6 +58,12 @@
       object-fit: cover;
       border-radius: 10px;
       background-color: #2a2a2a;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .product-image:active {
+      opacity: 0.8;
     }
 
     .product-title {
@@ -66,10 +72,9 @@
       line-height: 1.3;
     }
 
-    .product-desc {
-      font-size: 14px;
+    .product-info-sub {
+      font-size: 13px;
       color: var(--tg-theme-hint-color, #aaaaaa);
-      line-height: 1.4;
     }
 
     .product-price {
@@ -118,7 +123,122 @@
       box-sizing: border-box;
     }
 
-    /* Элементы корзины */
+    /* Модальное окно (Галерея / Детали товара) */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: var(--tg-theme-bg-color, #1e1e1e);
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--tg-theme-hint-color, #aaa);
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Слайдер в модалке */
+    .modal-slider {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .modal-slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-slide.active {
+      display: block;
+    }
+
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 50%;
+    }
+
+    .slider-prev { left: 10px; }
+    .slider-next { right: 10px; }
+
+    .modal-desc {
+      font-size: 14px;
+      color: var(--tg-theme-text-color, #ddd);
+      line-height: 1.5;
+    }
+
+    .modal-sizes {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .size-chip {
+      background: var(--tg-theme-secondary-bg-color, #2a2a2a);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .size-chip.selected {
+      border-color: #2ea6ff;
+      background: rgba(46, 166, 255, 0.15);
+    }
+
+    /* Корзина */
     .cart-item {
       background-color: var(--tg-theme-secondary-bg-color, #1e1e1e);
       border-radius: 12px;
@@ -178,7 +298,7 @@
       font-size: 16px;
     }
 
-    /* Нижняя навигационная панель (Таб-бар) */
+    /* Нижняя панель */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -238,29 +358,29 @@
     <!-- Вкладка 1: Товары -->
     <div id="tab-products" class="tab-content active">
       
-      <!-- Товар 1 -->
+      <!-- Товар 1: Кроссовки -->
       <div class="product-card">
         <div class="photos-grid">
-          <img src="krosi_1.jpg" alt="Nike Air Force High 1" class="product-image">
-          <img src="krosi_2.jpg" alt="Nike Air Force High 2" class="product-image">
+          <img src="krosi_1.jpg" alt="Nike Air Force High 1" class="product-image" onclick="openModal('sneakers')">
+          <img src="krosi_2.jpg" alt="Nike Air Force High 2" class="product-image" onclick="openModal('sneakers')">
         </div>
         <div class="product-title">Nike Air Force 1 High (White)</div>
-        <div class="product-desc">Культовая высокая модель в классическом белом исполнении. Идеальное состояние, полная комплектация.</div>
-        <div class="product-price">8 290 ₽</div>
+        <div class="product-info-sub">Размеры: 41 (26см) | 42.5 (27см) | 43 (27.5см)</div>
+        <div class="product-price">6 990 ₽</div>
         <div class="btn-group">
-          <button class="add-to-cart-btn" onclick="addToCart('Nike Air Force 1 High (White)', 8290)">Добавить в корзину</button>
+          <button class="add-to-cart-btn" onclick="addToCart('Nike Air Force 1 High (White)', 6990)">Добавить в корзину</button>
           <a href="https://t.me/notprettymf" class="contact-btn" target="_blank">Написать менеджеру</a>
         </div>
       </div>
 
-      <!-- Товар 2 -->
+      <!-- Товар 2: Куртка -->
       <div class="product-card">
         <div class="photos-grid">
-          <img src="kyrtka_1.png" alt="Зимняя куртка 1" class="product-image">
-          <img src="kyrtka_2.png" alt="Зимняя куртка 2" class="product-image">
+          <img src="kyrtka_1.png" alt="Зимняя куртка 1" class="product-image" onclick="openModal('jacket')">
+          <img src="kyrtka_2.png" alt="Зимняя куртка 2" class="product-image" onclick="openModal('jacket')">
         </div>
         <div class="product-title">Зимняя куртка с меховым капюшоном</div>
-        <div class="product-desc">Тёмно-синий пуховик с меховой опушкой. Отличное качество, удобные карманы и защита от холода.</div>
+        <div class="product-info-sub"></div>
         <div class="product-price">4 290 ₽</div>
         <div class="btn-group">
           <button class="add-to-cart-btn" onclick="addToCart('Зимняя куртка с меховым капюшоном', 4290)">Добавить в корзину</button>
@@ -288,6 +408,41 @@
 
   </div>
 
+  <!-- Модальное окно просмотра товара -->
+  <div id="productModal" class="modal" onclick="outsideClose(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div id="modalTitle" class="modal-title">Название товара</div>
+        <button class="close-modal" onclick="closeModal()">&times;</button>
+      </div>
+      
+      <!-- Слайдер картинок -->
+      <div class="modal-slider">
+        <img id="modalSlide1" src="" class="modal-slide active" alt="Фото 1">
+        <img id="modalSlide2" src="" class="modal-slide" alt="Фото 2">
+        <button class="slider-nav slider-prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="slider-nav slider-next" onclick="changeSlide(1)">&#10095;</button>
+      </div>
+
+      <div id="modalPrice" class="product-price" style="font-size: 22px;">0 ₽</div>
+      <div id="modalDesc" class="modal-desc">Описание товара...</div>
+      
+      <div id="modalSizesContainer" style="display: none; flex-direction: column; gap: 8px;">
+        <div style="font-size: 13px; color: var(--tg-theme-hint-color);">Выберите размер:</div>
+        <div class="modal-sizes" id="modalSizes">
+          <div class="size-chip" onclick="selectSize(this)">41 (26см)</div>
+          <div class="size-chip" onclick="selectSize(this)">42.5 (27см)</div>
+          <div class="size-chip" onclick="selectSize(this)">43 (27.5см)</div>
+        </div>
+      </div>
+
+      <div class="btn-group" style="margin-top: 10px;">
+        <button id="modalAddToCart" class="add-to-cart-btn">Добавить в корзину</button>
+        <a href="https://t.me/notprettymf" class="contact-btn" target="_blank">Написать менеджеру</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Нижняя панель навигации -->
   <nav class="nav-bar">
     <button class="nav-item active" onclick="switchTab('products', this)">
@@ -302,46 +457,133 @@
   </nav>
 
   <script>
-    // Телеграм WebApp инициализация
     const tg = window.Telegram.WebApp;
     tg.expand();
 
     let cart = [];
+    let currentSlideIdx = 0;
+    let activeProductData = null;
 
-    // Переключение вкладок
+    // База данных товаров для модального окна
+    const productsData = {
+      sneakers: {
+        title: "Nike Air Force 1 High (White)",
+        price: 6990,
+        desc: "Культовая высокая модель в классическом белом исполнении. Идеальное состояние, полная комплектация. Отличный выбор на любой сезон.",
+        images: ["krosi_1.jpg", "krosi_2.jpg"],
+        hasSizes: true
+      },
+      jacket: {
+        title: "Зимняя куртка с меховым капюшоном",
+        price: 4290,
+        desc: "Тёмно-синий пуховик с меховой опушкой. Премиальное качество, глубокие удобные карманы и надежная защита от сильных морозов и ветра.",
+        images: ["kyrtka_1.png", "kyrtka_2.png"],
+        hasSizes: false
+      }
+    };
+
     function switchTab(tabName, btnElement) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
       document.getElementById('tab-' + tabName).classList.add('active');
       btnElement.classList.add('active');
     }
 
-    // Добавление в корзину
+    // Открытие модального окна
+    function openModal(productId) {
+      const p = productsData[productId];
+      activeProductData = p;
+      currentSlideIdx = 0;
+
+      document.getElementById('modalTitle').innerText = p.title;
+      document.getElementById('modalPrice').innerText = p.price.toLocaleString() + ' ₽';
+      document.getElementById('modalDesc').innerText = p.desc;
+      
+      document.getElementById('modalSlide1').src = p.images[0];
+      document.getElementById('modalSlide2').src = p.images[1];
+      updateSlideView();
+
+      const sizesCont = document.getElementById('modalSizesContainer');
+      if (p.hasSizes) {
+        sizesCont.style.display = 'flex';
+        // Сбросить выбор размера по умолчанию
+        document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
+      } else {
+        sizesCont.style.display = 'none';
+      }
+
+      // Привязка кнопки добавления в корзину в модалке
+      document.getElementById('modalAddToCart').onclick = function() {
+        let titleFull = p.title;
+        if (p.hasSizes) {
+          const selectedSize = document.querySelector('.size-chip.selected');
+          if (!selectedSize) {
+            alert('Пожалуйста, выберите размер!');
+            return;
+          }
+          titleFull += ` (${selectedSize.innerText})`;
+        }
+        addToCart(titleFull, p.price);
+        closeModal();
+      };
+
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').classList.remove('active');
+    }
+
+    function outsideClose(event) {
+      if (event.target.id === 'productModal') {
+        closeModal();
+      }
+    }
+
+    function changeSlide(direction) {
+      currentSlideIdx += direction;
+      if (currentSlideIdx > 1) currentSlideIdx = 0;
+      if (currentSlideIdx < 0) currentSlideIdx = 1;
+      updateSlideView();
+    }
+
+    function updateSlideView() {
+      const s1 = document.getElementById('modalSlide1');
+      const s2 = document.getElementById('modalSlide2');
+      if (currentSlideIdx === 0) {
+        s1.classList.add('active');
+        s2.classList.remove('active');
+      } else {
+        s1.classList.remove('active');
+        s2.classList.add('active');
+      }
+    }
+
+    function selectSize(element) {
+      document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
     function addToCart(title, price) {
       cart.push({ id: Date.now(), title: title, price: price });
       updateCartUI();
       
-      // Легкая вибрация при добавлении в корзину (если открыто с телефона)
       if (tg.HapticFeedback) {
         tg.HapticFeedback.notificationOccurred('success');
       }
     }
 
-    // Удаление из корзины
     function removeFromCart(itemId) {
       cart = cart.filter(item => item.id !== itemId);
       updateCartUI();
     }
 
-    // Обновление интерфейса корзины и счетчика
     function updateCartUI() {
       const container = document.getElementById('cart-items-container');
       const badge = document.getElementById('cart-badge');
       const summary = document.getElementById('cart-summary');
       const totalPriceEl = document.getElementById('cart-total-price');
 
-      // Обновляем бейдж на вкладке корзины
       if (cart.length > 0) {
         badge.innerText = cart.length;
         badge.style.display = 'block';
@@ -349,14 +591,12 @@
         badge.style.display = 'none';
       }
 
-      // Если корзина пуста
       if (cart.length === 0) {
         container.innerHTML = '<div class="empty-cart-text">Корзина пока пуста</div>';
         summary.style.display = 'none';
         return;
       }
 
-      // Отрисовка товаров
       let html = '';
       let total = 0;
 
@@ -378,11 +618,8 @@
       summary.style.display = 'flex';
     }
 
-    // Переход в личку к менеджеру для оформления заказа
     function checkout() {
       if (cart.length === 0) return;
-      
-      // Перенаправление к менеджеру в ЛС
       window.open('https://t.me/notprettymf', '_blank');
     }
   </script>
