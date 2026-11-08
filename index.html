@@ -1,112 +1,118 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store | Каталог</title>
-    <!-- Подключаем Telegram Web App стили -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #f8fafc);
-            color: var(--tg-theme-text-color, #0f172a);
-            margin: 0;
-            padding: 16px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0;
-        }
-        .subtitle {
-            font-size: 13px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-        .product-card {
-            background: var(--tg-theme-secondary-bg-color, #ffffff);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        /* Слайдер / сетка для фотографий */
-        .photos-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 14px;
-        }
-        .product-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .product-title {
-            font-size: 17px;
-            font-weight: 600;
-            margin: 0 0 6px 0;
-        }
-        .product-desc {
-            font-size: 13px;
-            color: #64748b;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-        .product-price {
-            font-size: 18px;
-            font-weight: 700;
-            color: #059669;
-            margin-bottom: 16px;
-        }
-        .buy-btn {
-            display: block;
-            width: 100%;
-            background-color: var(--tg-theme-button-color, #2563eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            text-align: center;
-            padding: 14px 0;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
-            box-sizing: border-box;
-            transition: opacity 0.2s;
-        }
-        .buy-btn:active {
-            opacity: 0.85;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Striver store</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--tg-theme-bg-color, #121212);
+      color: var(--tg-theme-text-color, #ffffff);
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .product-card {
+      background-color: var(--tg-theme-secondary-bg-color, #1e1e1e);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      background-color: #2a2a2a;
+    }
+
+    .product-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .product-desc {
+      font-size: 14px;
+      color: var(--tg-theme-hint-color, #aaaaaa);
+      line-height: 1.4;
+    }
+
+    .product-price {
+      font-size: 20px;
+      font-weight: 800;
+      color: #2ea6ff;
+    }
+
+    .buy-button {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      background-color: var(--tg-theme-button-color, #2481cc);
+      color: var(--tg-theme-button-text-color, #ffffff);
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      transition: background-color 0.2s ease;
+    }
+
+    .buy-button:active {
+      opacity: 0.85;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>⚡️ Exclusive Drop</h1>
-        <div class="subtitle">Оригинальные позиции и лучшие реплики</div>
-    </header>
+  <div class="container">
 
+    <!-- Товар №1: Кроссовки -->
     <div class="product-card">
-        <!-- Фотографии товара -->
-        <div class="photos-grid">
-            <!-- Замени 'sneakers1.jpg' и 'sneakers2.jpg' на имена твоих файлов или прямые ссылки -->
-            <img src="krosi_1.jpg" alt="Nike Air Force High вид 1" class="product-image">
-            <img src="krosi_2.jpg" alt="Nike Air Force High вид 2" class="product-image">
-        </div>
-
-        <div class="product-title">Nike Air Force 1 High (White)</div>
-        <div class="product-desc">Культовая высокая модель в классическом белом исполнении. Идеальное состояние, полная комплектация.</div>
-        <div class="product-price">8 290 ₽</div>
-        
-        <!-- Кнопка ведет на оформление заказа через твой профиль -->
-        <a href="https://t.me/notprettymf" class="buy-btn" target="_blank">Оформить заказ</a>
+      <div class="photos-grid">
+        <img src="krosi_1.jpg" alt="Nike Air Force High вид 1" class="product-image">
+        <img src="krosi_2.jpg" alt="Nike Air Force High вид 2" class="product-image">
+      </div>
+      <div class="product-title">Nike Air Force 1 High (White)</div>
+      <div class="product-desc">Культовая высокая модель в классическом белом исполнении. Идеальное состояние, полная комплектация.</div>
+      <div class="product-price">8 290 ₽</div>
+      <a href="https://t.me/notprettymf" class="buy-button" target="_blank">Купить / Заказать</a>
     </div>
+
+    <!-- Товар №2: Куртка -->
+    <div class="product-card">
+      <div class="photos-grid">
+        <img src="kyrtka_1.png" alt="Зимняя куртка вид 1" class="product-image">
+        <img src="kyrtka_2.png" alt="Зимняя куртка вид 2" class="product-image">
+      </div>
+      <div class="product-title">Зимняя куртка с меховым капюшоном</div>
+      <div class="product-desc">Тёмно-синий пуховик с меховой опушкой. Отличное качество, удобные карманы и защита от холода.</div>
+      <div class="product-price">4 290 ₽</div>
+      <a href="https://t.me/notprettymf" class="buy-button" target="_blank">Купить / Заказать</a>
+    </div>
+
+  </div>
 
 </body>
 </html>
