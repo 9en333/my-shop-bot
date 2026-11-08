@@ -8,6 +8,7 @@
   <style>
     * {
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
     body {
       margin: 0;
@@ -28,11 +29,16 @@
 
     .tab-content {
       display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .tab-content.active {
       display: flex;
       flex-direction: column;
       gap: 20px;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Карточки товаров */
@@ -44,6 +50,11 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .product-card:active {
+      transform: scale(0.99);
     }
 
     .photos-grid {
@@ -59,11 +70,16 @@
       border-radius: 10px;
       background-color: #2a2a2a;
       cursor: pointer;
-      transition: opacity 0.2s;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .product-image:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
     }
 
     .product-image:active {
-      opacity: 0.8;
+      transform: scale(0.97);
     }
 
     .product-title {
@@ -83,7 +99,7 @@
       color: #2ea6ff;
     }
 
-    /* Кнопки */
+    /* Кнопки с приятным откликом */
     .btn-group {
       display: flex;
       flex-direction: column;
@@ -100,12 +116,15 @@
       font-size: 15px;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
+      transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+    }
+
+    .add-to-cart-btn:hover {
+      opacity: 0.92;
     }
 
     .add-to-cart-btn:active {
-      opacity: 0.85;
-      transform: scale(0.98);
+      transform: scale(0.96);
     }
 
     .contact-btn {
@@ -121,24 +140,36 @@
       font-size: 14px;
       border-radius: 10px;
       box-sizing: border-box;
+      transition: background-color 0.2s ease, transform 0.15s ease;
     }
 
-    /* Модальное окно (Галерея / Детали товара) */
+    .contact-btn:hover {
+      background-color: rgba(100, 181, 246, 0.08);
+    }
+
+    .contact-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* Плавное модальное окно */
     .modal {
-      display: none;
+      display: flex;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0);
       z-index: 2000;
       justify-content: center;
       align-items: flex-end;
+      pointer-events: none;
+      transition: background-color 0.3s ease;
     }
 
     .modal.active {
-      display: flex;
+      pointer-events: auto;
+      background-color: rgba(0, 0, 0, 0.75);
     }
 
     .modal-content {
@@ -154,6 +185,12 @@
       gap: 16px;
       overflow-y: auto;
       box-sizing: border-box;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
     }
 
     .modal-header {
@@ -173,6 +210,11 @@
       color: var(--tg-theme-hint-color, #aaa);
       font-size: 24px;
       cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .close-modal:active {
+      transform: scale(0.9);
     }
 
     /* Слайдер в модалке */
@@ -190,10 +232,16 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      animation: fadeIn 0.3s ease;
     }
 
     .modal-slide.active {
       display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .slider-nav {
@@ -207,6 +255,11 @@
       cursor: pointer;
       font-size: 16px;
       border-radius: 50%;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .slider-nav:active {
+      transform: translateY(-50%) scale(0.9);
     }
 
     .slider-prev { left: 10px; }
@@ -231,6 +284,11 @@
       border-radius: 8px;
       font-size: 13px;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .size-chip:active {
+      transform: scale(0.95);
     }
 
     .size-chip.selected {
@@ -238,7 +296,7 @@
       background: rgba(46, 166, 255, 0.15);
     }
 
-    /* Корзина */
+    /* Элементы корзины */
     .cart-item {
       background-color: var(--tg-theme-secondary-bg-color, #1e1e1e);
       border-radius: 12px;
@@ -246,6 +304,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      animation: fadeIn 0.3s ease;
     }
 
     .cart-item-info {
@@ -273,6 +332,12 @@
       padding: 6px 10px;
       cursor: pointer;
       font-size: 12px;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+    }
+
+    .remove-btn:active {
+      transform: scale(0.92);
+      opacity: 0.8;
     }
 
     .cart-summary {
@@ -282,6 +347,7 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
+      animation: fadeIn 0.3s ease;
     }
 
     .cart-total {
@@ -296,6 +362,7 @@
       color: var(--tg-theme-hint-color, #888);
       padding: 40px 0;
       font-size: 16px;
+      animation: fadeIn 0.3s ease;
     }
 
     /* Нижняя панель */
@@ -326,6 +393,11 @@
       font-size: 12px;
       cursor: pointer;
       position: relative;
+      transition: color 0.2s ease, transform 0.15s ease;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
     }
 
     .nav-item.active {
@@ -348,6 +420,12 @@
       font-size: 10px;
       font-weight: bold;
       display: none;
+      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
@@ -368,7 +446,7 @@
         <div class="product-info-sub">Размеры: 41 (26см) | 42.5 (27см) | 43 (27.5см)</div>
         <div class="product-price">6 990 ₽</div>
         <div class="btn-group">
-          <button class="add-to-cart-btn" onclick="addToCart('Nike Air Force 1 High (White)', 6990)">Добавить в корзину</button>
+          <button class="add-to-cart-btn" onclick="openModal('sneakers')">Добавить в корзину</button>
           <a href="https://t.me/notprettymf" class="contact-btn" target="_blank">Написать менеджеру</a>
         </div>
       </div>
@@ -383,7 +461,7 @@
         <div class="product-info-sub"></div>
         <div class="product-price">4 290 ₽</div>
         <div class="btn-group">
-          <button class="add-to-cart-btn" onclick="addToCart('Зимняя куртка с меховым капюшоном', 4290)">Добавить в корзину</button>
+          <button class="add-to-cart-btn" onclick="openModal('jacket')">Добавить в корзину</button>
           <a href="https://t.me/notprettymf" class="contact-btn" target="_blank">Написать менеджеру</a>
         </div>
       </div>
@@ -464,7 +542,6 @@
     let currentSlideIdx = 0;
     let activeProductData = null;
 
-    // База данных товаров для модального окна
     const productsData = {
       sneakers: {
         title: "Nike Air Force 1 High (White)",
@@ -489,7 +566,6 @@
       btnElement.classList.add('active');
     }
 
-    // Открытие модального окна
     function openModal(productId) {
       const p = productsData[productId];
       activeProductData = p;
@@ -506,13 +582,11 @@
       const sizesCont = document.getElementById('modalSizesContainer');
       if (p.hasSizes) {
         sizesCont.style.display = 'flex';
-        // Сбросить выбор размера по умолчанию
         document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
       } else {
         sizesCont.style.display = 'none';
       }
 
-      // Привязка кнопки добавления в корзину в модалке
       document.getElementById('modalAddToCart').onclick = function() {
         let titleFull = p.title;
         if (p.hasSizes) {
