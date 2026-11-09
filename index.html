@@ -14,9 +14,10 @@
     body {
       margin: 0;
       padding: 0 0 85px 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #08080a;
       color: #f3f3f6;
+      overflow-x: hidden;
     }
 
     .container {
@@ -28,35 +29,42 @@
       gap: 16px;
     }
 
-    /* Верхние фишки-плашки */
+    /* Стильные увеличенные плашки без эмодзи */
     .features-banner {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
     }
 
     .feature-chip {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.05));
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      border-radius: 16px;
-      padding: 10px 12px;
+      background: linear-gradient(145deg, #141418, #0e0e11);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 14px 16px;
       display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #93c5fd;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    .feature-chip span {
-      font-size: 16px;
+    .feature-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #3b82f6;
+    }
+
+    .feature-sub {
+      font-size: 11px;
+      color: #8e8e93;
     }
 
     .tab-content {
       display: none;
       opacity: 0;
       transform: translateY(10px);
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .tab-content.active {
       display: flex;
@@ -69,48 +77,18 @@
     /* Карточки товаров */
     .product-card {
       background: #121216;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 24px;
       padding: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       display: flex;
       flex-direction: column;
       gap: 14px;
-      position: relative;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .product-card:active {
       transform: scale(0.985);
-    }
-
-    /* Кнопка Избранное сердечко на карточке */
-    .fav-btn {
-      position: absolute;
-      top: 26px;
-      right: 26px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      cursor: pointer;
-      z-index: 10;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .fav-btn:active {
-      transform: scale(0.8);
-    }
-
-    .fav-btn.active {
-      background: rgba(239, 68, 68, 0.2);
-      border-color: rgba(239, 68, 68, 0.4);
     }
 
     .photos-grid {
@@ -126,7 +104,7 @@
       border-radius: 16px;
       background-color: #1a1a1e;
       cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: transform 0.25s ease, filter 0.25s ease;
     }
 
     .product-image:active {
@@ -198,7 +176,7 @@
       background-color: rgba(147, 197, 253, 0.08);
     }
 
-    /* Модальное окно */
+    /* Фикс модального окна на телефонах */
     .modal {
       display: flex;
       position: fixed;
@@ -212,7 +190,8 @@
       justify-content: center;
       align-items: flex-end;
       pointer-events: none;
-      transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+      transition: background-color 0.35s ease, backdrop-filter 0.35s ease;
+      touch-action: none; /* Запрещает скроллить весь магазин за окном */
     }
 
     .modal.active {
@@ -225,17 +204,18 @@
       background-color: #121216;
       width: 100%;
       max-width: 480px;
-      max-height: 92vh;
+      max-height: 90vh;
       border-top-left-radius: 32px;
       border-top-right-radius: 32px;
-      padding: 18px 22px 34px 22px;
+      padding: 16px 20px 30px 20px;
       display: flex;
       flex-direction: column;
       gap: 16px;
       overflow-y: auto;
-      box-shadow: 0 -20px 50px rgba(0,0,0,0.7);
+      box-shadow: 0 -20px 50px rgba(0,0,0,0.8);
       transform: translateY(100%);
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      touch-action: pan-y;
     }
 
     .modal.active .modal-content {
@@ -243,9 +223,9 @@
     }
 
     .modal-handle-bar {
-      width: 42px;
+      width: 44px;
       height: 5px;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.25);
       border-radius: 3px;
       align-self: center;
     }
@@ -257,21 +237,20 @@
     }
 
     .modal-title {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 700;
       letter-spacing: -0.4px;
     }
 
-    /* Живой интерактивный слайдер */
+    /* Изолированный слайдер под палец */
     .modal-slider {
       position: relative;
       width: 100%;
-      height: 360px;
+      height: 340px;
       border-radius: 20px;
       overflow: hidden;
       background: #08080a;
-      touch-action: pan-y;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      touch-action: pan-x;
     }
 
     .modal-slides-track {
@@ -290,7 +269,7 @@
 
     .slider-dots {
       position: absolute;
-      bottom: 16px;
+      bottom: 14px;
       left: 0;
       right: 0;
       display: flex;
@@ -316,7 +295,7 @@
     .modal-desc {
       font-size: 14px;
       color: #a1a1aa;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .modal-sizes {
@@ -333,7 +312,7 @@
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.15s ease, background 0.2s ease;
     }
 
     .size-chip:active {
@@ -346,7 +325,7 @@
       color: #93c5fd;
     }
 
-    /* Элементы корзины и избранного */
+    /* Элементы корзины */
     .cart-item {
       background: #121216;
       border: 1px solid rgba(255, 255, 255, 0.06);
@@ -355,7 +334,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      animation: fadeIn 0.4s ease;
+      animation: fadeIn 0.3s ease;
     }
 
     .cart-item-info {
@@ -384,7 +363,6 @@
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
-      transition: transform 0.15s ease;
     }
 
     .remove-btn:active {
@@ -420,16 +398,16 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Нижняя панель навигации с 3 вкладками */
+    /* Нижняя навигация с белыми SVG иконками */
     .nav-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 70px;
-      background-color: rgba(18, 18, 22, 0.85);
+      height: 65px;
+      background-color: rgba(18, 18, 22, 0.92);
       backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -450,26 +428,29 @@
       font-weight: 500;
       cursor: pointer;
       position: relative;
-      transition: color 0.25s ease, transform 0.15s ease;
-    }
-
-    .nav-item:active {
-      transform: scale(0.9);
+      transition: color 0.2s ease, transform 0.15s ease;
     }
 
     .nav-item.active {
-      color: #3b82f6;
+      color: #ffffff;
     }
 
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 2px;
+    .nav-icon-svg {
+      width: 22px;
+      height: 22px;
+      fill: #71717a;
+      margin-bottom: 4px;
+      transition: fill 0.2s ease;
+    }
+
+    .nav-item.active .nav-icon-svg {
+      fill: #ffffff;
     }
 
     .badge {
       position: absolute;
       top: 10px;
-      right: 24%;
+      right: 32%;
       background-color: #ef4444;
       color: white;
       border-radius: 10px;
@@ -484,22 +465,23 @@
 
   <div class="container">
     
-    <!-- Фишки-плашки наверху -->
+    <!-- Крупные плашки без смайликов -->
     <div class="features-banner">
       <div class="feature-chip">
-        <span>📦</span> Отправка за 24 часа
+        <div class="feature-title">EXPRESS SHIP</div>
+        <div class="feature-sub">Отправка в течение 24 часов</div>
       </div>
       <div class="feature-chip">
-        <span>🇷🇺</span> Доставка по РФ
+        <div class="feature-title">RUSSIA DELIVERY</div>
+        <div class="feature-sub">Доставка по всей РФ</div>
       </div>
     </div>
 
-    <!-- Вкладка 1: Каталог товаров -->
+    <!-- Вкладка 1: Каталог -->
     <div id="tab-products" class="tab-content active">
       
       <!-- Товар 1: Кроссовки -->
       <div class="product-card">
-        <div class="fav-btn" id="fav-sneakers" onclick="toggleFavorite('sneakers', event)">🤍</div>
         <div class="photos-grid" onclick="openModal('sneakers')">
           <img src="krosi_1.jpg" alt="Nike Air Force High 1" class="product-image">
           <img src="krosi_2.jpg" alt="Nike Air Force High 2" class="product-image">
@@ -515,7 +497,6 @@
 
       <!-- Товар 2: Куртка -->
       <div class="product-card">
-        <div class="fav-btn" id="fav-jacket" onclick="toggleFavorite('jacket', event)">🤍</div>
         <div class="photos-grid" onclick="openModal('jacket')">
           <img src="kyrtka_1.png" alt="Куртка 1" class="product-image">
           <img src="kyrtka_2.png" alt="Куртка 2" class="product-image">
@@ -531,15 +512,7 @@
 
     </div>
 
-    <!-- Вкладка 2: Избранное -->
-    <div id="tab-fav" class="tab-content">
-      <h2>Избранное</h2>
-      <div id="fav-items-container">
-        <div class="empty-cart-text">Список избранного пуст</div>
-      </div>
-    </div>
-
-    <!-- Вкладка 3: Корзина -->
+    <!-- Вкладка 2: Корзина -->
     <div id="tab-cart" class="tab-content">
       <h2>Ваша корзина</h2>
       <div id="cart-items-container">
@@ -557,7 +530,7 @@
 
   </div>
 
-  <!-- Модальное окно товара со свайпом -->
+  <!-- Модальное окно -->
   <div id="productModal" class="modal" onclick="outsideClose(event)">
     <div class="modal-content" id="modalContent">
       <div class="modal-handle-bar"></div>
@@ -565,7 +538,6 @@
         <div id="modalTitle" class="modal-title">Название товара</div>
       </div>
       
-      <!-- Живой слайдер -->
       <div class="modal-slider" id="modalSlider">
         <div class="modal-slides-track" id="slidesTrack">
           <img id="modalSlide0" src="" class="modal-slide" alt="Фото 1">
@@ -596,19 +568,14 @@
     </div>
   </div>
 
-  <!-- Нижняя панель навигации (3 вкладки) -->
+  <!-- Нижняя панель навигации (Только белые иконки) -->
   <nav class="nav-bar">
     <button class="nav-item active" onclick="switchTab('products', this)">
-      <span class="nav-icon">🛍️</span>
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12z"/></svg>
       <span>Каталог</span>
     </button>
-    <button class="nav-item" onclick="switchTab('fav', this)">
-      <span class="nav-icon">❤️</span>
-      <span>Избранное</span>
-      <span id="fav-badge" class="badge">0</span>
-    </button>
     <button class="nav-item" onclick="switchTab('cart', this)">
-      <span class="nav-icon">🛒</span>
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
       <span>Корзина</span>
       <span id="cart-badge" class="badge">0</span>
     </button>
@@ -619,13 +586,11 @@
     tg.expand();
 
     let cart = [];
-    let favorites = [];
     let currentSlideIdx = 0;
     let activeProductKey = null;
 
     const productsData = {
       sneakers: {
-        key: "sneakers",
         title: "Nike Air Force 1 High (White)",
         price: 6990,
         desc: "Культовая высокая модель в классическом белом исполнении. Идеальное состояние, полная комплектация. Отличный выбор на любой сезон.",
@@ -633,7 +598,6 @@
         hasSizes: true
       },
       jacket: {
-        key: "jacket",
         title: "Куртка Hollister 10s type",
         price: 4290,
         desc: "Стильная брендовая куртка. Премиальное качество, глубокие удобные карманы и надежная защита от сильных морозов и ветра.",
@@ -647,56 +611,6 @@
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       document.getElementById('tab-' + tabName).classList.add('active');
       btnElement.classList.add('active');
-    }
-
-    function toggleFavorite(productKey, event) {
-      event.stopPropagation();
-      const index = favorites.indexOf(productKey);
-      const btn = document.getElementById('fav-' + productKey);
-
-      if (index > -1) {
-        favorites.splice(index, 1);
-        btn.innerText = "🤍";
-        btn.classList.remove('active');
-      } else {
-        favorites.push(productKey);
-        btn.innerText = "❤️";
-        btn.classList.add('active');
-        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-      }
-      updateFavUI();
-    }
-
-    function updateFavUI() {
-      const container = document.getElementById('fav-items-container');
-      const badge = document.getElementById('fav-badge');
-
-      if (favorites.length > 0) {
-        badge.innerText = favorites.length;
-        badge.style.display = 'block';
-      } else {
-        badge.style.display = 'none';
-      }
-
-      if (favorites.length === 0) {
-        container.innerHTML = '<div class="empty-cart-text">Список избранного пуст</div>';
-        return;
-      }
-
-      let html = '';
-      favorites.forEach(key => {
-        const p = productsData[key];
-        html += `
-          <div class="cart-item">
-            <div class="cart-item-info">
-              <span class="cart-item-title">${p.title}</span>
-              <span class="cart-item-price">${p.price.toLocaleString()} ₽</span>
-            </div>
-            <button class="remove-btn" onclick="toggleFavorite('${key}', event); event.stopPropagation();">Удалить</button>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
     }
 
     function openModal(productKey) {
@@ -757,7 +671,7 @@
       element.classList.add('selected');
     }
 
-    // Живой слайдер под палец (Drag & Snap)
+    /* ИЗОЛИРОВАННЫЙ ТАЧ-СЛАЙДЕР БЕЗ РЫВКОВ */
     const slider = document.getElementById('modalSlider');
     const track = document.getElementById('slidesTrack');
 
@@ -766,32 +680,17 @@
     let prevTranslate = 0;
     let isDragging = false;
 
-    track.style.transition = 'none';
-
-    slider.addEventListener('touchstart', touchStart, {passive: true});
-    slider.addEventListener('touchmove', touchMove, {passive: false});
-    slider.addEventListener('touchend', touchEnd);
-
-    slider.addEventListener('mousedown', touchStart);
-    slider.addEventListener('mousemove', touchMove);
-    slider.addEventListener('mouseup', touchEnd);
-    slider.addEventListener('mouseleave', touchEnd);
-
-    function getPositionX(e) {
-      return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-    }
-
-    function touchStart(e) {
+    slider.addEventListener('touchstart', e => {
       isDragging = true;
-      startX = getPositionX(e);
+      startX = e.touches[0].clientX;
       currentTranslate = -currentSlideIdx * slider.clientWidth;
       prevTranslate = currentTranslate;
       track.style.transition = 'none';
-    }
+    }, {passive: true});
 
-    function touchMove(e) {
+    slider.addEventListener('touchmove', e => {
       if (!isDragging) return;
-      const currentX = getPositionX(e);
+      const currentX = e.touches[0].clientX;
       const diff = currentX - startX;
       currentTranslate = prevTranslate + diff;
       
@@ -801,14 +700,14 @@
       if (currentTranslate < minTranslate) currentTranslate = minTranslate;
 
       track.style.transform = `translateX(${currentTranslate}px)`;
-    }
+    }, {passive: true});
 
-    function touchEnd() {
+    slider.addEventListener('touchend', () => {
       if (!isDragging) return;
       isDragging = false;
       const movedBy = currentTranslate - prevTranslate;
 
-      track.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      track.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
 
       if (movedBy < -40 && currentSlideIdx < 1) {
         currentSlideIdx++;
@@ -817,20 +716,20 @@
       }
 
       updateSlidePosition(currentSlideIdx, true);
-    }
+    });
 
     function updateSlidePosition(index, animated) {
       currentSlideIdx = index;
       if (!animated) {
         track.style.transition = 'none';
       } else {
-        track.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        track.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
       }
       track.style.transform = `translateX(-${currentSlideIdx * 100}%)`;
       updateDots();
     }
 
-    // Свайп вниз для закрытия шторки
+    /* СВАЙП ВНИЗ ТОЛЬКО ДЛЯ МОДАЛЬНОГО ОКНА */
     const modalContent = document.getElementById('modalContent');
     let modalStartY = 0;
     let modalCurrentY = 0;
@@ -842,20 +741,20 @@
     modalContent.addEventListener('touchmove', e => {
       modalCurrentY = e.touches[0].clientY;
       const diffY = modalCurrentY - modalStartY;
-      if (diffY > 0) {
+      if (diffY > 0 && modalContent.scrollTop === 0) {
         modalContent.style.transform = `translateY(${diffY}px)`;
       }
     }, {passive: true});
 
-    modalContent.addEventListener('touchend', e => {
+    modalContent.addEventListener('touchend', () => {
       const diffY = modalCurrentY - modalStartY;
-      modalContent.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
-      if (diffY > 100) {
+      modalContent.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+      if (diffY > 90 && modalContent.scrollTop === 0) {
         closeModal();
       } else {
         modalContent.style.transform = 'translateY(0)';
       }
-      setTimeout(() => { modalContent.style.transition = ''; }, 350);
+      setTimeout(() => { modalContent.style.transition = ''; }, 300);
       modalStartY = 0;
       modalCurrentY = 0;
     });
@@ -863,10 +762,7 @@
     function addToCart(title, price) {
       cart.push({ id: Date.now(), title: title, price: price });
       updateCartUI();
-      
-      if (tg.HapticFeedback) {
-        tg.HapticFeedback.notificationOccurred('success');
-      }
+      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
     }
 
     function removeFromCart(itemId) {
