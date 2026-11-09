@@ -16,7 +16,7 @@
       margin: 0;
       padding: 0 0 85px 0;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #070709;
+      background-color: #050507;
       color: #f3f3f6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
@@ -31,37 +31,45 @@
       gap: 14px;
     }
 
-    /* Шапка магазина */
+    /* Шапка магазина с аватаркой ava и белым свечением */
     .store-header {
-      background: linear-gradient(145deg, #141418, #0a0a0d);
+      background: linear-gradient(145deg, #121216, #09090c);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      border-radius: 22px;
       padding: 14px 16px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 255, 255, 0.07);
+    }
+
+    .store-avatar-wrapper {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
     }
 
     .store-avatar {
-      width: 48px;
-      height: 48px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .store-info {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 800;
-      color: #fff;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
-      flex-shrink: 0;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .store-name {
       font-size: 18px;
       font-weight: 800;
       letter-spacing: -0.4px;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
     .store-status {
@@ -79,7 +87,7 @@
       height: 6px;
       background-color: #34d399;
       border-radius: 50%;
-      box-shadow: 0 0 6px #34d399;
+      box-shadow: 0 0 8px #34d399;
     }
 
     /* Категории */
@@ -93,10 +101,10 @@
     .categories-bar::-webkit-scrollbar { display: none; }
 
     .cat-chip {
-      background: #121215;
+      background: #111115;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 8px 14px;
-      border-radius: 12px;
+      padding: 9px 15px;
+      border-radius: 14px;
       font-size: 12px;
       font-weight: 600;
       color: #8e8e93;
@@ -106,17 +114,17 @@
     }
 
     .cat-chip.active {
-      background: #2563eb;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
       border-color: #3b82f6;
       color: #ffffff;
-      box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
     }
 
     .tab-content {
       display: none;
       opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .tab-content.active {
       display: flex;
@@ -126,34 +134,32 @@
       transform: translateY(0);
     }
 
-    /* Сетка 2 товара в 1 строчку */
+    /* Сетка 2 в ряд */
     .products-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 11px;
     }
 
     .product-card {
-      background: linear-gradient(165deg, #121216, #0c0c0e);
+      background: linear-gradient(165deg, #131318, #0a0a0d);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 20px;
       padding: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 8px;
-      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .product-card:active {
-      transform: scale(0.97);
-    }
+    .product-card:active { transform: scale(0.97); }
 
     .card-photo-wrapper {
       position: relative;
       width: 100%;
-      height: 155px;
+      height: 160px;
       border-radius: 14px;
       overflow: hidden;
       cursor: pointer;
@@ -186,13 +192,13 @@
       background: #ffffff;
       width: 12px;
       border-radius: 3px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.8);
     }
 
     .product-title {
       font-size: 13px;
       font-weight: 700;
       line-height: 1.25;
-      letter-spacing: -0.2px;
       height: 32px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -204,51 +210,29 @@
       font-size: 16px;
       font-weight: 800;
       color: #60a5fa;
-      letter-spacing: -0.4px;
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
     }
 
-    /* Кнопки с неоновым эффектом */
     .add-to-cart-btn {
       width: 100%;
-      padding: 10px 0;
+      padding: 11px 0;
       background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #ffffff;
       border: none;
       font-weight: 700;
       font-size: 12px;
-      border-radius: 12px;
+      border-radius: 13px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .add-to-cart-btn:active {
       transform: scale(0.95);
-      box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
-      opacity: 0.9;
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.7);
     }
 
-    .contact-btn {
-      display: block;
-      width: 100%;
-      padding: 9px 0;
-      background-color: rgba(255, 255, 255, 0.03);
-      color: #93c5fd;
-      border: 1px solid rgba(147, 197, 253, 0.2);
-      text-align: center;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 12px;
-      border-radius: 12px;
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .contact-btn:active {
-      transform: scale(0.95);
-      background-color: rgba(147, 197, 253, 0.1);
-    }
-
-    /* Модальное окно просмотра товара */
+    /* Модалки (без свайпов, с крестиком и кликом по фону) */
     .modal {
       display: flex;
       position: fixed;
@@ -263,60 +247,74 @@
       align-items: flex-end;
       pointer-events: none;
       transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-      touch-action: none;
     }
 
     .modal.active {
       pointer-events: auto;
-      background-color: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(14px);
     }
 
     .modal-content {
-      background-color: #111114;
+      background-color: #111115;
       width: 100%;
       max-width: 480px;
-      max-height: 90vh;
+      max-height: 96vh; /* Увеличенная высота окна */
       border-top-left-radius: 28px;
       border-top-right-radius: 28px;
-      padding: 14px 18px 28px 18px;
+      padding: 16px 18px 32px 18px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       overflow-y: auto;
-      box-shadow: 0 -15px 40px rgba(0,0,0,0.8);
+      box-shadow: 0 -20px 50px rgba(0,0,0,0.9);
       transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      touch-action: pan-y;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
     }
 
     .modal.active .modal-content {
       transform: translateY(0);
     }
 
-    .modal-handle-bar {
-      width: 40px;
-      height: 4px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 2px;
-      align-self: center;
+    .modal-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .modal-close-btn:active {
+      transform: scale(0.9);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .modal-title {
       font-size: 19px;
       font-weight: 700;
-      letter-spacing: -0.3px;
+      padding-right: 35px;
     }
 
-    /* Слайдер в модалке под палец */
+    /* Увеличенный и переосмысленный слайдер товара */
     .modal-slider {
       position: relative;
       width: 100%;
-      height: 320px;
-      border-radius: 18px;
+      height: 380px; /* Больше размер под фотки */
+      border-radius: 20px;
       overflow: hidden;
       background: #08080a;
-      touch-action: pan-x;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .modal-slides-track {
@@ -324,6 +322,7 @@
       width: 100%;
       height: 100%;
       will-change: transform;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal-slide {
@@ -353,15 +352,16 @@
     }
 
     .slider-dot.active {
-      width: 20px;
+      width: 22px;
       border-radius: 4px;
       background: #ffffff;
+      box-shadow: 0 0 8px rgba(255,255,255,0.8);
     }
 
     .modal-desc {
       font-size: 13px;
       color: #98989f;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .modal-sizes {
@@ -371,14 +371,14 @@
     }
 
     .size-chip {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 8px 14px;
-      border-radius: 12px;
+      padding: 9px 15px;
+      border-radius: 13px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.15s ease, background 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .size-chip:active { transform: scale(0.92); }
@@ -387,14 +387,14 @@
       border-color: #3b82f6;
       background: rgba(59, 130, 246, 0.25);
       color: #93c5fd;
-      box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
 
-    /* Поля ввода заказа (полуовальные темные) */
+    /* Поля ввода */
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .form-label {
@@ -407,9 +407,9 @@
     .custom-input {
       width: 100%;
       padding: 13px 18px;
-      background-color: #17171c;
+      background-color: #16161b;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      border-radius: 22px;
       color: #ffffff;
       font-size: 14px;
       outline: none;
@@ -418,13 +418,13 @@
 
     .custom-input:focus {
       border-color: #3b82f6;
-      box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      background-color: #1a1a21;
     }
 
-    /* Реквизиты модалка */
     .payment-card {
-      background: linear-gradient(135deg, #1e1e24, #141418);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(135deg, #1b1b22, #111115);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 16px;
       display: flex;
@@ -438,11 +438,10 @@
       justify-content: space-between;
       font-size: 14px;
     }
-    .payment-row .val { font-weight: 700; color: #60a5fa; }
+    .payment-row .val { font-weight: 700; color: #60a5fa; text-shadow: 0 0 8px rgba(96,165,250,0.3); }
 
-    /* Элементы корзины */
     .cart-item {
-      background: #121216;
+      background: #131317;
       border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
       padding: 12px 14px;
@@ -466,13 +465,13 @@
     }
 
     .cart-summary {
-      background: #121216;
+      background: #131317;
       border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 16px;
       border-radius: 20px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .cart-total {
@@ -489,14 +488,14 @@
       font-size: 14px;
     }
 
-    /* Навигация с белым бейджиком */
+    /* Навигация с белым активным индикатором */
     .nav-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       height: 65px;
-      background-color: rgba(14, 14, 18, 0.94);
+      background-color: rgba(12, 12, 16, 0.92);
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
@@ -531,9 +530,8 @@
       transition: fill 0.2s ease;
     }
 
-    .nav-item.active .nav-icon-svg { fill: #ffffff; }
+    .nav-item.active .nav-icon-svg { fill: #ffffff; filter: drop-shadow(0 0 6px rgba(255,255,255,0.7)); }
 
-    /* Подвинутая близкая цифра корзины на белом фоне */
     .cart-badge-container {
       position: relative;
       display: inline-block;
@@ -553,7 +551,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
     }
   </style>
 </head>
@@ -561,10 +559,12 @@
 
   <div class="container">
     
-    <!-- Шапка -->
+    <!-- Шапка магазина с аватаркой ava.jpg -->
     <div class="store-header">
-      <div class="store-avatar">S</div>
-      <div>
+      <div class="store-avatar-wrapper">
+        <img src="ava.jpg" alt="Avatar" class="store-avatar">
+      </div>
+      <div class="store-info">
         <div class="store-name">Striver store</div>
         <div class="store-status">Онлайн · Отправка за 24h</div>
       </div>
@@ -577,7 +577,7 @@
       <div class="cat-chip" onclick="filterCategory('jacket', this)">Верхняя одежда</div>
     </div>
 
-    <!-- Каталог (2 товара в ряд) -->
+    <!-- Каталог -->
     <div id="tab-products" class="tab-content active">
       <div class="products-grid">
         
@@ -612,21 +612,20 @@
       </div>
     </div>
 
-    <!-- Корзина + Оформление -->
+    <!-- Корзина -->
     <div id="tab-cart" class="tab-content">
       <h2>Корзина</h2>
       <div id="cart-items-container">
         <div class="empty-cart-text">Корзина пуста</div>
       </div>
       
-      <!-- Форма доставки и Оформления -->
       <div id="cart-summary" class="cart-summary" style="display: none;">
         <div class="cart-total">
           <span>Итого:</span>
           <span id="cart-total-price">0 ₽</span>
         </div>
 
-        <div style="font-size: 14px; font-weight: 700; margin-top: 6px;">Данные для доставки:</div>
+        <div style="font-size: 14px; font-weight: 700; margin-top: 4px;">Данные для доставки:</div>
         
         <div class="form-group">
           <label class="form-label">Город:</label>
@@ -648,19 +647,19 @@
           <input type="tel" id="inputPhone" class="custom-input" placeholder="+7 (999) 000-00-00">
         </div>
 
-        <button class="add-to-cart-btn" style="padding: 14px 0; font-size: 14px; margin-top: 6px;" onclick="openPaymentModal()">Перейти к оплате</button>
+        <button class="add-to-cart-btn" style="padding: 14px 0; font-size: 14px; margin-top: 4px;" onclick="openPaymentModal()">Перейти к оплате</button>
       </div>
     </div>
 
   </div>
 
-  <!-- Модалка просмотра товара -->
+  <!-- Модалка просмотра товара (Крестик + Клик вне окна) -->
   <div id="productModal" class="modal" onclick="outsideClose(event, 'productModal')">
-    <div class="modal-content" id="modalContent">
-      <div class="modal-handle-bar"></div>
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-close-btn" onclick="closeModalDirect('productModal')">✕</div>
       <div class="modal-title" id="modalTitle">Название товара</div>
       
-      <div class="modal-slider" id="modalSlider">
+      <div class="modal-slider" id="modalSlider" onclick="nextSlide()">
         <div class="modal-slides-track" id="slidesTrack">
           <img id="modalSlide0" src="" class="modal-slide" alt="Фото 1">
           <img id="modalSlide1" src="" class="modal-slide" alt="Фото 2">
@@ -687,10 +686,10 @@
     </div>
   </div>
 
-  <!-- Модалка оплаты с реквизитами -->
+  <!-- Модалка оплаты (Крестик + Клик вне окна) -->
   <div id="paymentModal" class="modal" onclick="outsideClose(event, 'paymentModal')">
-    <div class="modal-content">
-      <div class="modal-handle-bar"></div>
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-close-btn" onclick="closeModalDirect('paymentModal')">✕</div>
       <div class="modal-title">Оплата заказа</div>
       
       <div class="payment-card">
@@ -706,7 +705,7 @@
           <span>Получатель:</span>
           <span class="val">Денис Б.</span>
         </div>
-        <div class="payment-row" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+        <div class="payment-row" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
           <span>К оплате:</span>
           <span class="val" id="payTotalVal">0 ₽</span>
         </div>
@@ -742,7 +741,6 @@
 
     let cart = [];
     let currentSlideIdx = 0;
-    let activeProductKey = null;
 
     const productsData = {
       sneakers: {
@@ -772,8 +770,7 @@
       document.querySelectorAll('.cat-chip').forEach(el => el.classList.remove('active'));
       element.classList.add('active');
 
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
+      document.querySelectorAll('.product-card').forEach(card => {
         if (category === 'all' || card.getAttribute('data-category') === category) {
           card.style.display = 'flex';
         } else {
@@ -782,10 +779,8 @@
       });
     }
 
-    /* Моментальное плавное закрытие без повисаний */
     function openModal(productKey) {
       const p = productsData[productKey];
-      activeProductKey = productKey;
       currentSlideIdx = 0;
 
       document.getElementById('modalTitle').innerText = p.title;
@@ -794,7 +789,7 @@
       
       document.getElementById('modalSlide0').src = p.images[0];
       document.getElementById('modalSlide1').src = p.images[1];
-      updateSlidePosition(0, false);
+      updateSlidePosition(0);
 
       const sizesCont = document.getElementById('modalSizesContainer');
       if (p.hasSizes) {
@@ -823,8 +818,7 @@
     }
 
     function closeModalDirect(modalId) {
-      const modal = document.getElementById(modalId);
-      modal.classList.remove('active');
+      document.getElementById(modalId).classList.remove('active');
     }
 
     function outsideClose(event, modalId) {
@@ -833,7 +827,15 @@
       }
     }
 
-    function updateDots() {
+    function nextSlide() {
+      currentSlideIdx = currentSlideIdx === 0 ? 1 : 0;
+      updateSlidePosition(currentSlideIdx);
+    }
+
+    function updateSlidePosition(idx) {
+      currentSlideIdx = idx;
+      const track = document.getElementById('slidesTrack');
+      track.style.transform = `translateX(-${currentSlideIdx * 100}%)`;
       document.getElementById('dot0').classList.toggle('active', currentSlideIdx === 0);
       document.getElementById('dot1').classList.toggle('active', currentSlideIdx === 1);
     }
@@ -843,63 +845,6 @@
       element.classList.add('selected');
     }
 
-    /* ДРАГ И СНАП: Слайдер с порогом 30% (не перекручивает если мало потянуть) */
-    const slider = document.getElementById('modalSlider');
-    const track = document.getElementById('slidesTrack');
-
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
-    let isDragging = false;
-
-    slider.addEventListener('touchstart', e => {
-      isDragging = true;
-      startX = e.touches[0].clientX;
-      currentTranslate = -currentSlideIdx * slider.clientWidth;
-      prevTranslate = currentTranslate;
-      track.style.transition = 'none';
-    }, {passive: true});
-
-    slider.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      const currentX = e.touches[0].clientX;
-      const diff = currentX - startX;
-      currentTranslate = prevTranslate + diff;
-      
-      const maxTranslate = 0;
-      const minTranslate = -(1 * slider.clientWidth);
-      if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
-      if (currentTranslate < minTranslate) currentTranslate = minTranslate;
-
-      track.style.transform = `translateX(${currentTranslate}px)`;
-    }, {passive: true});
-
-    slider.addEventListener('touchend', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      const movedBy = currentTranslate - prevTranslate;
-      const threshold = slider.clientWidth * 0.3; // 30% порог
-
-      track.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-
-      if (movedBy < -threshold && currentSlideIdx < 1) {
-        currentSlideIdx++;
-      } else if (movedBy > threshold && currentSlideIdx > 0) {
-        currentSlideIdx--;
-      }
-
-      updateSlidePosition(currentSlideIdx, true);
-    });
-
-    function updateSlidePosition(index, animated) {
-      currentSlideIdx = index;
-      if (!animated) track.style.transition = 'none';
-      else track.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-      track.style.transform = `translateX(-${currentSlideIdx * 100}%)`;
-      updateDots();
-    }
-
-    /* Корзина */
     function addToCart(title, price) {
       cart.push({ id: Date.now(), title: title, price: price });
       updateCartUI();
@@ -951,7 +896,6 @@
       summary.style.display = 'flex';
     }
 
-    /* Модалка Оплаты */
     function openPaymentModal() {
       const city = document.getElementById('inputCity').value.trim();
       const pvz = document.getElementById('inputPvz').value.trim();
@@ -970,7 +914,6 @@
       document.getElementById('paymentModal').classList.add('active');
     }
 
-    /* Автоматическая отправка через бота менеджеру */
     function finishOrder() {
       const city = document.getElementById('inputCity').value.trim();
       const pvz = document.getElementById('inputPvz').value.trim();
@@ -990,14 +933,12 @@
         phone: phone
       };
 
-      // Передаем данные боту Telegram
       if (tg.sendData) {
         tg.sendData(JSON.stringify(orderData));
       } else {
-        alert("Заказ сформирован! Отправьте подтверждение менеджеру @rashgardovski");
+        alert("Заказ сформирован!");
       }
 
-      // Сброс корзины и очистка полей
       cart = [];
       updateCartUI();
       document.getElementById('inputCity').value = '';
