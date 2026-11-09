@@ -14,49 +14,49 @@
     body {
       margin: 0;
       padding: 0 0 80px 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--tg-theme-bg-color, #0d0d0d);
-      color: var(--tg-theme-text-color, #f5f5f7);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--tg-theme-bg-color, #0a0a0c);
+      color: var(--tg-theme-text-color, #f4f4f6);
     }
 
     .container {
       max-width: 480px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     .tab-content {
       display: none;
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(15px);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .tab-content.active {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* Карточки товаров (Премиальный стиль) */
+    /* Карточки товаров с живым эффектом глубины */
     .product-card {
-      background: linear-gradient(145deg, #1c1c1e, #161618);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 22px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(145deg, #18181b, #121214);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       gap: 14px;
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
     }
 
     .product-card:active {
-      transform: scale(0.985);
+      transform: scale(0.98);
     }
 
     .photos-grid {
@@ -69,37 +69,38 @@
       width: 100%;
       height: 190px;
       object-fit: cover;
-      border-radius: 14px;
-      background-color: #242426;
+      border-radius: 16px;
+      background-color: #202024;
       cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
     }
 
     .product-image:active {
-      transform: scale(0.96);
-      filter: brightness(0.9);
+      transform: scale(0.95);
+      filter: brightness(0.85);
     }
 
     .product-title {
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: -0.3px;
-      line-height: 1.3;
+      letter-spacing: -0.4px;
+      line-height: 1.25;
     }
 
     .product-info-sub {
       font-size: 13px;
-      color: var(--tg-theme-hint-color, #98989f);
+      color: var(--tg-theme-hint-color, #8e8e93);
+      letter-spacing: -0.2px;
     }
 
     .product-price {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 800;
       color: #3b82f6;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.6px;
     }
 
-    /* Кнопки */
+    /* Элитные кнопки с интуитивным откликом */
     .btn-group {
       display: flex;
       flex-direction: column;
@@ -108,45 +109,46 @@
 
     .add-to-cart-btn {
       width: 100%;
-      padding: 14px 0;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      padding: 15px 0;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
       color: #ffffff;
       border: none;
       font-weight: 600;
       font-size: 15px;
-      border-radius: 14px;
+      letter-spacing: -0.2px;
+      border-radius: 16px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(37, 99, 235,.35);
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
     }
 
     .add-to-cart-btn:active {
-      transform: scale(0.96);
-      opacity: 0.9;
+      transform: scale(0.95);
+      opacity: 0.85;
     }
 
     .contact-btn {
       display: block;
       width: 100%;
-      padding: 12px 0;
-      background-color: rgba(255, 255, 255, 0.04);
+      padding: 13px 0;
+      background-color: rgba(255, 255, 255, 0.03);
       color: #60a5fa;
-      border: 1px solid rgba(96, 165, 250, 0.3);
+      border: 1px solid rgba(96, 165, 250, 0.25);
       text-align: center;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      border-radius: 14px;
+      border-radius: 16px;
       box-sizing: border-box;
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      transition: background-color 0.2s ease, transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .contact-btn:active {
-      transform: scale(0.96);
-      background-color: rgba(96, 165, 250, 0.1);
+      transform: scale(0.95);
+      background-color: rgba(96, 165, 250, 0.12);
     }
 
-    /* Модальное окно (Шторка с размытием) */
+    /* Модальное окно (Шторка с глубоким блюром) */
     .modal {
       display: flex;
       position: fixed;
@@ -165,37 +167,37 @@
 
     .modal.active {
       pointer-events: auto;
-      background-color: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
     }
 
     .modal-content {
-      background-color: #18181b;
+      background-color: #141416;
       width: 100%;
       max-width: 480px;
       max-height: 92vh;
-      border-top-left-radius: 28px;
-      border-top-right-radius: 28px;
-      padding: 16px 20px 30px 20px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      padding: 18px 22px 32px 22px;
       display: flex;
       flex-direction: column;
       gap: 16px;
       overflow-y: auto;
       box-sizing: border-box;
-      box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 -15px 50px rgba(0,0,0,0.6);
       transform: translateY(100%);
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal.active .modal-content {
       transform: translateY(0);
     }
 
-    /* Ручка для свайпа вниз */
+    /* Стильная ручка для свайпа вниз */
     .modal-handle-bar {
-      width: 44px;
+      width: 42px;
       height: 5px;
-      background-color: rgba(255, 255, 255, 0.25);
+      background-color: rgba(255, 255, 255, 0.2);
       border-radius: 3px;
       align-self: center;
       margin-bottom: 2px;
@@ -208,20 +210,21 @@
     }
 
     .modal-title {
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 700;
-      letter-spacing: -0.4px;
+      letter-spacing: -0.5px;
     }
 
-    /* Живой слайдер под палец */
+    /* Интерактивный слайдер под палец */
     .modal-slider {
       position: relative;
       width: 100%;
-      height: 340px;
-      border-radius: 18px;
+      height: 350px;
+      border-radius: 20px;
       overflow: hidden;
-      background: #111;
+      background: #0d0d0f;
       touch-action: pan-y;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     }
 
     .modal-slides-track {
@@ -239,10 +242,10 @@
       user-select: none;
     }
 
-    /* Точки пагинации */
+    /* Индикатор точек слайдера */
     .slider-dots {
       position: absolute;
-      bottom: 14px;
+      bottom: 16px;
       left: 0;
       right: 0;
       display: flex;
@@ -255,20 +258,21 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.35);
-      transition: width 0.3s ease, background 0.3s ease;
+      background: rgba(255, 255, 255, 0.3);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
     }
 
     .slider-dot.active {
-      width: 20px;
+      width: 22px;
       border-radius: 4px;
       background: #ffffff;
     }
 
     .modal-desc {
       font-size: 14px;
-      color: #a1a1aa;
-      line-height: 1.5;
+      color: #98989f;
+      line-height: 1.55;
+      letter-spacing: -0.1px;
     }
 
     .modal-sizes {
@@ -278,14 +282,14 @@
     }
 
     .size-chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 10px 16px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, border-color 0.2s ease;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease, border-color 0.2s ease;
     }
 
     .size-chip:active {
@@ -294,20 +298,20 @@
 
     .size-chip.selected {
       border-color: #3b82f6;
-      background: rgba(59, 130, 246, 0.2);
+      background: rgba(59, 130, 246, 0.18);
       color: #60a5fa;
     }
 
-    /* Корзина */
+    /* Элементы корзины */
     .cart-item {
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
-      padding: 14px;
+      border-radius: 18px;
+      padding: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      animation: fadeIn 0.35s ease;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .cart-item-info {
@@ -319,6 +323,7 @@
     .cart-item-title {
       font-size: 15px;
       font-weight: 600;
+      letter-spacing: -0.2px;
     }
 
     .cart-item-price {
@@ -328,63 +333,64 @@
     }
 
     .remove-btn {
-      background: rgba(239, 68, 68, 0.15);
+      background: rgba(239, 68, 68, 0.12);
       color: #f87171;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 8px 12px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 600;
-      transition: transform 0.15s ease, background 0.2s ease;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.2s ease;
     }
 
     .remove-btn:active {
       transform: scale(0.9);
-      background: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.25);
     }
 
     .cart-summary {
-      background: #1c1c1e;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 18px;
-      border-radius: 20px;
+      background: #18181b;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 20px;
+      border-radius: 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      animation: fadeIn 0.35s ease;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .cart-total {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 800;
       display: flex;
       justify-content: space-between;
+      letter-spacing: -0.4px;
     }
 
     .empty-cart-text {
       text-align: center;
       color: #71717a;
-      padding: 50px 0;
+      padding: 60px 0;
       font-size: 15px;
-      animation: fadeIn 0.35s ease;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Навигация снизу */
+    /* Навигация снизу с эффектом стекла */
     .nav-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 65px;
-      background-color: rgba(24, 24, 27, 0.85);
+      height: 68px;
+      background-color: rgba(20, 20, 22, 0.85);
       backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -405,7 +411,7 @@
       font-weight: 500;
       cursor: pointer;
       position: relative;
-      transition: color 0.2s ease, transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: color 0.25s ease, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .nav-item:active {
@@ -432,7 +438,7 @@
       font-size: 10px;
       font-weight: bold;
       display: none;
-      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes popIn {
@@ -506,7 +512,7 @@
         <div id="modalTitle" class="modal-title">Название товара</div>
       </div>
       
-      <!-- Живой слайдер -->
+      <!-- Живой слайдер под палец -->
       <div class="modal-slider" id="modalSlider">
         <div class="modal-slides-track" id="slidesTrack">
           <img id="modalSlide0" src="" class="modal-slide" alt="Фото 1">
@@ -518,11 +524,11 @@
         </div>
       </div>
 
-      <div id="modalPrice" class="product-price" style="font-size: 22px;">0 ₽</div>
+      <div id="modalPrice" class="product-price" style="font-size: 23px;">0 ₽</div>
       <div id="modalDesc" class="modal-desc">Описание товара...</div>
       
       <div id="modalSizesContainer" style="display: none; flex-direction: column; gap: 8px;">
-        <div style="font-size: 13px; color: #a1a1aa;">Выберите размер:</div>
+        <div style="font-size: 13px; color: #98989f;">Выберите размер:</div>
         <div class="modal-sizes" id="modalSizes">
           <div class="size-chip" onclick="selectSize(this)">41 (26см)</div>
           <div class="size-chip" onclick="selectSize(this)">42.5 (27см)</div>
@@ -530,7 +536,7 @@
         </div>
       </div>
 
-      <div class="btn-group" style="margin-top: 6px;">
+      <div class="btn-group" style="margin-top: 8px;">
         <button id="modalAddToCart" class="add-to-cart-btn">Добавить в корзину</button>
         <a href="https://t.me/notprettymf" class="contact-btn" target="_blank">Написать менеджеру</a>
       </div>
@@ -614,7 +620,7 @@
           titleFull += ` (${selectedSize.innerText})`;
         }
         addToCart(titleFull, p.price);
-        closeModal();
+        closeModal(); // Окно теперь сразу и плавно закрывается при добавлении!
       };
 
       document.getElementById('productModal').classList.add('active');
@@ -640,7 +646,7 @@
       element.classList.add('selected');
     }
 
-    // --- НАСТОЯЩИЙ ЖИВОЙ СЛАЙДЕР ПОД ПАЛЕЦ (DRAG & SNAP) ---
+    // Живой интерактивный слайдер под палец
     const slider = document.getElementById('modalSlider');
     const track = document.getElementById('slidesTrack');
 
@@ -655,7 +661,6 @@
     slider.addEventListener('touchmove', touchMove, {passive: false});
     slider.addEventListener('touchend', touchEnd);
 
-    // Поддержка мышки для тестов на ПК
     slider.addEventListener('mousedown', touchStart);
     slider.addEventListener('mousemove', touchMove);
     slider.addEventListener('mouseup', touchEnd);
@@ -679,7 +684,6 @@
       const diff = currentX - startX;
       currentTranslate = prevTranslate + diff;
       
-      // Ограничение по краям, чтобы не тянуть в пустоту
       const maxTranslate = 0;
       const minTranslate = -(1 * slider.clientWidth);
       if (currentTranslate > maxTranslate) currentTranslate = maxTranslate;
@@ -693,12 +697,11 @@
       isDragging = false;
       const movedBy = currentTranslate - prevTranslate;
 
-      track.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+      track.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
 
-      // Если сдвинули больше чем на 20% ширины экрана — переключаем слайд
-      if (movedBy < -50 && currentSlideIdx < 1) {
+      if (movedBy < -45 && currentSlideIdx < 1) {
         currentSlideIdx++;
-      } else if (movedBy > 50 && currentSlideIdx > 0) {
+      } else if (movedBy > 45 && currentSlideIdx > 0) {
         currentSlideIdx--;
       }
 
@@ -710,13 +713,13 @@
       if (!animated) {
         track.style.transition = 'none';
       } else {
-        track.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+        track.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
       }
       track.style.transform = `translateX(-${currentSlideIdx * 100}%)`;
       updateDots();
     }
 
-    // --- СВАЙП ВНИЗ ДЛЯ ЗАКРЫТИЯ ОКНА ---
+    // Свайп вниз для закрытия шторки
     const modalContent = document.getElementById('modalContent');
     let modalStartY = 0;
     let modalCurrentY = 0;
@@ -735,13 +738,13 @@
 
     modalContent.addEventListener('touchend', e => {
       const diffY = modalCurrentY - modalStartY;
-      modalContent.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
-      if (diffY > 120) {
+      modalContent.style.transition = 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+      if (diffY > 100) {
         closeModal();
       } else {
         modalContent.style.transform = 'translateY(0)';
       }
-      setTimeout(() => { modalContent.style.transition = ''; }, 300);
+      setTimeout(() => { modalContent.style.transition = ''; }, 350);
       modalStartY = 0;
       modalCurrentY = 0;
     });
