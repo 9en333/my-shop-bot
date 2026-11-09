@@ -202,6 +202,7 @@
       height: 32px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -259,7 +260,7 @@
       background-color: #111115;
       width: 100%;
       max-width: 480px;
-      max-height: 96vh; /* Увеличенная высота окна */
+      max-height: 96vh;
       border-top-left-radius: 28px;
       border-top-right-radius: 28px;
       padding: 16px 18px 32px 18px;
@@ -306,11 +307,11 @@
       padding-right: 35px;
     }
 
-    /* Увеличенный и переосмысленный слайдер товара */
+    /* Слайдер товара */
     .modal-slider {
       position: relative;
       width: 100%;
-      height: 380px; /* Больше размер под фотки */
+      height: 380px;
       border-radius: 20px;
       overflow: hidden;
       background: #08080a;
@@ -488,7 +489,7 @@
       font-size: 14px;
     }
 
-    /* Навигация с белым активным индикатором */
+    /* Навигация */
     .nav-bar {
       position: fixed;
       bottom: 0;
@@ -653,7 +654,7 @@
 
   </div>
 
-  <!-- Модалка просмотра товара (Крестик + Клик вне окна) -->
+  <!-- Модалка просмотра товара -->
   <div id="productModal" class="modal" onclick="outsideClose(event, 'productModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-close-btn" onclick="closeModalDirect('productModal')">✕</div>
@@ -686,7 +687,7 @@
     </div>
   </div>
 
-  <!-- Модалка оплаты (Крестик + Клик вне окна) -->
+  <!-- Модалка оплаты -->
   <div id="paymentModal" class="modal" onclick="outsideClose(event, 'paymentModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-close-btn" onclick="closeModalDirect('paymentModal')">✕</div>
