@@ -15,10 +15,11 @@
     body {
       margin: 0;
       padding: 0 0 85px 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #050507;
       color: #f3f3f6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     .container {
@@ -38,29 +39,45 @@
       display: flex;
       align-items: center;
       gap: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(255, 255, 255, 0.07);
+    }
+
+    .store-avatar-wrapper {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
     }
 
     .store-avatar {
-      width: 52px;
-      height: 52px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
       border: 2px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.35);
+    }
+
+    .store-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .store-name {
       font-size: 18px;
       font-weight: 800;
+      letter-spacing: -0.4px;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
     }
 
     .store-status {
       font-size: 11px;
       color: #34d399;
-      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 5px;
-      margin-top: 2px;
+      font-weight: 600;
     }
 
     .store-status::before {
@@ -69,12 +86,14 @@
       height: 6px;
       background-color: #34d399;
       border-radius: 50%;
+      box-shadow: 0 0 8px #34d399;
     }
 
     .categories-bar {
       display: flex;
       gap: 8px;
       overflow-x: auto;
+      padding-bottom: 2px;
       scrollbar-width: none;
     }
     .categories-bar::-webkit-scrollbar { display: none; }
@@ -89,19 +108,28 @@
       color: #8e8e93;
       cursor: pointer;
       white-space: nowrap;
+      transition: all 0.25s ease;
     }
+
     .cat-chip.active {
-      background: #2563eb;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: #3b82f6;
       color: #ffffff;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.5);
     }
 
     .tab-content {
       display: none;
-      flex-direction: column;
-      gap: 14px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .tab-content.active {
       display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .products-grid {
@@ -111,23 +139,28 @@
     }
 
     .product-card {
-      background: #131318;
+      background: linear-gradient(165deg, #131318, #0a0a0d);
       border: 1px solid rgba(255, 255, 255, 0.07);
       border-radius: 20px;
       padding: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 8px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
+    .product-card:active { transform: scale(0.97); }
+
     .card-photo-wrapper {
+      position: relative;
       width: 100%;
       height: 160px;
       border-radius: 14px;
       overflow: hidden;
       cursor: pointer;
-      background: #1a1a1e;
+      background-color: #1a1a1e;
     }
 
     .card-photo {
@@ -136,87 +169,221 @@
       object-fit: cover;
     }
 
+    .card-photo-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .mini-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    .mini-dot.active {
+      background: #ffffff;
+      width: 12px;
+      border-radius: 3px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.8);
+    }
+
     .product-title {
       font-size: 13px;
       font-weight: 700;
+      line-height: 1.25;
       height: 32px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      cursor: pointer;
     }
 
     .product-price {
       font-size: 16px;
       font-weight: 800;
       color: #60a5fa;
+      text-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
     }
 
     .add-to-cart-btn {
       width: 100%;
       padding: 11px 0;
-      background: #2563eb;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
       color: #ffffff;
       border: none;
       font-weight: 700;
       font-size: 12px;
       border-radius: 13px;
       cursor: pointer;
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .add-to-cart-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.7);
     }
 
     .modal {
-      display: none;
+      display: flex;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(14px);
+      background-color: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
       z-index: 2000;
       justify-content: center;
       align-items: flex-end;
+      pointer-events: none;
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
     }
+
     .modal.active {
-      display: flex;
+      pointer-events: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(14px);
     }
 
     .modal-content {
-      background: #111115;
+      background-color: #111115;
       width: 100%;
       max-width: 480px;
+      max-height: 96vh;
       border-top-left-radius: 28px;
       border-top-right-radius: 28px;
       padding: 16px 18px 32px 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      max-height: 96vh;
       overflow-y: auto;
+      box-shadow: 0 -20px 50px rgba(0,0,0,0.9);
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .modal.active .modal-content {
+      transform: translateY(0);
     }
 
     .modal-close-btn {
-      align-self: flex-end;
-      background: rgba(255, 255, 255, 0.08);
-      border: none;
-      color: #fff;
+      position: absolute;
+      top: 16px;
+      right: 16px;
       width: 32px;
       height: 32px;
       border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      font-weight: bold;
+      z-index: 10;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .modal-close-btn:active {
+      transform: scale(0.9);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .modal-title {
+      font-size: 19px;
+      font-weight: 700;
+      padding-right: 35px;
     }
 
     .modal-slider {
+      position: relative;
       width: 100%;
-      height: 280px;
-      border-radius: 16px;
+      height: 380px;
+      border-radius: 20px;
       overflow: hidden;
       background: #08080a;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .modal-slides-track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      will-change: transform;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal-slide {
-      width: 100%;
+      min-width: 100%;
       height: 100%;
       object-fit: cover;
+      pointer-events: none;
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .slider-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+
+    .slider-dot.active {
+      width: 22px;
+      border-radius: 4px;
+      background: #ffffff;
+      box-shadow: 0 0 8px rgba(255,255,255,0.8);
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: #98989f;
+      line-height: 1.45;
+    }
+
+    .modal-sizes {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .size-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 9px 15px;
+      border-radius: 13px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .size-chip:active { transform: scale(0.92); }
+
+    .size-chip.selected {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.25);
+      color: #93c5fd;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
 
     .form-group {
@@ -229,29 +396,36 @@
       font-size: 12px;
       font-weight: 600;
       color: #8e8e93;
+      margin-left: 6px;
     }
 
     .custom-input {
       width: 100%;
       padding: 13px 18px;
-      background: #16161b;
+      background-color: #16161b;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 22px;
       color: #ffffff;
       font-size: 14px;
       outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
+
     .custom-input:focus {
-      border-color: #2563eb;
+      border-color: #3b82f6;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+      background-color: #1a1a21;
     }
 
     .payment-card {
-      background: #1b1b22;
+      background: linear-gradient(135deg, #1b1b22, #111115);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
       padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
     }
 
     .payment-row {
@@ -259,19 +433,20 @@
       justify-content: space-between;
       font-size: 14px;
     }
-    .payment-row .val {
-      font-weight: 700;
-      color: #60a5fa;
-    }
+    .payment-row .val { font-weight: 700; color: #60a5fa; text-shadow: 0 0 8px rgba(96,165,250,0.3); }
 
     .cart-item {
       background: #131317;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 16px;
       padding: 12px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
+    .cart-item-title { font-size: 14px; font-weight: 600; }
+    .cart-item-price { font-size: 13px; color: #60a5fa; font-weight: 700; }
 
     .remove-btn {
       background: rgba(239, 68, 68, 0.15);
@@ -280,10 +455,13 @@
       border-radius: 10px;
       padding: 6px 10px;
       cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
     }
 
     .cart-summary {
       background: #131317;
+      border: 1px solid rgba(255, 255, 255, 0.06);
       padding: 16px;
       border-radius: 20px;
       display: flex;
@@ -302,6 +480,7 @@
       text-align: center;
       color: #52525b;
       padding: 40px 0;
+      font-size: 14px;
     }
 
     .nav-bar {
@@ -310,7 +489,7 @@
       left: 0;
       right: 0;
       height: 65px;
-      background: rgba(12, 12, 16, 0.92);
+      background-color: rgba(12, 12, 16, 0.92);
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
@@ -320,23 +499,44 @@
     }
 
     .nav-item {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       background: none;
       border: none;
       color: #71717a;
       font-size: 11px;
       font-weight: 500;
       cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;
     }
-    .nav-item.active {
-      color: #ffffff;
+
+    .nav-item.active { color: #ffffff; }
+
+    .nav-icon-svg {
+      width: 22px;
+      height: 22px;
+      fill: #71717a;
+      margin-bottom: 3px;
+      transition: fill 0.2s ease;
+    }
+
+    .nav-item.active .nav-icon-svg { fill: #ffffff; filter: drop-shadow(0 0 6px rgba(255,255,255,0.7)); }
+
+    .cart-badge-container {
+      position: relative;
+      display: inline-block;
     }
 
     .badge {
-      background: #fff;
-      color: #000;
+      position: absolute;
+      top: -3px;
+      right: -8px;
+      background-color: #ffffff;
+      color: #000000;
       border-radius: 50%;
       width: 16px;
       height: 16px;
@@ -345,18 +545,19 @@
       display: none;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      top: -4px;
-      right: -8px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+    
     <div class="store-header">
-      <img src="ava.jpg" alt="Avatar" class="store-avatar">
-      <div>
+      <div class="store-avatar-wrapper">
+        <img src="ava.jpg" alt="Avatar" class="store-avatar">
+      </div>
+      <div class="store-info">
         <div class="store-name">Striver store</div>
         <div class="store-status">Онлайн · Отправка за 24h</div>
       </div>
@@ -365,18 +566,38 @@
     <div class="categories-bar">
       <div class="cat-chip active" onclick="filterCategory('all', this)">Все товары</div>
       <div class="cat-chip" onclick="filterCategory('sneakers', this)">Обувь</div>
+      <div class="cat-chip" onclick="filterCategory('jacket', this)">Верхняя одежда</div>
     </div>
 
     <div id="tab-products" class="tab-content active">
       <div class="products-grid">
+        
         <div class="product-card" data-category="sneakers">
-          <div class="card-photo-wrapper" onclick="openModal()">
-            <img src="krosi_1.jpg" alt="Nike Air Force" class="card-photo">
+          <div class="card-photo-wrapper" onclick="openModal('sneakers')">
+            <img src="krosi_1.jpg" alt="Nike Air Force High" class="card-photo">
+            <div class="card-photo-dots">
+              <div class="mini-dot active"></div>
+              <div class="mini-dot"></div>
+            </div>
           </div>
-          <div class="product-title" onclick="openModal()">Nike Air Force 1 High (White)</div>
+          <div class="product-title" onclick="openModal('sneakers')">Nike Air Force 1 High (White)</div>
           <div class="product-price">6 990 ₽</div>
-          <button class="add-to-cart-btn" onclick="openModal()">В корзину</button>
+          <button class="add-to-cart-btn" onclick="openModal('sneakers')">В корзину</button>
         </div>
+
+        <div class="product-card" data-category="jacket">
+          <div class="card-photo-wrapper" onclick="openModal('jacket')">
+            <img src="kyrtka_1.png" alt="Куртка Hollister" class="card-photo">
+            <div class="card-photo-dots">
+              <div class="mini-dot active"></div>
+              <div class="mini-dot"></div>
+            </div>
+          </div>
+          <div class="product-title" onclick="openModal('jacket')">Куртка Hollister 10s type</div>
+          <div class="product-price">4 290 ₽</div>
+          <button class="add-to-cart-btn" onclick="openModal('jacket')">В корзину</button>
+        </div>
+
       </div>
     </div>
 
@@ -391,43 +612,72 @@
           <span>Итого:</span>
           <span id="cart-total-price">0 ₽</span>
         </div>
+
+        <div style="font-size: 14px; font-weight: 700; margin-top: 4px;">Данные для доставки:</div>
+        
         <div class="form-group">
           <label class="form-label">Город:</label>
-          <input type="text" id="inputCity" class="custom-input" placeholder="Москва">
+          <input type="text" id="inputCity" class="custom-input" placeholder="Например: Москва">
         </div>
+
         <div class="form-group">
-          <label class="form-label">Пункт выдачи (СДЭК):</label>
+          <label class="form-label">Пункт выдачи (СДЭК / Почта):</label>
           <input type="text" id="inputPvz" class="custom-input" placeholder="СДЭК">
         </div>
+
         <div class="form-group">
-          <label class="form-label">Адрес ПВЗ:</label>
+          <label class="form-label">Адрес пункта выдачи:</label>
           <input type="text" id="inputAddress" class="custom-input" placeholder="ул. Ленина 15">
         </div>
+
         <div class="form-group">
-          <label class="form-label">Телефон:</label>
-          <input type="tel" id="inputPhone" class="custom-input" placeholder="+7...">
+          <label class="form-label">Ваш номер телефона:</label>
+          <input type="tel" id="inputPhone" class="custom-input" placeholder="+7 (999) 000-00-00">
         </div>
-        <button class="add-to-cart-btn" style="padding: 14px 0;" onclick="openPaymentModal()">Перейти к оплате</button>
+
+        <button class="add-to-cart-btn" style="padding: 14px 0; font-size: 14px; margin-top: 4px;" onclick="openPaymentModal()">Перейти к оплате</button>
       </div>
+    </div>
+
+  </div>
+
+  <div id="productModal" class="modal" onclick="outsideClose(event, 'productModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-close-btn" onclick="closeModalDirect('productModal')">✕</div>
+      <div class="modal-title" id="modalTitle">Название товара</div>
+      
+      <div class="modal-slider" id="modalSlider" onclick="nextSlide()">
+        <div class="modal-slides-track" id="slidesTrack">
+          <img id="modalSlide0" src="" class="modal-slide" alt="Фото 1">
+          <img id="modalSlide1" src="" class="modal-slide" alt="Фото 2">
+        </div>
+        <div class="slider-dots">
+          <div class="slider-dot active" id="dot0"></div>
+          <div class="slider-dot" id="dot1"></div>
+        </div>
+      </div>
+
+      <div id="modalPrice" class="product-price" style="font-size: 20px;">0 ₽</div>
+      <div id="modalDesc" class="modal-desc">Описание...</div>
+      
+      <div id="modalSizesContainer" style="display: none; flex-direction: column; gap: 6px;">
+        <div style="font-size: 12px; color: #8e8e93;">Выберите размер:</div>
+        <div class="modal-sizes" id="modalSizes">
+          <div class="size-chip" onclick="selectSize(this)">41 (26см)</div>
+          <div class="size-chip" onclick="selectSize(this)">42.5 (27см)</div>
+          <div class="size-chip" onclick="selectSize(this)">43 (27.5см)</div>
+        </div>
+      </div>
+
+      <button id="modalAddToCartBtn" class="add-to-cart-btn" style="padding: 13px 0; font-size: 14px; margin-top: 4px;">Добавить в корзину</button>
     </div>
   </div>
 
-  <div id="productModal" class="modal" onclick="closeModal()">
+  <div id="paymentModal" class="modal" onclick="outsideClose(event, 'paymentModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closeModal()">✕</button>
-      <div style="font-size: 18px; font-weight: bold;">Nike Air Force 1 High (White)</div>
-      <div class="modal-slider">
-        <img src="krosi_1.jpg" class="modal-slide" alt="Товар">
-      </div>
-      <div class="product-price">6 990 ₽</div>
-      <button class="add-to-cart-btn" onclick="addToCart('Nike Air Force 1', 6990); closeModal();">Добавить в корзину</button>
-    </div>
-  </div>
-
-  <div id="paymentModal" class="modal" onclick="closePaymentModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <button class="modal-close-btn" onclick="closePaymentModal()">✕</button>
-      <div style="font-size: 18px; font-weight: bold;">Оплата заказа</div>
+      <div class="modal-close-btn" onclick="closeModalDirect('paymentModal')">✕</div>
+      <div class="modal-title">Оплата заказа</div>
+      
       <div class="payment-card">
         <div class="payment-row">
           <span>Банк:</span>
@@ -438,19 +688,35 @@
           <span class="val">+7 920 104 5288</span>
         </div>
         <div class="payment-row">
+          <span>Получатель:</span>
+          <span class="val">Денис Б.</span>
+        </div>
+        <div class="payment-row" style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
           <span>К оплате:</span>
           <span class="val" id="payTotalVal">0 ₽</span>
         </div>
       </div>
-      <button class="add-to-cart-btn" style="padding: 14px 0;" onclick="finishOrder()">Завершить оформление</button>
+
+      <div style="font-size: 12px; color: #8e8e93; text-align: center; line-height: 1.4;">
+        Переведите указанную сумму по номеру телефона и нажмите кнопку ниже.
+      </div>
+
+      <button class="add-to-cart-btn" style="padding: 14px 0; font-size: 14px;" onclick="finishOrder()">Завершить оформление</button>
     </div>
   </div>
 
   <nav class="nav-bar">
-    <button class="nav-item active" onclick="switchTab('products', this)">Каталог</button>
-    <button class="nav-item" onclick="switchTab('cart', this)" style="position: relative;">
-      Корзина
-      <span id="cart-badge" class="badge">0</span>
+    <button class="nav-item active" onclick="switchTab('products', this)">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M19 6h-2c0-2.76-2.24-5-5-5S7 3.24 7 6H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7-3c1.66 0 3 1.34 3 3H9c0-1.66 1.34-3 3-3zm7 17H5V8h14v12z"/></svg>
+      <span>Каталог</span>
+    </button>
+    
+    <button class="nav-item" onclick="switchTab('cart', this)">
+      <div class="cart-badge-container">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span id="cart-badge" class="badge">0</span>
+      </div>
+      <span>Корзина</span>
     </button>
   </nav>
 
@@ -459,106 +725,209 @@
     try { tg.expand(); } catch (e) {}
 
     let cart = [];
+    let currentSlideIdx = 0;
 
-    function switchTab(tabName, el) {
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      document.getElementById('tab-' + tabName).classList.add('active');
-      el.classList.add('active');
-    }
-
-    function openModal() { 
-      document.getElementById('productModal').classList.add('active'); 
-    }
-    
-    function closeModal() { 
-      document.getElementById('productModal').classList.remove('active'); 
-    }
-
-    function openPaymentModal() {
-      const city = document.getElementById('inputCity').value.trim();
-      const phone = document.getElementById('inputPhone').value.trim();
-      
-      if (!city || !phone) {
-        alert('Заполните город и телефон!'); 
-        return;
+    const productsData = {
+      sneakers: {
+        title: "Nike Air Force 1 High (White)",
+        price: 6990,
+        desc: "Культовая высокая модель в классическом белом исполнении. Идеальное состояние.",
+        images: ["krosi_1.jpg", "krosi_2.jpg"],
+        hasSizes: true
+      },
+      jacket: {
+        title: "Куртка Hollister 10s type",
+        price: 4290,
+        desc: "Стильная брендовая куртка. Премиальное качество и тепло.",
+        images: ["kyrtka_1.png", "kyrtka_2.png"],
+        hasSizes: false
       }
-      
-      let total = 0; 
-      cart.forEach(i => total += i.price);
-      document.getElementById('payTotalVal').innerText = total.toLocaleString() + ' ₽';
-      document.getElementById('paymentModal').classList.add('active');
+    };
+
+    function switchTab(tabName, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      btnElement.classList.add('active');
     }
-    
-    function closePaymentModal() { 
-      document.getElementById('paymentModal').classList.remove('active'); 
+
+    function filterCategory(category, element) {
+      document.querySelectorAll('.cat-chip').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+
+      document.querySelectorAll('.product-card').forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openModal(productKey) {
+      const p = productsData[productKey];
+      currentSlideIdx = 0;
+
+      document.getElementById('modalTitle').innerText = p.title;
+      document.getElementById('modalPrice').innerText = p.price.toLocaleString() + ' ₽';
+      document.getElementById('modalDesc').innerText = p.desc;
+      
+      document.getElementById('modalSlide0').src = p.images[0];
+      document.getElementById('modalSlide1').src = p.images[1];
+      updateSlidePosition(0);
+
+      const sizesCont = document.getElementById('modalSizesContainer');
+      if (p.hasSizes) {
+        sizesCont.style.display = 'flex';
+        document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
+      } else {
+        sizesCont.style.display = 'none';
+      }
+
+      const addBtn = document.getElementById('modalAddToCartBtn');
+      addBtn.onclick = function() {
+        let titleFull = p.title;
+        if (p.hasSizes) {
+          const selectedSize = document.querySelector('.size-chip.selected');
+          if (!selectedSize) {
+            alert('Выберите размер!');
+            return;
+          }
+          titleFull += ` (${selectedSize.innerText})`;
+        }
+        addToCart(titleFull, p.price);
+        closeModalDirect('productModal');
+      };
+
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeModalDirect(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function outsideClose(event, modalId) {
+      if (event.target.id === modalId) {
+        closeModalDirect(modalId);
+      }
+    }
+
+    function nextSlide() {
+      currentSlideIdx = currentSlideIdx === 0 ? 1 : 0;
+      updateSlidePosition(currentSlideIdx);
+    }
+
+    function updateSlidePosition(idx) {
+      currentSlideIdx = idx;
+      const track = document.getElementById('slidesTrack');
+      track.style.transform = `translateX(-${currentSlideIdx * 100}%)`;
+      document.getElementById('dot0').classList.toggle('active', currentSlideIdx === 0);
+      document.getElementById('dot1').classList.toggle('active', currentSlideIdx === 1);
+    }
+
+    function selectSize(element) {
+      document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
+      element.classList.add('selected');
     }
 
     function addToCart(title, price) {
-      cart.push({ id: Date.now(), title, price });
+      cart.push({ id: Date.now(), title: title, price: price });
       updateCartUI();
+      try {
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      } catch(e) {}
     }
 
-    function removeFromCart(id) {
-      cart = cart.filter(i => i.id !== id);
+    function removeFromCart(itemId) {
+      cart = cart.filter(item => item.id !== itemId);
       updateCartUI();
     }
 
     function updateCartUI() {
-      const badge = document.getElementById('cart-badge');
       const container = document.getElementById('cart-items-container');
+      const badge = document.getElementById('cart-badge');
       const summary = document.getElementById('cart-summary');
-      
-      if (cart.length > 0) { 
-        badge.innerText = cart.length; 
-        badge.style.display = 'flex'; 
-      } else { 
-        badge.style.display = 'none'; 
+      const totalPriceEl = document.getElementById('cart-total-price');
+
+      if (cart.length > 0) {
+        badge.innerText = cart.length;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
       }
 
       if (cart.length === 0) {
         container.innerHTML = '<div class="empty-cart-text">Корзина пуста</div>';
-        summary.style.display = 'none'; 
+        summary.style.display = 'none';
         return;
       }
 
-      let html = '', total = 0;
-      cart.forEach(i => {
-        total += i.price;
+      let html = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        total += item.price;
         html += `
           <div class="cart-item">
             <div>
-              <div>${i.title}</div>
-              <div style="color: #60a5fa; font-size: 13px; font-weight: 700;">${i.price.toLocaleString()} ₽</div>
+              <div class="cart-item-title">${item.title}</div>
+              <div class="cart-item-price">${item.price.toLocaleString()} ₽</div>
             </div>
-            <button class="remove-btn" onclick="removeFromCart(${i.id})">Удалить</button>
+            <button class="remove-btn" onclick="removeFromCart(${item.id})">Удалить</button>
           </div>
         `;
       });
-      
+
       container.innerHTML = html;
-      document.getElementById('cart-total-price').innerText = total.toLocaleString() + ' ₽';
+      totalPriceEl.innerText = total.toLocaleString() + ' ₽';
       summary.style.display = 'flex';
     }
 
+    function openPaymentModal() {
+      const city = document.getElementById('inputCity').value.trim();
+      const pvz = document.getElementById('inputPvz').value.trim();
+      const address = document.getElementById('inputAddress').value.trim();
+      const phone = document.getElementById('inputPhone').value.trim();
+
+      if (!city || !pvz || !address || !phone) {
+        alert('Пожалуйста, заполните все поля для отправки заказа!');
+        return;
+      }
+
+      let total = 0;
+      cart.forEach(i => total += i.price);
+      document.getElementById('payTotalVal').innerText = total.toLocaleString() + ' ₽';
+
+      document.getElementById('paymentModal').classList.add('active');
+    }
+
     function finishOrder() {
+      const city = document.getElementById('inputCity').value.trim();
+      const pvz = document.getElementById('inputPvz').value.trim();
+      const address = document.getElementById('inputAddress').value.trim();
+      const phone = document.getElementById('inputPhone').value.trim();
+
+      let itemsList = cart.map(i => `- ${i.title} (${i.price} ₽)`).join('\n');
+      let totalSum = cart.reduce((sum, item) => sum + item.price, 0);
+
       const orderData = {
         action: "new_order",
-        items: cart.map(i => `- ${i.title} (${i.price} ₽)`).join('\n'),
-        total: cart.reduce((s, i) => s + i.price, 0),
-        city: document.getElementById('inputCity').value.trim(),
-        pvz: document.getElementById('inputPvz').value.trim(),
-        address: document.getElementById('inputAddress').value.trim(),
-        phone: document.getElementById('inputPhone').value.trim()
+        items: itemsList,
+        total: totalSum,
+        city: city,
+        pvz: pvz,
+        address: address,
+        phone: phone
       };
 
       if (tg && tg.sendData) {
         tg.sendData(JSON.stringify(orderData));
-        tg.showAlert("✅ Заказ успешно оформлен! Менеджер свяжется с вами.", () => {
+        // Используем встроенный нативный алерт Телеграма вместо тупого закрытия, чтобы плашка 100% вылетела
+        tg.showAlert("✅ Заказ успешно оформлен! Менеджер скоро свяжется с вами.", () => {
           tg.close();
         });
       } else {
-        alert("Заказ сформирован (вне Telegram)!");
+        alert("Заказ сформирован!");
       }
     }
   </script>
