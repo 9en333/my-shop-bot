@@ -722,7 +722,7 @@
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.expand();
+    try { tg.expand(); } catch (e) {}
 
     let cart = [];
     let currentSlideIdx = 0;
@@ -833,7 +833,9 @@
     function addToCart(title, price) {
       cart.push({ id: Date.now(), title: title, price: price });
       updateCartUI();
-      if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      try {
+        if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+      } catch(e) {}
     }
 
     function removeFromCart(itemId) {
@@ -855,7 +857,7 @@
       }
 
       if (cart.length === 0) {
-        container.innerHTML = '<div class='empty-cart-text'>Корзина пуста</div>';
+        container.innerHTML = '<div class="empty-cart-text">Корзина пуста</div>';
         summary.style.display = 'none';
         return;
       }
@@ -918,12 +920,11 @@
         phone: phone
       };
 
-      if (tg.sendData) {
+      if (tg && tg.sendData) {
         tg.sendData(JSON.stringify(orderData));
         
-        // Задержка перед закрытием, чтобы данные гарантированно улетели боту
         setTimeout(() => {
-          tg.close();
+          try { tg.close(); } catch(e) {}
         }, 800);
       } else {
         alert("Заказ сформирован!");
