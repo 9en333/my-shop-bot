@@ -494,13 +494,16 @@
     .store-avatar { width: 50px; height: 50px; flex: 0 0 auto; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; object-fit: cover; box-shadow: 0 0 18px rgba(100,166,255,.16); }
     .store-status-copy { min-width: 0; display: grid; gap: 5px; }
     .store-status-copy > strong { font-size: 16px; font-weight: 850; letter-spacing: -.025em; }
-    .store-status-message { min-height: 18px; display: flex; align-items: center; gap: 7px; color: #43d7a5; font-size: 11px; font-weight: 750; transition: opacity .2s ease; }
+    .store-status-message { width: fit-content; max-width: 100%; min-height: 28px; display: inline-flex; align-items: center; gap: 8px; padding: 4px 11px; border: 1px solid rgba(179,194,218,.16); border-radius: 99px; background: rgba(166,181,205,.12); color: #e8f1ff; font-size: 11px; font-weight: 800; text-shadow: 0 0 14px rgba(113,169,255,.68); transition: opacity .2s ease; }
     .store-status-message i { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #43d7a5; box-shadow: 0 0 12px rgba(67,215,165,.7); }
     .store-status-mark { display: grid; place-items: center; width: 31px; height: 31px; margin-left: auto; border: 1px solid var(--line); border-radius: 10px; color: #d9e7ff; font-size: 9px; font-weight: 900; letter-spacing: -.04em; }
     #storefront { display: block; }
     body.cart-view #storefront { display: none; }
+    body.profile-view #storefront { display: none; }
     #tab-cart { display: none; }
     #tab-cart.active { display: block; }
+    #tab-profile { display: none; }
+    #tab-profile.active { display: block; }
     .ticker, .hero, .editorial-band, .site-footer { display: none !important; }
     .section { padding: 0 0 25px; }
     .section-heading { display: none; }
@@ -550,6 +553,35 @@
     .nav-item.active { background: transparent; color: #fff; box-shadow: none; text-shadow: 0 0 13px rgba(255,255,255,.64); }
     .nav-item.active .icon { filter: drop-shadow(0 0 7px rgba(255,255,255,.72)); }
     .nav-badge { position: absolute; margin: -26px 0 0 22px; background: #347cff; color: #fff; box-shadow: 0 0 12px rgba(52,124,255,.65); }
+    .bottom-nav-inner { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .profile-card, .order-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,rgba(24,27,34,.98),rgba(13,15,19,.98)); box-shadow: 0 10px 28px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.03); }
+    .profile-card { display: flex; align-items: center; gap: 12px; min-height: 75px; margin: 14px 0 22px; padding: 12px; }
+    .profile-avatar { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(122,174,255,.35); border-radius: 50%; background: radial-gradient(circle at 35% 25%,#5090ff,#173d89); color: #fff; font-size: 18px; font-weight: 900; box-shadow: 0 0 20px rgba(52,124,255,.25); }
+    .profile-card-copy { min-width: 0; display: grid; gap: 3px; }
+    .profile-caption { color: #8c95a5; font-size: 8px; font-weight: 850; letter-spacing: .13em; }
+    .profile-card-copy strong { overflow: hidden; color: #f4f5f7; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+    .profile-username { color: #a0a8b6; font-size: 10px; }
+    .profile-check { display: grid; place-items: center; width: 24px; height: 24px; margin-left: auto; border: 1px solid rgba(67,215,165,.3); border-radius: 50%; color: #43d7a5; font-size: 12px; box-shadow: 0 0 12px rgba(67,215,165,.12); }
+    .profile-orders-head { display: flex; align-items: center; justify-content: space-between; margin: 0 2px 12px; }
+    .profile-orders-head h1 { margin: 0; color: var(--ink); font-size: 21px; letter-spacing: -.04em; }
+    .profile-orders-head span { color: #8992a0; font-size: 9px; }
+    .profile-order-count { display: grid; place-items: center; min-width: 25px; height: 25px; padding: 0 7px; border: 1px solid var(--line); border-radius: 99px; color: #dbe8ff !important; background: rgba(255,255,255,.05); }
+    .order-history { display: grid; gap: 10px; }
+    .order-card { overflow: hidden; padding: 13px; }
+    .order-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .order-card-title { margin: 0; color: #f4f5f7; font-size: 12px; font-weight: 850; }
+    .order-card-date { display: block; margin-top: 4px; color: #858d9b; font-size: 9px; }
+    .order-card-total { color: #73b0ff; font-size: 13px; font-weight: 900; white-space: nowrap; text-shadow: 0 0 12px rgba(78,151,255,.24); }
+    .order-items { display: grid; gap: 5px; margin: 12px 0; padding: 10px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .order-item { display: flex; justify-content: space-between; gap: 10px; color: #c1c7d2; font-size: 10px; }
+    .order-item-size { color: #8992a0; text-align: right; }
+    .order-status { display: flex; align-items: center; gap: 7px; color: #ffc66e; font-size: 10px; font-weight: 800; }
+    .order-status::before { width: 7px; height: 7px; content: ''; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
+    .order-status.sent { color: #43d7a5; }
+    .order-countdown { margin-left: auto; color: #8e97a6; font-size: 9px; font-weight: 600; }
+    .order-empty { display: grid; justify-items: center; gap: 7px; padding: 25px 16px; border: 1px dashed rgba(255,255,255,.15); border-radius: 18px; color: #9199a7; text-align: center; }
+    .order-empty strong { color: #eef1f7; font-size: 12px; }
+    .order-empty span { font-size: 10px; }
     .toast { bottom: calc(72px + env(safe-area-inset-bottom)); }
     @media (min-width: 760px) {
       .app-shell { width: min(620px,100%); }
@@ -630,11 +662,22 @@
         </div>
       </section>
 
+      <section class="tab-content" id="tab-profile" aria-label="Профиль">
+        <div class="profile-card">
+          <div class="profile-avatar" id="profileAvatar">S</div>
+          <div class="profile-card-copy"><span class="profile-caption">ПРОФИЛЬ TELEGRAM</span><strong id="profileName">Покупатель</strong><span id="profileUsername" class="profile-username">Мои заказы</span></div>
+          <span class="profile-check" aria-hidden="true">✓</span>
+        </div>
+        <div class="profile-orders-head"><div><h1>Мои заказы</h1><span>История покупок</span></div><span id="profileOrderCount" class="profile-order-count">0</span></div>
+        <div class="order-history" id="orderHistoryList" aria-live="polite"></div>
+      </section>
+
   </div>
 
   <nav class="bottom-nav" aria-label="Основная навигация"><div class="bottom-nav-inner">
     <button class="nav-item active" id="productsNav" type="button" onclick="switchTab('products', this)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v7H4zM13 5h7v7h-7zM4 14h7v6H4zM13 14h7v6h-7z"/></svg>Каталог</button>
     <button class="nav-item" id="cartNav" type="button" onclick="switchTab('cart', this)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>Корзина <span class="nav-badge" id="cart-badge">0</span></button>
+    <button class="nav-item" id="profileNav" type="button" onclick="switchTab('profile', this)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg>Профиль</button>
   </div></nav>
 
   <div id="productModal" class="modal" onclick="outsideClose(event, 'productModal')" aria-hidden="true">
@@ -713,11 +756,129 @@
     let nextCartItemId = 1;
     let orderSending = false;
     let toastTimer = null;
+    let orderStatusTimer = null;
+    const ORDER_HISTORY_PREFIX = 'striver_order_';
+    const ORDER_HISTORY_LOCAL_KEY = 'striver_orders_local_v1';
 
     function formatMoney(value) { return new Intl.NumberFormat('ru-RU').format(value) + ' ' + currency; }
     function countItems() { return cart.reduce((sum, item) => sum + item.quantity, 0); }
     function totalPrice() { return cart.reduce((sum, item) => sum + item.price * item.quantity, 0); }
     function iconHeart() { return '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.1-8.8 10.4-8.8 10.4S3.2 13.9 3.2 8.8a4.7 4.7 0 0 1 8.8-2.3 4.7 4.7 0 0 1 8.8 2.3Z"/></svg>'; }
+
+    function cloudStorageCall(method, ...args) {
+      const storage = tg && tg.CloudStorage;
+      if (!storage || typeof storage[method] !== 'function') return Promise.reject(new Error('Telegram CloudStorage is unavailable'));
+      return new Promise((resolve, reject) => {
+        let settled = false;
+        const timeout = setTimeout(() => { settled = true; reject(new Error('Telegram CloudStorage timed out')); }, 4000);
+        const callback = (error, value) => {
+          if (settled) return;
+          settled = true; clearTimeout(timeout);
+          if (error) reject(error); else resolve(value);
+        };
+        try { storage[method](...args, callback); } catch (error) { clearTimeout(timeout); reject(error); }
+      });
+    }
+    function localOrderHistoryRead() {
+      try { const value = JSON.parse(localStorage.getItem(ORDER_HISTORY_LOCAL_KEY) || '[]'); return Array.isArray(value) ? value : []; }
+      catch (error) { console.warn('Local order history could not be read', error); return []; }
+    }
+    async function readOrderHistory() {
+      try {
+        const keys = await cloudStorageCall('getKeys');
+        const orderKeys = (keys || []).filter(key => key.startsWith(ORDER_HISTORY_PREFIX)).slice(-50);
+        if (!orderKeys.length) return localOrderHistoryRead().sort((a, b) => b.createdAt - a.createdAt);
+        const values = await cloudStorageCall('getItems', orderKeys);
+        return orderKeys.map(key => {
+          try { return JSON.parse((values || {})[key]); } catch (error) { return null; }
+        }).filter(order => order && Number.isFinite(order.createdAt) && Array.isArray(order.items))
+          .sort((a, b) => b.createdAt - a.createdAt);
+      } catch (error) {
+        console.warn('Telegram order history unavailable; using local storage', error);
+        return localOrderHistoryRead().sort((a, b) => b.createdAt - a.createdAt);
+      }
+    }
+    async function saveOrderHistory(order) {
+      const key = ORDER_HISTORY_PREFIX + order.id;
+      try {
+        await cloudStorageCall('setItem', key, JSON.stringify(order));
+        const keys = await cloudStorageCall('getKeys');
+        const oldKeys = (keys || []).filter(item => item.startsWith(ORDER_HISTORY_PREFIX) && item !== key).sort();
+        if (oldKeys.length >= 50) await cloudStorageCall('removeItems', oldKeys.slice(0, oldKeys.length - 49));
+      } catch (error) {
+        console.warn('Telegram order history save failed; using local storage', error);
+        const history = localOrderHistoryRead().filter(item => item.id !== order.id);
+        localStorage.setItem(ORDER_HISTORY_LOCAL_KEY, JSON.stringify([order, ...history].slice(0, 50)));
+      }
+    }
+    function renderProfileIdentity() {
+      const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+      if (!user) return;
+      const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || 'Покупатель';
+      document.getElementById('profileName').textContent = name;
+      document.getElementById('profileUsername').textContent = user.username ? '@' + user.username : 'Мои заказы';
+      document.getElementById('profileAvatar').textContent = Array.from(name)[0].toLocaleUpperCase('ru');
+    }
+    function formatOrderDate(timestamp) {
+      return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(timestamp));
+    }
+    function formatCountdown(milliseconds) {
+      const minutes = Math.max(0, Math.ceil(milliseconds / 60000));
+      const hours = Math.floor(minutes / 60);
+      return hours + ' ч ' + String(minutes % 60).padStart(2, '0') + ' мин';
+    }
+    async function renderProfileOrders() {
+      const history = await readOrderHistory();
+      const container = document.getElementById('orderHistoryList');
+      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => productsData[item.product_id]));
+      document.getElementById('profileOrderCount').textContent = String(validOrders.length);
+      container.replaceChildren();
+      if (!validOrders.length) {
+        const empty = document.createElement('div'); empty.className = 'order-empty';
+        const title = document.createElement('strong'); title.textContent = 'Пока заказов нет';
+        const copy = document.createElement('span'); copy.textContent = 'Оформленные покупки появятся здесь';
+        empty.append(title, copy); container.append(empty);
+        return;
+      }
+      let nextStatusChange = Infinity;
+      validOrders.forEach(order => {
+        const card = document.createElement('article'); card.className = 'order-card';
+        const head = document.createElement('div'); head.className = 'order-card-head';
+        const identity = document.createElement('div');
+        const title = document.createElement('h2'); title.className = 'order-card-title'; title.textContent = 'Заказ #' + order.id.slice(-6).toUpperCase();
+        const date = document.createElement('time'); date.className = 'order-card-date'; date.dateTime = new Date(order.createdAt).toISOString(); date.textContent = formatOrderDate(order.createdAt);
+        identity.append(title, date);
+        const total = document.createElement('strong'); total.className = 'order-card-total'; total.textContent = formatMoney(order.total);
+        head.append(identity, total);
+        const lines = document.createElement('div'); lines.className = 'order-items';
+        const groups = new Map();
+        order.items.forEach(item => {
+          const key = item.product_id + ':' + item.size_index;
+          groups.set(key, (groups.get(key) || 0) + 1);
+        });
+        groups.forEach((quantity, key) => {
+          const [productId, sizeValue] = key.split(':'); const product = productsData[productId];
+          const row = document.createElement('div'); row.className = 'order-item';
+          const name = document.createElement('span'); name.textContent = product.title + (quantity > 1 ? ' × ' + quantity : '');
+          const size = document.createElement('span'); size.className = 'order-item-size';
+          const sizeIndex = sizeValue === 'null' ? null : Number(sizeValue);
+          size.textContent = sizeIndex === null ? 'Без размера' : (productSizes[sizeIndex] || 'Размер');
+          row.append(name, size); lines.append(row);
+        });
+        const status = document.createElement('div');
+        const sentAt = order.createdAt + 24 * 60 * 60 * 1000;
+        const remaining = sentAt - Date.now();
+        if (remaining <= 0) { status.className = 'order-status sent'; status.textContent = 'Отправлено'; }
+        else {
+          status.className = 'order-status'; status.append(document.createTextNode('Не отправлено'));
+          const countdown = document.createElement('span'); countdown.className = 'order-countdown'; countdown.textContent = formatCountdown(remaining); status.append(countdown);
+          nextStatusChange = Math.min(nextStatusChange, remaining);
+        }
+        card.append(head, lines, status); container.append(card);
+      });
+      if (orderStatusTimer) clearTimeout(orderStatusTimer);
+      if (Number.isFinite(nextStatusChange)) orderStatusTimer = setTimeout(renderProfileOrders, Math.max(0, nextStatusChange));
+    }
 
     function renderProducts() {
       const grid = document.getElementById('productsGrid');
@@ -781,11 +942,21 @@
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       if (tabName === 'cart') {
         document.body.classList.add('cart-view');
+        document.body.classList.remove('profile-view');
         document.getElementById('tab-cart').classList.add('active');
         document.getElementById('cartNav').classList.add('active');
+      } else if (tabName === 'profile') {
+        document.body.classList.remove('cart-view');
+        document.body.classList.add('profile-view');
+        document.getElementById('tab-profile').classList.add('active');
+        document.getElementById('profileNav').classList.add('active');
+        renderProfileIdentity();
+        renderProfileOrders().catch(error => { console.error('Order history render failed', error); showToast('Не удалось загрузить заказы'); });
       } else {
         document.body.classList.remove('cart-view');
+        document.body.classList.remove('profile-view');
         document.getElementById('tab-cart').classList.remove('active');
+        document.getElementById('tab-profile').classList.remove('active');
         document.getElementById('productsNav').classList.add('active');
         if (btnElement && btnElement.classList.contains('nav-item')) btnElement.classList.add('active');
       }
@@ -924,7 +1095,7 @@
       if (fields.phone.replace(/\D/g, '').length < 7) { showToast('Проверь номер телефона'); document.getElementById('inputPhone').focus(); return null; }
       return fields;
     }
-    function finishOrder() {
+    async function finishOrder() {
       if (orderSending) return;
       if (!tg || typeof tg.sendData !== 'function') { showToast('Открой магазин через кнопку бота в Telegram'); return; }
       const delivery = getDeliveryFields(); if (!delivery) { closeModalDirect('paymentModal'); return; }
@@ -933,7 +1104,16 @@
       const items = cart.flatMap(item => Array.from({ length: item.quantity }, () => ({ product_id: item.productId, size_index: item.sizeIndex })));
       const payload = JSON.stringify({ action: 'new_order', items, city: delivery.city, pvz: delivery.pvz, address: delivery.address, phone: delivery.phone });
       if (new TextEncoder().encode(payload).length > 4096) { showToast('Заказ получился слишком большим'); return; }
-      try { orderSending = true; tg.sendData(payload); }
+      orderSending = true;
+      const order = {
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+        createdAt: Date.now(),
+        total: totalPrice(),
+        items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index }))
+      };
+      try { await saveOrderHistory(order); }
+      catch (error) { console.error('Order history save failed', error); }
+      try { tg.sendData(payload); }
       catch (error) { orderSending = false; console.error('Telegram sendData failed', error); showToast('Не удалось отправить заказ. Попробуй ещё раз'); }
     }
     function showToast(message) {
@@ -955,7 +1135,7 @@
       }, 180);
     }, 3200);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
-    renderProducts(); updateCartUI();
+    renderProducts(); updateCartUI(); renderProfileIdentity();
   </script>
 </body>
 </html>
