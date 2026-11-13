@@ -554,6 +554,44 @@
     .nav-item.active .icon { filter: drop-shadow(0 0 7px rgba(255,255,255,.72)); }
     .nav-badge { position: absolute; margin: -26px 0 0 22px; background: #347cff; color: #fff; box-shadow: 0 0 12px rgba(52,124,255,.65); }
     .bottom-nav-inner { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .profile-subnav { display:flex; gap:7px; margin:0 0 12px; }
+    .profile-subnav button { flex:1; min-height:36px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.035); color:#a8adba; font-size:10px; font-weight:800; }
+    .profile-subnav button.active { color:#fff; border-color:rgba(100,166,255,.55); background:rgba(52,124,255,.18); box-shadow:0 0 18px rgba(52,124,255,.16); }
+    .profile-avatar { overflow:hidden; }
+    .profile-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+    .referral-card { margin:0 0 16px; padding:14px; border:1px solid rgba(160,178,205,.18); border-radius:17px; background:linear-gradient(120deg,rgba(150,165,190,.13),rgba(255,255,255,.035)); box-shadow:0 0 24px rgba(100,166,255,.08); }
+    .referral-balance { display:flex; justify-content:space-between; align-items:center; color:#aeb8c9; font-size:10px; }
+    .referral-balance strong { color:#dceaff; font-size:18px; text-shadow:0 0 15px rgba(100,166,255,.4); }
+    .referral-actions { display:flex; gap:8px; margin-top:11px; }
+    .referral-actions button { flex:1; min-height:35px; border:1px solid rgba(115,167,255,.32); border-radius:11px; background:rgba(52,124,255,.12); color:#e3efff; font-size:9px; font-weight:800; }
+    .profile-pane[hidden] { display:none !important; }
+    .profile-theme { width:100%; min-height:40px; margin:0 0 16px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.035); color:var(--ink); font-size:10px; font-weight:800; }
+    .referral-sheet-copy { color:#bdc4d0; font-size:12px; line-height:1.65; }
+    [data-theme="light"] { color-scheme:light; --paper:#f1f3f8; --paper-strong:#fff; --ink:#171b24; --muted:#697284; --line:rgba(30,42,65,.14); --blue:#2869d9; --shadow:0 22px 55px rgba(25,28,40,.12); }
+    [data-theme="light"] body { background:radial-gradient(ellipse at 50% -12%,rgba(93,140,255,.13),transparent 36%),var(--paper); }
+    [data-theme="light"] .product-card,[data-theme="light"] .cart-panel,[data-theme="light"] .checkout-panel,[data-theme="light"] .profile-card,[data-theme="light"] .order-card { background:linear-gradient(145deg,#fff,#f5f7fb); }
+    [data-theme="light"] .product-title,[data-theme="light"] .profile-card-copy strong,[data-theme="light"] .order-card-title { color:#171b24; }
+    [data-theme="light"] .profile-username,[data-theme="light"] .order-item { color:#596273; }
+    [data-theme="light"] .bottom-nav { background:rgba(246,248,252,.94); }
+    [data-theme="light"] .topbar { background:rgba(246,248,252,.9); }
+    [data-theme="light"] .store-status,[data-theme="light"] .profile-card,[data-theme="light"] .order-card { background:linear-gradient(145deg,#fff,#f3f6fb); }
+    [data-theme="light"] .store-status-copy > strong,[data-theme="light"] .order-card-title { color:#171b24; }
+    [data-theme="light"] .store-status-message { border-color:rgba(36,95,199,.2); background:rgba(36,95,199,.08); color:#245fc7; text-shadow:none; }
+    [data-theme="light"] .profile-caption,[data-theme="light"] .profile-username,[data-theme="light"] .order-card-date,[data-theme="light"] .order-item,[data-theme="light"] .order-item-size { color:#667184; }
+    [data-theme="light"] .order-history .order-card-total { color:#245fc7; }
+    [data-theme="light"] .cart-item { background:#f1f4f9; }
+    [data-theme="light"] .field input,[data-theme="light"] .payment-card { background:#f5f7fb; color:#171b24; }
+    [data-theme="light"] .profile-theme,[data-theme="light"] .profile-subnav button { color:#344055; background:rgba(37,82,150,.05); }
+    [data-theme="light"] .referral-card { background:linear-gradient(120deg,rgba(49,102,195,.1),rgba(255,255,255,.8)); }
+    [data-theme="light"] .referral-balance strong,[data-theme="light"] .referral-sheet-copy { color:#263b60; }
+    [data-theme="light"] .referral-actions button { color:#245fc7; }
+    [data-theme="light"] .modal-close-btn,[data-theme="light"] .slider-arrow { background:#f1f3f8; color:#171b24; }
+    [data-theme="light"] .nav-item { color:#697284; }
+    [data-theme="light"] .nav-item.active { color:#245fc7; text-shadow:0 0 12px rgba(52,124,255,.3); }
+    [data-theme="light"] .modal-content { background:#fff; }
+    [data-theme="light"] .product-image-button img,.product-image-button img { object-fit:contain; transition:opacity .18s ease; }
+    .modal-slide { object-fit:contain; }
+    .modal-content { overscroll-behavior:contain; touch-action:pan-y; }
     .profile-card, .order-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,rgba(24,27,34,.98),rgba(13,15,19,.98)); box-shadow: 0 10px 28px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.03); }
     .profile-card { display: flex; align-items: center; gap: 12px; min-height: 75px; margin: 14px 0 22px; padding: 12px; }
     .profile-avatar { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(122,174,255,.35); border-radius: 50%; background: radial-gradient(circle at 35% 25%,#5090ff,#173d89); color: #fff; font-size: 18px; font-weight: 900; box-shadow: 0 0 20px rgba(52,124,255,.25); }
@@ -655,7 +693,8 @@
               <div class="field"><label for="inputAddress">АДРЕС ПУНКТА</label><input id="inputAddress" type="text" placeholder="Улица, дом или адрес ПВЗ" autocomplete="street-address" maxlength="250"></div>
               <div class="field"><label for="inputPhone">ТЕЛЕФОН ДЛЯ СВЯЗИ</label><input id="inputPhone" type="tel" placeholder="+7 999 000-00-00" autocomplete="tel" maxlength="40"></div>
             </div>
-            <div class="checkout-total"><span>Итого за товары</span><strong id="cart-total-price">0 &#8381;</strong></div>
+            <label id="referralApplyRow" class="checkout-total" style="display:none;cursor:pointer"><span>Использовать скидку 1 000 ₽ <input id="useReferralBalance" type="checkbox" onchange="updateCartUI()"></span><strong id="referralApplyHint">Доступно</strong></label>
+            <div class="checkout-total"><span>Итого к оплате</span><strong id="cart-total-price">0 &#8381;</strong></div>
             <button class="dark-button checkout-submit" type="button" onclick="openPaymentModal()">Продолжить к оплате <span aria-hidden="true">&#8594;</span></button>
             <p class="secure-note"><span aria-hidden="true">&#9679;</span> Данные отправятся боту только после подтверждения заказа</p>
           </aside>
@@ -663,13 +702,26 @@
       </section>
 
       <section class="tab-content" id="tab-profile" aria-label="Профиль">
+        <div class="profile-subnav" role="tablist" aria-label="Профиль и заказы">
+          <button id="profilePaneTab" class="active" type="button" onclick="switchProfilePane('profile')">Профиль</button>
+          <button id="ordersPaneTab" type="button" onclick="switchProfilePane('orders')">Мои заказы</button>
+        </div>
+        <div id="profilePane" class="profile-pane">
         <div class="profile-card">
           <div class="profile-avatar" id="profileAvatar">S</div>
           <div class="profile-card-copy"><span class="profile-caption">ПРОФИЛЬ TELEGRAM</span><strong id="profileName">Покупатель</strong><span id="profileUsername" class="profile-username">Мои заказы</span></div>
           <span class="profile-check" aria-hidden="true">✓</span>
         </div>
+        <div class="referral-card">
+          <div class="referral-balance"><span>Реферальный баланс</span><strong id="referralBalance">0 ₽</strong></div>
+          <div class="referral-actions"><button type="button" onclick="shareReferralLink()">Пригласить друга</button><button type="button" onclick="openReferralInfo()">Как это работает</button></div>
+        </div>
+        <button id="themeToggle" class="profile-theme" type="button" onclick="toggleTheme()">Переключить тему</button>
+        </div>
+        <div id="ordersPane" class="profile-pane" hidden>
         <div class="profile-orders-head"><div><h1>Мои заказы</h1><span>История покупок</span></div><span id="profileOrderCount" class="profile-order-count">0</span></div>
         <div class="order-history" id="orderHistoryList" aria-live="polite"></div>
+        </div>
       </section>
 
   </div>
@@ -722,6 +774,15 @@
     </section>
   </div>
 
+  <div id="referralModal" class="modal" onclick="outsideClose(event, 'referralModal')" aria-hidden="true">
+    <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="referralTitle" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" type="button" aria-label="Закрыть" onclick="closeModalDirect('referralModal')">&#10005;</button>
+      <p class="section-kicker">STRIVER BONUS</p><h2 class="modal-title" id="referralTitle">Реферальный баланс</h2>
+      <div class="referral-sheet-copy"><p>1. Поделитесь персональной ссылкой с другом.</p><p>2. Друг открывает бота по ссылке и оформляет первый заказ.</p><p>3. После передачи заказа менеджеру на ваш баланс один раз зачисляется 1 000 ₽.</p><p>4. При следующем заказе можно использовать скидку до 1 000 ₽. Баланс проверяет бот.</p><p>Бонус начисляется за первый заказ, принятый ботом. Оплату и фактическую доставку отдельно подтверждает менеджер.</p></div>
+      <button class="dark-button modal-add" type="button" onclick="shareReferralLink()">Поделиться ссылкой</button>
+    </section>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -759,6 +820,48 @@
     let orderStatusTimer = null;
     const ORDER_HISTORY_PREFIX = 'striver_order_';
     const ORDER_HISTORY_LOCAL_KEY = 'striver_orders_local_v1';
+    const appParams = new URLSearchParams(window.location.search);
+    let availableReferralBalance = Math.max(0, Number.parseInt(appParams.get('referral_balance') || '0', 10) || 0);
+    const referralUrl = appParams.get('referral_link') || '';
+    let themeMode = 'dark';
+    try { themeMode = localStorage.getItem('striver_theme_v1') === 'light' ? 'light' : 'dark'; } catch (_) {}
+    document.documentElement.dataset.theme = themeMode;
+
+    function switchProfilePane(pane) {
+      const isOrders = pane === 'orders';
+      document.getElementById('profilePane').hidden = isOrders;
+      document.getElementById('ordersPane').hidden = !isOrders;
+      document.getElementById('profilePaneTab').classList.toggle('active', !isOrders);
+      document.getElementById('ordersPaneTab').classList.toggle('active', isOrders);
+    }
+    function updateReferralUI() {
+      const balance = document.getElementById('referralBalance');
+      if (balance) balance.textContent = formatMoney(availableReferralBalance);
+      const row = document.getElementById('referralApplyRow');
+      if (row) row.style.display = availableReferralBalance > 0 ? 'flex' : 'none';
+      const hint = document.getElementById('referralApplyHint');
+      if (hint) hint.textContent = formatMoney(Math.min(1000, availableReferralBalance));
+      const toggle = document.getElementById('themeToggle');
+      if (toggle) toggle.textContent = themeMode === 'dark' ? '☀️ Включить светлую тему' : '🌙 Включить тёмную тему';
+    }
+    function toggleTheme() {
+      themeMode = themeMode === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = themeMode;
+      try { localStorage.setItem('striver_theme_v1', themeMode); } catch (_) {}
+      const color = themeMode === 'dark' ? '#090a0d' : '#f1f3f8';
+      try { if (tg && tg.setHeaderColor) tg.setHeaderColor(color); if (tg && tg.setBackgroundColor) tg.setBackgroundColor(color); } catch (error) { console.warn('Telegram theme update failed', error); }
+      updateReferralUI();
+    }
+    function openReferralInfo() {
+      const modal = document.getElementById('referralModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    }
+    function shareReferralLink() {
+      const url = referralUrl || (tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? 'https://t.me/striver_store_bot?start=ref_' + tg.initDataUnsafe.user.id : '');
+      if (!url) { showToast('Ссылка появится при открытии Mini App через бота'); return; }
+      const shareUrl = 'https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent('Открой Striver по моей ссылке — за заказ тебе ничего не стоит дополнительно.');
+      try { if (tg && tg.openTelegramLink) tg.openTelegramLink(shareUrl); else if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => showToast('Ссылка скопирована')).catch(() => showToast(url)); else showToast(url); }
+      catch (error) { console.error('Referral sharing failed', error); showToast('Не удалось открыть отправку ссылки'); }
+    }
 
     function formatMoney(value) { return new Intl.NumberFormat('ru-RU').format(value) + ' ' + currency; }
     function countItems() { return cart.reduce((sum, item) => sum + item.quantity, 0); }
@@ -817,7 +920,13 @@
       const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || 'Покупатель';
       document.getElementById('profileName').textContent = name;
       document.getElementById('profileUsername').textContent = user.username ? '@' + user.username : 'Мои заказы';
-      document.getElementById('profileAvatar').textContent = Array.from(name)[0].toLocaleUpperCase('ru');
+      const avatar = document.getElementById('profileAvatar');
+      avatar.replaceChildren();
+      if (user.photo_url) {
+        const image = document.createElement('img'); image.src = user.photo_url; image.alt = 'Аватар ' + name;
+        image.onerror = () => { avatar.textContent = Array.from(name)[0].toLocaleUpperCase('ru'); };
+        avatar.append(image);
+      } else avatar.textContent = Array.from(name)[0].toLocaleUpperCase('ru');
     }
     function formatOrderDate(timestamp) {
       return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(timestamp));
@@ -898,16 +1007,16 @@
       }
       keys.forEach((key, index) => {
         const product = productsData[key];
-        const card = document.createElement('article'); card.className = 'product-card'; card.style.animationDelay = (index * 60) + 'ms';
+        const card = document.createElement('article'); card.className = 'product-card'; card.dataset.productId = key; card.style.animationDelay = (index * 60) + 'ms';
         const media = document.createElement('div'); media.className = 'product-media';
-        const imageButton = document.createElement('button'); imageButton.className = 'product-image-button'; imageButton.type = 'button'; imageButton.setAttribute('aria-label', 'Подробнее: ' + product.title); imageButton.onclick = () => openModal(key);
+        const imageButton = document.createElement('button'); imageButton.className = 'product-image-button'; imageButton.type = 'button'; imageButton.setAttribute('aria-label', 'Подробнее: ' + product.title); imageButton.onclick = () => { if (Date.now() > Number(imageButton.dataset.swipeUntil || 0)) openModal(key); };
         const image = document.createElement('img'); image.src = product.images[0]; image.alt = product.title; image.loading = index > 1 ? 'lazy' : 'eager'; imageButton.append(image); media.append(imageButton);
         const tag = document.createElement('span'); tag.className = 'product-tag'; tag.textContent = product.tag; media.append(tag);
         const favorite = document.createElement('button'); favorite.className = 'favorite-button' + (favorites.has(key) ? ' active' : ''); favorite.type = 'button'; favorite.setAttribute('aria-label', favorites.has(key) ? 'Убрать из избранного' : 'В избранное'); favorite.setAttribute('aria-pressed', String(favorites.has(key))); favorite.innerHTML = iconHeart(); favorite.onclick = () => toggleFavorite(key); media.append(favorite);
         const dots = document.createElement('div'); dots.className = 'media-dots'; dots.setAttribute('aria-label', 'Фотографии товара');
         product.images.forEach((src, slideIndex) => {
           const dot = document.createElement('button'); dot.type = 'button'; dot.className = 'media-dot' + (slideIndex === 0 ? ' active' : ''); dot.setAttribute('aria-label', 'Фото ' + (slideIndex + 1));
-          dot.onclick = event => { event.stopPropagation(); image.src = src; dots.querySelectorAll('.media-dot').forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === slideIndex)); };
+          dot.onclick = event => { event.stopPropagation(); setCardSlide(card, slideIndex); };
           dots.append(dot);
         });
         media.append(dots);
@@ -1002,15 +1111,52 @@
     function nextSlide(direction) { updateSlidePosition((currentSlideIdx + direction + 2) % 2); }
     let galleryTouchStartX = null;
     const gallery = document.getElementById('modalSlider');
+    let galleryTouchStartY = null;
     gallery.addEventListener('touchstart', event => {
       galleryTouchStartX = event.changedTouches.length ? event.changedTouches[0].clientX : null;
+      galleryTouchStartY = event.changedTouches.length ? event.changedTouches[0].clientY : null;
     }, { passive: true });
     gallery.addEventListener('touchend', event => {
       if (galleryTouchStartX === null || !event.changedTouches.length) return;
       const deltaX = event.changedTouches[0].clientX - galleryTouchStartX;
+      const deltaY = event.changedTouches[0].clientY - galleryTouchStartY;
       galleryTouchStartX = null;
-      if (Math.abs(deltaX) > 42) nextSlide(deltaX < 0 ? 1 : -1);
+      galleryTouchStartY = null;
+      if (Math.abs(deltaX) > 42 && Math.abs(deltaX) > Math.abs(deltaY) * 1.25) nextSlide(deltaX < 0 ? 1 : -1);
     }, { passive: true });
+    document.querySelectorAll('.modal-content').forEach(sheet => {
+      let startX = 0, startY = 0;
+      sheet.addEventListener('touchstart', event => { if (!event.touches.length) return; startX = event.touches[0].clientX; startY = event.touches[0].clientY; }, { passive: true });
+      sheet.addEventListener('touchend', event => {
+        if (!event.changedTouches.length || sheet.scrollTop > 0) return;
+        const dx = event.changedTouches[0].clientX - startX;
+        const dy = event.changedTouches[0].clientY - startY;
+        if (dy > 85 && Math.abs(dy) > Math.abs(dx) * 1.35) closeModalDirect(sheet.closest('.modal').id);
+      }, { passive: true });
+    });
+    function setCardSlide(card, index) {
+      const product = productsData[card && card.dataset.productId];
+      const image = card && card.querySelector('.product-image-button img');
+      if (!product || !image || !product.images[index]) return;
+      image.style.opacity = '0';
+      setTimeout(() => { image.onload = () => { image.style.opacity = '1'; }; image.onerror = () => { image.style.opacity = '1'; }; image.src = product.images[index]; }, 90);
+      card.querySelectorAll('.media-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
+    }
+    let cardTouchStart = null;
+    const productGrid = document.getElementById('productsGrid');
+    productGrid.addEventListener('touchstart', event => { if (event.changedTouches.length) { const imageArea=event.target.closest('.product-image-button'); cardTouchStart = { x:event.changedTouches[0].clientX, y:event.changedTouches[0].clientY, card:imageArea ? imageArea.closest('.product-card') : null }; } }, { passive:true });
+    productGrid.addEventListener('touchend', event => {
+      if (!cardTouchStart || !event.changedTouches.length) return;
+      const dx = event.changedTouches[0].clientX - cardTouchStart.x, dy = event.changedTouches[0].clientY - cardTouchStart.y, card = cardTouchStart.card;
+      cardTouchStart = null;
+      if (!card || Math.abs(dx) < 38 || Math.abs(dx) < Math.abs(dy) * 1.25) return;
+      const product = productsData[card.dataset.productId], image = card.querySelector('.product-image-button img');
+      if (!product || !image) return;
+      const current = Math.max(0, product.images.indexOf(image.getAttribute('src').replace(window.location.href, '')));
+      const next = (current + (dx < 0 ? 1 : product.images.length - 1)) % product.images.length;
+      const imageButton = card.querySelector('.product-image-button'); if (imageButton) imageButton.dataset.swipeUntil = String(Date.now() + 450);
+      setCardSlide(card, next);
+    }, { passive:true });
     function updateSlidePosition(index) {
       currentSlideIdx = index; document.getElementById('slidesTrack').style.transform = 'translateX(-' + (index * 100) + '%)';
       document.getElementById('dot0').classList.toggle('active', index === 0); document.getElementById('dot1').classList.toggle('active', index === 1);
@@ -1053,12 +1199,14 @@
 
     function updateCartUI() {
       const count = countItems(); const total = totalPrice();
+      const discount = document.getElementById('useReferralBalance').checked ? Math.min(1000, availableReferralBalance, total) : 0;
       document.getElementById('cart-badge').textContent = count;
       document.getElementById('cart-badge').style.display = count ? 'inline-grid' : 'none';
       document.getElementById('topCartCount').textContent = count;
       document.getElementById('cartHeadingCount').textContent = count ? ' (' + count + ')' : '';
       document.getElementById('cartPanelCount').textContent = count ? count + ' ' + (count === 1 ? 'позиция' : 'позиций') : 'Пока пусто';
-      document.getElementById('cart-total-price').textContent = formatMoney(total);
+      document.getElementById('cart-total-price').textContent = formatMoney(total - discount);
+      updateReferralUI();
       const container = document.getElementById('cart-items-container'); container.replaceChildren();
       if (!count) {
         const empty = document.createElement('div'); empty.className = 'empty-cart';
@@ -1086,7 +1234,8 @@
     function openPaymentModal() {
       if (!countItems()) { showToast('Сначала добавь товар в корзину'); return; }
       if (!getDeliveryFields()) return;
-      document.getElementById('payTotalVal').textContent = formatMoney(totalPrice());
+      const discount = document.getElementById('useReferralBalance').checked ? Math.min(1000, availableReferralBalance, totalPrice()) : 0;
+      document.getElementById('payTotalVal').textContent = formatMoney(totalPrice() - discount);
       const modal = document.getElementById('paymentModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     }
     function getDeliveryFields() {
@@ -1102,15 +1251,11 @@
       const quantity = countItems();
       if (!quantity || quantity > 20) { showToast('В одном заказе можно отправить до 20 товаров'); return; }
       const items = cart.flatMap(item => Array.from({ length: item.quantity }, () => ({ product_id: item.productId, size_index: item.sizeIndex })));
-      const payload = JSON.stringify({ action: 'new_order', items, city: delivery.city, pvz: delivery.pvz, address: delivery.address, phone: delivery.phone });
+      const referralDiscount = document.getElementById('useReferralBalance').checked ? Math.min(1000, availableReferralBalance, totalPrice()) : 0;
+      const order = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), createdAt: Date.now(), subtotal: totalPrice(), discount: referralDiscount, total: totalPrice() - referralDiscount, items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index })) };
+      const payload = JSON.stringify({ action: 'new_order', order_id: order.id, use_referral_balance: referralDiscount > 0, items, city: delivery.city, pvz: delivery.pvz, address: delivery.address, phone: delivery.phone });
       if (new TextEncoder().encode(payload).length > 4096) { showToast('Заказ получился слишком большим'); return; }
       orderSending = true;
-      const order = {
-        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
-        createdAt: Date.now(),
-        total: totalPrice(),
-        items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index }))
-      };
       try { await saveOrderHistory(order); }
       catch (error) { console.error('Order history save failed', error); }
       try { tg.sendData(payload); }
@@ -1135,7 +1280,7 @@
       }, 180);
     }, 3200);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
-    renderProducts(); updateCartUI(); renderProfileIdentity();
+    renderProducts(); updateCartUI(); renderProfileIdentity(); updateReferralUI();
   </script>
 </body>
 </html>
