@@ -337,9 +337,9 @@
       --ink: #f4f5f7;
       --muted: #9298a5;
       --line: rgba(235, 240, 255, .12);
-      --acid: #f4f5f7;
-      --acid-dark: #aeb8ce;
-      --blue: #a996ff;
+      --acid: #2767f5;
+      --acid-dark: #3e83ff;
+      --blue: #64a6ff;
       --shadow: 0 22px 60px rgba(0, 0, 0, .42);
     }
     body {
@@ -482,6 +482,80 @@
       .hero-description { font-size: 10px; }
       .hero-actions .primary-button { font-size: 9px; }
     }
+    /* Compact Telegram storefront layout. */
+    body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+    .app-shell { width: min(620px, 100%); padding: 0 14px; }
+    .topbar { height: 58px; }
+    .brand-mark { width: 34px; height: 34px; border-radius: 11px; }
+    .brand-name { font-size: 14px; letter-spacing: .08em; }
+    .brand-caption, .topbar-note, .bag-button { display: none !important; }
+    .icon-button { width: 38px; min-height: 38px; }
+    .store-status { display: flex; align-items: center; gap: 12px; min-height: 76px; margin: 12px 0 14px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(115deg, rgba(24,27,34,.98), rgba(13,15,19,.98)); box-shadow: inset 0 1px rgba(255,255,255,.035), 0 10px 30px rgba(0,0,0,.25); }
+    .store-avatar { width: 50px; height: 50px; flex: 0 0 auto; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; object-fit: cover; box-shadow: 0 0 18px rgba(100,166,255,.16); }
+    .store-status-copy { min-width: 0; display: grid; gap: 5px; }
+    .store-status-copy > strong { font-size: 16px; font-weight: 850; letter-spacing: -.025em; }
+    .store-status-message { min-height: 18px; display: flex; align-items: center; gap: 7px; color: #43d7a5; font-size: 11px; font-weight: 750; transition: opacity .2s ease; }
+    .store-status-message i { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #43d7a5; box-shadow: 0 0 12px rgba(67,215,165,.7); }
+    .store-status-mark { display: grid; place-items: center; width: 31px; height: 31px; margin-left: auto; border: 1px solid var(--line); border-radius: 10px; color: #d9e7ff; font-size: 9px; font-weight: 900; letter-spacing: -.04em; }
+    #storefront { display: block; }
+    body.cart-view #storefront { display: none; }
+    #tab-cart { display: none; }
+    #tab-cart.active { display: block; }
+    .ticker, .hero, .editorial-band, .site-footer { display: none !important; }
+    .section { padding: 0 0 25px; }
+    .section-heading { display: none; }
+    .catalog-tools { display: grid; gap: 10px; margin: 0 0 12px; }
+    .filter-list { width: 100%; gap: 7px; overflow-x: auto; }
+    .filter-chip { min-height: 35px; padding: 0 13px; border-color: var(--line); background: rgba(255,255,255,.035); color: #a8adba; font-size: 10px; }
+    #favoritesFilter { display: none; }
+    .filter-chip.active { border-color: #5592ff; background: linear-gradient(135deg,#347cff,#2058e8); color: #fff; box-shadow: 0 0 20px rgba(47,112,255,.35); }
+    .catalog-controls { width: 100%; }
+    .search-box { width: 100%; min-height: 36px; border-radius: 12px; background: rgba(255,255,255,.035); }
+    .sort-select { display: none; }
+    .products-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+    .product-card { padding: 7px; border: 1px solid rgba(255,255,255,.105); border-radius: 20px; background: linear-gradient(150deg,#15171d,#0f1014); box-shadow: 0 10px 26px rgba(0,0,0,.26), inset 0 1px rgba(255,255,255,.025); }
+    .product-card:hover { transform: translateY(-2px); border-color: rgba(67,127,255,.5); box-shadow: 0 14px 30px rgba(0,0,0,.34), 0 0 22px rgba(50,111,255,.12); }
+    .product-media { aspect-ratio: .94 / 1; border-radius: 14px; }
+    .product-image-button img { object-fit: cover; }
+    .product-info { display: grid; gap: 6px; padding: 10px 3px 3px; }
+    .product-type, .product-description { display: none; }
+    .product-title { min-height: 36px; margin: 0; color: #f4f5f7; font-size: 12px; line-height: 1.25; letter-spacing: -.025em; }
+    .product-specs { min-height: 26px; margin: 0; color: #aab0bd; font-size: 9px; line-height: 1.4; }
+    .product-buy-row { display: grid; gap: 8px; margin-top: 2px; }
+    .product-price { color: #69aaff; font-size: 17px; font-weight: 900; letter-spacing: -.035em; text-shadow: 0 0 18px rgba(78,151,255,.18); }
+    .card-cta { width: 100%; min-height: 39px; border: 1px solid rgba(115,167,255,.55); border-radius: 13px; background: linear-gradient(135deg,#347cff,#2058e8); color: #fff; cursor: pointer; font-size: 10px; font-weight: 850; box-shadow: 0 6px 19px rgba(29,92,255,.28), 0 0 16px rgba(70,129,255,.16); }
+    .card-cta:hover { background: linear-gradient(135deg,#5591ff,#2865f5); box-shadow: 0 8px 25px rgba(29,92,255,.4), 0 0 22px rgba(70,129,255,.25); transform: translateY(-1px); }
+    .media-dots { position: absolute; z-index: 2; right: 0; bottom: 8px; left: 0; display: flex; justify-content: center; gap: 5px; }
+    .media-dot { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.42); box-shadow: 0 1px 4px rgba(0,0,0,.45); cursor: pointer; }
+    .media-dot.active { width: 15px; border-radius: 99px; background: #fff; box-shadow: 0 0 10px rgba(255,255,255,.48); }
+    .product-tag, .size-help { display: none !important; }
+    .favorite-button { width: 29px; height: 29px; }
+    .cart-heading { align-items: center; margin: 14px 0 12px; }
+    .cart-heading .section-kicker { display: none; }
+    .cart-heading .section-title { font-size: 25px; }
+    .cart-heading .outline-button { min-height: 38px; padding: 0 12px; font-size: 10px; }
+    .cart-layout { grid-template-columns: 1fr; gap: 11px; }
+    .cart-panel, .checkout-panel { border-radius: 18px; }
+    .checkout-head { padding: 14px 15px 11px; }
+    .checkout-fields { gap: 9px; padding: 12px 15px; }
+    .field label { font-size: 8px; }
+    .field input { min-height: 40px; }
+    .checkout-total { padding: 12px 15px; }
+    .checkout-submit { width: calc(100% - 30px); margin: 0 15px 14px; }
+    .secure-note { padding: 0 15px 12px; }
+    .bottom-nav { display: block !important; padding: 7px 14px calc(7px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.11); background: rgba(8,9,12,.94); box-shadow: 0 -10px 30px rgba(0,0,0,.28); }
+    .bottom-nav-inner { width: min(430px,100%); gap: 10px; }
+    .nav-item { min-height: 52px; flex-direction: column; gap: 3px; color: #8f95a3; font-size: 9px; }
+    .nav-item .icon { width: 21px; height: 21px; }
+    .nav-item.active { background: transparent; color: #fff; box-shadow: none; text-shadow: 0 0 13px rgba(255,255,255,.64); }
+    .nav-item.active .icon { filter: drop-shadow(0 0 7px rgba(255,255,255,.72)); }
+    .nav-badge { position: absolute; margin: -26px 0 0 22px; background: #347cff; color: #fff; box-shadow: 0 0 12px rgba(52,124,255,.65); }
+    .toast { bottom: calc(72px + env(safe-area-inset-bottom)); }
+    @media (min-width: 760px) {
+      .app-shell { width: min(620px,100%); }
+      .products-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .product-media { aspect-ratio: .94 / 1; }
+    }
   </style>
 </head>
 <body>
@@ -503,69 +577,39 @@
       </div>
     </header>
 
-    <div class="ticker" aria-hidden="true"><div class="ticker-track">
-      <div class="ticker-group"><span>Striver selected</span><i class="ticker-dot"></i><span>Найди свою пару</span><i class="ticker-dot"></i><span>Меньше шума — больше стиля</span><i class="ticker-dot"></i><span>Заказ напрямую в Telegram</span><i class="ticker-dot"></i></div>
-      <div class="ticker-group"><span>Striver selected</span><i class="ticker-dot"></i><span>Найди свою пару</span><i class="ticker-dot"></i><span>Меньше шума — больше стиля</span><i class="ticker-dot"></i><span>Заказ напрямую в Telegram</span><i class="ticker-dot"></i></div>
-    </div></div>
-
-    <main>
-      <section class="hero" id="top">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="eyebrow-mark"></span>Небольшая подборка. Большой характер.</div>
-          <h1>Меняй<br><span>привычное.</span></h1>
-          <p class="hero-description">Культовые силуэты и вещи на каждый день. Выбирай то, что совпадает с твоим ритмом.</p>
-          <div class="hero-actions">
-            <a class="primary-button" href="#catalog" onclick="switchTab('products', document.getElementById('productsNav'))">Смотреть подборку <span aria-hidden="true">&#8599;</span></a>
-            <a class="hero-link" href="#about">О магазине <span aria-hidden="true">&#8594;</span></a>
-          </div>
-          <div class="hero-footnote"><span><i class="check-mark">&#10003;</i>Выбор без лишнего</span><span><i class="check-mark">&#10003;</i>Заказ в пару касаний</span></div>
-        </div>
-        <div class="hero-art">
-          <img src="krosi_1.jpg" alt="Белые высокие кроссовки Nike Air Force 1">
-          <div class="art-topline"><span class="art-chip">The clean classic</span><span class="art-index">01 / 02</span></div>
-          <div class="floating-note"><strong>На каждый день</strong><span>Силуэт вне времени</span></div>
-          <div class="art-caption"><div><small>Главный выбор</small><h2>Nike Air Force 1 High</h2></div><span class="art-price">6 990 &#8381;</span></div>
-        </div>
+    <div id="storefront">
+      <section class="store-status" aria-label="Статус магазина">
+        <img class="store-avatar" src="ava.jpg" alt="">
+        <div class="store-status-copy"><strong>Striver store</strong><span class="store-status-message"><i></i><span id="serviceMessage">Отправка за 24 часа</span></span></div>
+        <span class="store-status-mark" aria-hidden="true">ST</span>
       </section>
 
-      <section class="section" id="catalog">
-        <div class="section-heading">
-          <div><p class="section-kicker">Текущая подборка / 02 позиции</p><h2 class="section-title">Вещи с характером</h2></div>
-          <p class="section-aside">Смотри детали, выбирай размер и добавляй в корзину. Все вопросы по заказу можно обсудить с менеджером в Telegram.</p>
-        </div>
-        <div class="catalog-tools">
-          <div class="filter-list" role="group" aria-label="Фильтр товаров">
-            <button class="filter-chip active" type="button" onclick="filterCategory('all', this)">Все товары</button>
-            <button class="filter-chip" type="button" onclick="filterCategory('sneakers', this)">Обувь</button>
-            <button class="filter-chip" type="button" onclick="filterCategory('jacket', this)">Верхняя одежда</button>
-            <button class="filter-chip" id="favoritesFilter" type="button" onclick="filterCategory('favorites', this)">Избранное <span id="favoriteCount"></span></button>
+      <main>
+        <section class="section" id="catalog" aria-label="Каталог">
+          <div class="catalog-tools">
+            <div class="filter-list" role="group" aria-label="Категории товаров">
+              <button class="filter-chip active" type="button" onclick="filterCategory('all', this)">Все товары</button>
+              <button class="filter-chip" type="button" onclick="filterCategory('sneakers', this)">Обувь</button>
+              <button class="filter-chip" type="button" onclick="filterCategory('jacket', this)">Верхняя одежда</button>
+              <button class="filter-chip" id="favoritesFilter" type="button" onclick="filterCategory('favorites', this)" aria-label="Избранное">Избранное <span id="favoriteCount"></span></button>
+            </div>
+            <div class="catalog-controls">
+              <label class="search-box">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
+                <input id="searchInput" type="search" placeholder="Найти товар" autocomplete="off" aria-label="Поиск товаров">
+              </label>
+              <select class="sort-select" id="sortSelect" aria-label="Сортировка товаров" onchange="sortProducts(this.value)">
+                <option value="featured">Сначала выбранное</option><option value="price-up">Сначала дешевле</option><option value="price-down">Сначала дороже</option>
+              </select>
+            </div>
           </div>
-          <div class="catalog-controls">
-            <label class="search-box">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
-              <input id="searchInput" type="search" placeholder="Найти вещь" autocomplete="off" aria-label="Поиск товаров">
-            </label>
-            <select class="sort-select" id="sortSelect" aria-label="Сортировка товаров" onchange="sortProducts(this.value)">
-              <option value="featured">Сначала выбранное</option>
-              <option value="price-up">Сначала дешевле</option>
-              <option value="price-down">Сначала дороже</option>
-            </select>
-          </div>
-        </div>
-        <div class="products-grid" id="productsGrid" aria-live="polite"></div>
-      </section>
-
-      <section class="editorial-band" id="about">
-        <div class="editorial-copy">
-          <div class="eyebrow"><span class="eyebrow-mark"></span>Наш подход</div>
-          <h2>Не гонись за всем. Выбирай своё.</h2>
-          <p>Striver — это компактная подборка вещей, которые легко представить в своём гардеробе. Открой товар, рассмотри детали и оформи заказ прямо в Telegram.</p>
-        </div>
-        <div class="editorial-visual"><img src="kyrtka_2.png" alt="Детали тёмной куртки Hollister"><span class="editorial-sticker">FIND<br>YOUR<br>PACE</span></div>
-      </section>
+          <div class="products-grid" id="productsGrid" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
 
       <section class="tab-content" id="tab-cart">
-        <div class="cart-heading"><div><p class="section-kicker">Твой выбор</p><h1 class="section-title">Корзина<span id="cartHeadingCount"></span></h1></div><button class="outline-button" type="button" onclick="switchTab('products', document.getElementById('productsNav'))">&#8592; Вернуться к товарам</button></div>
+        <div class="cart-heading"><div><p class="section-kicker">Твой выбор</p><h1 class="section-title">Корзина<span id="cartHeadingCount"></span></h1></div><button class="outline-button" type="button" onclick="switchTab('products', document.getElementById('productsNav'))">&#8592; В каталог</button></div>
         <div class="cart-layout">
           <section class="cart-panel" aria-label="Товары в корзине">
             <div class="cart-panel-head"><strong>Товары</strong><span id="cartPanelCount">Пока пусто</span></div>
@@ -585,9 +629,7 @@
           </aside>
         </div>
       </section>
-    </main>
 
-    <footer class="site-footer"><strong>STRIVER</strong><span>Твой стиль. Твой ритм.</span><span>Заказы принимаются через Telegram</span></footer>
   </div>
 
   <nav class="bottom-nav" aria-label="Основная навигация"><div class="bottom-nav-inner">
@@ -654,14 +696,12 @@
     const productSizes = ['41 (26 \u0441\u043c)', '42.5 (27 \u0441\u043c)', '43 (27.5 \u0441\u043c)'];
     const productsData = {
       sneakers: {
-        title: 'Nike Air Force 1 High (White)', price: 6990, type: 'Обувь / классика', tag: 'THE CLASSIC', category: 'sneakers',
-        desc: 'Культовая высокая модель в классическом белом исполнении. Чистый силуэт, который легко вписывается в повседневный гардероб.',
-        short: 'Белая классика на каждый день', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
+        title: 'Nike Air Force 1 High (White)', price: 6990, type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
+        color: 'Белый', desc: 'Цвет: белый', short: 'Белый · 41, 42.5, 43', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
       },
       jacket: {
-        title: 'Куртка Hollister 10s type', price: 4290, type: 'Верхняя одежда / слой', tag: 'OUTER LAYER', category: 'jacket',
-        desc: 'Тёмная утеплённая куртка с объёмным силуэтом и выразительной фактурой. Практичный верхний слой для прохладных дней.',
-        short: 'Тёплый слой с характером', images: ['kyrtka_1.png', 'kyrtka_2.png'], hasSizes: false
+        title: 'Куртка Hollister 10s type', price: 4290, type: 'Куртка', tag: 'HOLLISTER', category: 'jacket',
+        color: 'Тёмно-синий', desc: 'Цвет: тёмно-синий', short: 'Тёмно-синий', images: ['kyrtka_1.png', 'kyrtka_2.png'], hasSizes: false
       }
     };
     const productOrder = ['sneakers', 'jacket'];
@@ -703,15 +743,22 @@
         const image = document.createElement('img'); image.src = product.images[0]; image.alt = product.title; image.loading = index > 1 ? 'lazy' : 'eager'; imageButton.append(image); media.append(imageButton);
         const tag = document.createElement('span'); tag.className = 'product-tag'; tag.textContent = product.tag; media.append(tag);
         const favorite = document.createElement('button'); favorite.className = 'favorite-button' + (favorites.has(key) ? ' active' : ''); favorite.type = 'button'; favorite.setAttribute('aria-label', favorites.has(key) ? 'Убрать из избранного' : 'В избранное'); favorite.setAttribute('aria-pressed', String(favorites.has(key))); favorite.innerHTML = iconHeart(); favorite.onclick = () => toggleFavorite(key); media.append(favorite);
-        const count = document.createElement('span'); count.className = 'media-count'; count.textContent = '01 / 0' + product.images.length; media.append(count);
+        const dots = document.createElement('div'); dots.className = 'media-dots'; dots.setAttribute('aria-label', 'Фотографии товара');
+        product.images.forEach((src, slideIndex) => {
+          const dot = document.createElement('button'); dot.type = 'button'; dot.className = 'media-dot' + (slideIndex === 0 ? ' active' : ''); dot.setAttribute('aria-label', 'Фото ' + (slideIndex + 1));
+          dot.onclick = event => { event.stopPropagation(); image.src = src; dots.querySelectorAll('.media-dot').forEach((item, itemIndex) => item.classList.toggle('active', itemIndex === slideIndex)); };
+          dots.append(dot);
+        });
+        media.append(dots);
         const info = document.createElement('div'); info.className = 'product-info';
         const type = document.createElement('p'); type.className = 'product-type'; type.textContent = product.type;
         const title = document.createElement('h3'); title.className = 'product-title'; title.textContent = product.title;
         const description = document.createElement('p'); description.className = 'product-description'; description.textContent = product.short;
+        const specs = document.createElement('p'); specs.className = 'product-specs'; specs.textContent = 'Цвет: ' + product.color + (product.hasSizes ? ' · Размеры: ' + productSizes.map(size => size.split(' ')[0]).join(', ') : '');
         const buyRow = document.createElement('div'); buyRow.className = 'product-buy-row';
         const price = document.createElement('strong'); price.className = 'product-price'; price.textContent = formatMoney(product.price);
-        const add = document.createElement('button'); add.className = 'add-button'; add.type = 'button'; add.setAttribute('aria-label', 'Выбрать ' + product.title); add.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>'; add.onclick = () => openModal(key);
-        buyRow.append(price, add); info.append(type, title, description, buyRow); card.append(media, info); grid.append(card);
+        const add = document.createElement('button'); add.className = 'card-cta'; add.type = 'button'; add.textContent = 'В корзину'; add.setAttribute('aria-label', 'В корзину: ' + product.title); add.onclick = () => addCardProduct(key);
+        buyRow.append(price, add); info.append(type, title, description, specs, buyRow); card.append(media, info); grid.append(card);
       });
       document.getElementById('favoriteCount').textContent = favorites.size ? ' ' + favorites.size : '';
     }
@@ -733,14 +780,25 @@
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       if (tabName === 'cart') {
+        document.body.classList.add('cart-view');
         document.getElementById('tab-cart').classList.add('active');
         document.getElementById('cartNav').classList.add('active');
       } else {
+        document.body.classList.remove('cart-view');
         document.getElementById('tab-cart').classList.remove('active');
         document.getElementById('productsNav').classList.add('active');
         if (btnElement && btnElement.classList.contains('nav-item')) btnElement.classList.add('active');
       }
-      window.scrollTo({ top: tabName === 'cart' ? 0 : document.getElementById('catalog').offsetTop - 12, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function addCardProduct(productId) {
+      const product = productsData[productId];
+      if (!product) return;
+      if (product.hasSizes) { openModal(productId); return; }
+      addToCart(productId, null);
+      showToast('Добавлено в корзину');
+      try { if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light'); } catch (error) { /* optional haptics */ }
     }
 
     function openModal(productKey) {
@@ -884,6 +942,18 @@
     }
 
     document.getElementById('searchInput').addEventListener('input', renderProducts);
+    const serviceMessages = ['Отправка за 24 часа', 'Доставка по всей России', 'Надёжный магазин'];
+    let serviceMessageIndex = 0;
+    setInterval(() => {
+      const message = document.getElementById('serviceMessage');
+      if (!message) return;
+      message.parentElement.style.opacity = '0';
+      setTimeout(() => {
+        serviceMessageIndex = (serviceMessageIndex + 1) % serviceMessages.length;
+        message.textContent = serviceMessages[serviceMessageIndex];
+        message.parentElement.style.opacity = '1';
+      }, 180);
+    }, 3200);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
     renderProducts(); updateCartUI();
   </script>
