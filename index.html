@@ -721,11 +721,16 @@
   </nav>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    try { tg.expand(); } catch (e) {}
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) {
+      try { tg.ready(); tg.expand(); } catch (e) { console.warn('Telegram Web App initialization failed', e); }
+    }
 
     let cart = [];
+    let nextCartItemId = 1;
     let currentSlideIdx = 0;
+    let orderSending = false;
+    const cm = String.fromCharCode(1089, 1084); const productSizes = { sneakers: ["41 (26 " + cm + ")", "42.5 (27 " + cm + ")", "43 (27.5 " + cm + ")"] };
 
     const productsData = {
       sneakers: {
@@ -779,7 +784,10 @@
       const sizesCont = document.getElementById('modalSizesContainer');
       if (p.hasSizes) {
         sizesCont.style.display = 'flex';
-        document.querySelectorAll('.size-chip').forEach(el => el.classList.remove('selected'));
+        document.querySelectorAll('.size-chip').forEach((el, index) => {
+          el.classList.remove('selected');
+          el.textContent = productSizes[productKey][index];
+        });
       } else {
         sizesCont.style.display = 'none';
       }
@@ -795,7 +803,8 @@
           }
           titleFull += ` (${selectedSize.innerText})`;
         }
-        addToCart(titleFull, p.price);
+        const sizeIndex = p.hasSizes ? Array.from(document.querySelectorAll('.size-chip')).indexOf(document.querySelector('.size-chip.selected')) : null;
+        addToCart(productKey, sizeIndex, titleFull, p.price);
         closeModalDirect('productModal');
       };
 
@@ -830,8 +839,8 @@
       element.classList.add('selected');
     }
 
-    function addToCart(title, price) {
-      cart.push({ id: Date.now(), title: title, price: price });
+    function addToCart(productId, sizeIndex, title, price) {
+      cart.push({ id: nextCartItemId++, productId: productId, sizeIndex: sizeIndex, title: title, price: price });
       updateCartUI();
       try {
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
@@ -884,6 +893,10 @@
     }
 
     function openPaymentModal() {
+      if (cart.length === 0) {
+        alert('Добавьте товары в корзину перед оформлением заказа.');
+        return;
+      }
       const city = document.getElementById('inputCity').value.trim();
       const pvz = document.getElementById('inputPvz').value.trim();
       const address = document.getElementById('inputAddress').value.trim();
@@ -902,32 +915,52 @@
     }
 
     function finishOrder() {
+      if (orderSending) return;
+      if (!tg || typeof tg.sendData !== 'function') {
+        alert('Откройте магазин из Telegram через кнопку бота, чтобы отправить заказ.');
+        return;
+      }
+      if (cart.length === 0) {
+        alert('Корзина пуста. Добавьте товары перед оформлением заказа.');
+        return;
+      }
+
       const city = document.getElementById('inputCity').value.trim();
       const pvz = document.getElementById('inputPvz').value.trim();
       const address = document.getElementById('inputAddress').value.trim();
       const phone = document.getElementById('inputPhone').value.trim();
+      if (!city || !pvz || !address || !phone) {
+        alert('Заполните все поля доставки перед отправкой заказа.');
+        return;
+      }
 
-      let itemsList = cart.map(i => `- ${i.title} (${i.price} ₽)`).join('\n');
-      let totalSum = cart.reduce((sum, item) => sum + item.price, 0);
+      if (cart.length > 20) {
+        alert('Order is limited to 20 items. Remove some items and try again.');
+        return;
+      }
 
       const orderData = {
-        action: "new_order",
-        items: itemsList,
-        total: totalSum,
+        action: 'new_order',
+        items: cart.map(item => ({ product_id: item.productId, size_index: item.sizeIndex })),
         city: city,
         pvz: pvz,
         address: address,
         phone: phone
       };
+      const payload = JSON.stringify(orderData);
+      if (new TextEncoder().encode(payload).length > 4096) {
+        alert('Заказ слишком большой. Удалите часть товаров и попробуйте снова.');
+        return;
+      }
 
-      if (tg && tg.sendData) {
-        tg.sendData(JSON.stringify(orderData));
-        // Используем встроенный нативный алерт Телеграма вместо тупого закрытия, чтобы плашка 100% вылетела
-        tg.showAlert("✅ Заказ успешно оформлен! Менеджер скоро свяжется с вами.", () => {
-          tg.close();
-        });
-      } else {
-        alert("Заказ сформирован!");
+      try {
+        orderSending = true;
+        tg.sendData(payload);
+        // Telegram sends the service message and closes a keyboard-button Mini App.
+      } catch (error) {
+        orderSending = false;
+        console.error('Could not send order to Telegram', error);
+        alert('Не удалось отправить заказ в Telegram. Попробуйте ещё раз.');
       }
     }
   </script>
