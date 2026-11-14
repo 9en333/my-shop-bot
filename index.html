@@ -23,9 +23,11 @@
     }
 
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { min-height:100%; scroll-behavior: smooth; background:var(--paper); }
     body {
       margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
       min-width: 320px;
       padding: 0 0 calc(88px + env(safe-area-inset-bottom));
       background: var(--paper);
@@ -592,6 +594,32 @@
     [data-theme="light"] .product-image-button img,.product-image-button img { object-fit:contain; transition:opacity .18s ease; }
     .modal-slide { object-fit:contain; }
     .modal-content { overscroll-behavior:contain; touch-action:pan-y; }
+    .slider-arrow { display:none !important; }
+    .modal-slider { background:radial-gradient(ellipse at 50% 45%,rgba(66,83,112,.34),transparent 72%),#171a21; touch-action:pan-y; }
+    [data-theme="light"] .modal-slider { background:radial-gradient(ellipse at 50% 45%,rgba(115,151,205,.2),transparent 72%),#eef2f8; }
+    .modal-slide { background:transparent; }
+    .referral-card { position:relative; overflow:hidden; padding:16px; border:1px solid rgba(144,181,255,.22); border-radius:22px; background:radial-gradient(ellipse at 100% 0%,rgba(68,126,255,.28),transparent 48%),linear-gradient(145deg,#171b25,#0d1017 72%); box-shadow:inset 0 1px rgba(255,255,255,.07),0 14px 34px rgba(0,0,0,.24),0 0 28px rgba(54,117,255,.09); }
+    .referral-card::after { position:absolute; top:-54px; right:-35px; width:150px; height:150px; content:""; border:1px solid rgba(150,190,255,.13); border-radius:50%; box-shadow:0 0 0 16px rgba(100,166,255,.035),0 0 0 34px rgba(100,166,255,.025); pointer-events:none; }
+    .referral-card-head { position:relative; z-index:1; display:flex; align-items:center; gap:10px; color:#a9b4c7; font-size:9px; font-weight:850; letter-spacing:.13em; text-transform:uppercase; }
+    .referral-card-mark { display:grid; place-items:center; width:32px; height:32px; border:1px solid rgba(135,179,255,.28); border-radius:11px; background:rgba(61,126,255,.14); color:#b9d3ff; font-size:16px; box-shadow:0 0 18px rgba(77,141,255,.16); }
+    .referral-card-title { position:relative; z-index:1; display:block; margin:14px 0 2px; color:#f5f8ff; font-size:29px; font-weight:900; letter-spacing:-.055em; text-shadow:0 0 22px rgba(102,164,255,.25); }
+    .referral-card-copy { position:relative; z-index:1; margin:0; color:#a4aec0; font-size:10px; line-height:1.5; }
+    .referral-card .referral-actions { position:relative; z-index:1; margin-top:14px; }
+    .referral-card .referral-actions button { min-height:38px; border-color:rgba(129,174,255,.25); background:rgba(255,255,255,.045); color:#e8f0ff; }
+    [data-theme="light"] .referral-card { border-color:rgba(50,105,200,.18); background:radial-gradient(ellipse at 100% 0%,rgba(95,151,255,.2),transparent 48%),linear-gradient(145deg,#fff,#eaf1ff); box-shadow:inset 0 1px #fff,0 14px 34px rgba(40,77,133,.12),0 0 24px rgba(65,125,220,.08); }
+    [data-theme="light"] .referral-card-head { color:#66758e; }
+    [data-theme="light"] .referral-card-mark { color:#2763be; background:rgba(61,126,255,.1); }
+    [data-theme="light"] .referral-card-title { color:#19345d; text-shadow:0 0 20px rgba(70,130,225,.15); }
+    [data-theme="light"] .referral-card-copy { color:#66758e; }
+    [data-theme="light"] .referral-card .referral-actions button { color:#2458a9; border-color:rgba(50,105,200,.2); background:rgba(255,255,255,.72); }
+    [data-theme="light"] .bottom-nav #cartNav .icon { color:#65748c; stroke:#65748c; }
+    [data-theme="light"] .bottom-nav #cartNav.active .icon { color:#245fc7; stroke:#245fc7; }
+    .snow-layer { position:fixed; z-index:8; inset:0; overflow:hidden; pointer-events:none; contain:layout paint; }
+    .snowflake { position:absolute; top:-12vh; left:var(--x); color:rgba(235,244,255,var(--alpha)); font-size:var(--size); line-height:1; text-shadow:0 0 9px rgba(196,222,255,.55),0 0 22px rgba(118,174,255,.22); opacity:.8; will-change:transform; animation:snowfall var(--duration) linear var(--delay) infinite; }
+    .catalog-empty-link { min-height:40px; margin-top:6px; padding:0 18px; font-size:10px; }
+    [data-theme="light"] .snowflake { color:rgba(75,119,181,var(--alpha)); text-shadow:0 0 8px rgba(255,255,255,.9),0 0 18px rgba(91,147,222,.22); }
+    @keyframes snowfall { 0% { transform:translate3d(0,-8vh,0) rotate(0deg); } 25% { transform:translate3d(var(--drift),28vh,0) rotate(100deg); } 55% { transform:translate3d(calc(var(--drift) * -.55),62vh,0) rotate(220deg); } 80% { transform:translate3d(var(--drift),92vh,0) rotate(320deg); } 100% { transform:translate3d(0,116vh,0) rotate(420deg); } }
+    @media (prefers-reduced-motion:reduce) { .snowflake { animation-duration:30s !important; opacity:.24; } }
     .profile-card, .order-card { border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,rgba(24,27,34,.98),rgba(13,15,19,.98)); box-shadow: 0 10px 28px rgba(0,0,0,.25), inset 0 1px rgba(255,255,255,.03); }
     .profile-card { display: flex; align-items: center; gap: 12px; min-height: 75px; margin: 14px 0 22px; padding: 12px; }
     .profile-avatar { width: 46px; height: 46px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid rgba(122,174,255,.35); border-radius: 50%; background: radial-gradient(circle at 35% 25%,#5090ff,#173d89); color: #fff; font-size: 18px; font-weight: 900; box-shadow: 0 0 20px rgba(52,124,255,.25); }
@@ -629,6 +657,7 @@
   </style>
 </head>
 <body>
+  <div class="snow-layer" id="snowLayer" aria-hidden="true"></div>
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Striver — на главную">
@@ -658,7 +687,7 @@
         <section class="section" id="catalog" aria-label="Каталог">
           <div class="catalog-tools">
             <div class="filter-list" role="group" aria-label="Категории товаров">
-              <button class="filter-chip active" type="button" onclick="filterCategory('all', this)">Все товары</button>
+              <button class="filter-chip active" id="allFilter" type="button" onclick="filterCategory('all', this)">Все товары</button>
               <button class="filter-chip" type="button" onclick="filterCategory('sneakers', this)">Обувь</button>
               <button class="filter-chip" type="button" onclick="filterCategory('jacket', this)">Верхняя одежда</button>
               <button class="filter-chip" id="favoritesFilter" type="button" onclick="filterCategory('favorites', this)" aria-label="Избранное">Избранное <span id="favoriteCount"></span></button>
@@ -713,7 +742,9 @@
           <span class="profile-check" aria-hidden="true">✓</span>
         </div>
         <div class="referral-card">
-          <div class="referral-balance"><span>Реферальный баланс</span><strong id="referralBalance">0 ₽</strong></div>
+          <div class="referral-card-head"><span class="referral-card-mark" aria-hidden="true">✦</span><span>Striver rewards · баланс бонусов</span></div>
+          <strong class="referral-card-title" id="referralBalance">0 ₽</strong>
+          <p class="referral-card-copy">Получай 1 000 ₽ за первого приглашённого друга</p>
           <div class="referral-actions"><button type="button" onclick="shareReferralLink()">Пригласить друга</button><button type="button" onclick="openReferralInfo()">Как это работает</button></div>
         </div>
         <button id="themeToggle" class="profile-theme" type="button" onclick="toggleTheme()">Переключить тему</button>
@@ -739,8 +770,6 @@
       <h2 class="modal-title" id="modalTitle">Товар</h2>
       <div class="modal-slider" id="modalSlider">
         <div class="modal-slides-track" id="slidesTrack"><img id="modalSlide0" class="modal-slide" src="" alt="Фото товара, вид 1"><img id="modalSlide1" class="modal-slide" src="" alt="Фото товара, вид 2"></div>
-        <button class="slider-arrow left" type="button" onclick="nextSlide(-1)" aria-label="Предыдущее фото">&#8592;</button>
-        <button class="slider-arrow right" type="button" onclick="nextSlide(1)" aria-label="Следующее фото">&#8594;</button>
         <div class="slider-dots"><span class="slider-dot active" id="dot0"></span><span class="slider-dot" id="dot1"></span></div>
       </div>
       <div class="modal-meta"><span class="modal-price" id="modalPrice">0 &#8381;</span><span class="product-tag" id="modalTag">SELECTED</span></div>
@@ -786,13 +815,17 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
+    let themeMode = 'dark';
+    try { themeMode = localStorage.getItem('striver_theme_v1') === 'light' ? 'light' : 'dark'; } catch (_) {}
+    document.documentElement.dataset.theme = themeMode;
+    const themeColor = themeMode === 'light' ? '#f1f3f8' : '#090a0d';
     const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
     if (tg) {
       try {
         tg.ready();
         tg.expand();
-        if (typeof tg.setHeaderColor === 'function') tg.setHeaderColor('#090a0d');
-        if (typeof tg.setBackgroundColor === 'function') tg.setBackgroundColor('#090a0d');
+        if (typeof tg.setHeaderColor === 'function') tg.setHeaderColor(themeColor);
+        if (typeof tg.setBackgroundColor === 'function') tg.setBackgroundColor(themeColor);
       } catch (error) { console.warn('Telegram Web App init failed', error); }
     }
 
@@ -823,10 +856,6 @@
     const appParams = new URLSearchParams(window.location.search);
     let availableReferralBalance = Math.max(0, Number.parseInt(appParams.get('referral_balance') || '0', 10) || 0);
     const referralUrl = appParams.get('referral_link') || '';
-    let themeMode = 'dark';
-    try { themeMode = localStorage.getItem('striver_theme_v1') === 'light' ? 'light' : 'dark'; } catch (_) {}
-    document.documentElement.dataset.theme = themeMode;
-
     function switchProfilePane(pane) {
       const isOrders = pane === 'orders';
       document.getElementById('profilePane').hidden = isOrders;
@@ -847,6 +876,24 @@
     function toggleTheme() {
       themeMode = themeMode === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = themeMode;
+    function createSnowfall() {
+      const layer = document.getElementById('snowLayer');
+      if (!layer || layer.childElementCount) return;
+      const flakes = ['❄', '❅', '❆', '✧'];
+      for (let i = 0; i < 30; i += 1) {
+        const flake = document.createElement('span');
+        flake.className = 'snowflake';
+        flake.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+        const duration = 14 + Math.random() * 18;
+        flake.style.setProperty('--x', (Math.random() * 100) + 'vw');
+        flake.style.setProperty('--size', (7 + Math.random() * 13) + 'px');
+        flake.style.setProperty('--alpha', (0.18 + Math.random() * 0.48).toFixed(2));
+        flake.style.setProperty('--duration', duration + 's');
+        flake.style.setProperty('--delay', (-Math.random() * duration) + 's');
+        flake.style.setProperty('--drift', ((Math.random() - 0.5) * 70) + 'px');
+        layer.append(flake);
+      }
+    }
       try { localStorage.setItem('striver_theme_v1', themeMode); } catch (_) {}
       const color = themeMode === 'dark' ? '#090a0d' : '#f1f3f8';
       try { if (tg && tg.setHeaderColor) tg.setHeaderColor(color); if (tg && tg.setBackgroundColor) tg.setBackgroundColor(color); } catch (error) { console.warn('Telegram theme update failed', error); }
@@ -916,10 +963,15 @@
     }
     function renderProfileIdentity() {
       const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
-      if (!user) return;
+      if (!user) {
+        document.getElementById('profileName').textContent = 'Открой магазин через Telegram';
+        document.getElementById('profileUsername').textContent = 'Данные профиля недоступны';
+        document.getElementById('profileAvatar').textContent = '?';
+        return;
+      }
       const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || 'Покупатель';
       document.getElementById('profileName').textContent = name;
-      document.getElementById('profileUsername').textContent = user.username ? '@' + user.username : 'Мои заказы';
+      document.getElementById('profileUsername').textContent = user.username ? '@' + user.username : 'Telegram ID · ' + user.id;
       const avatar = document.getElementById('profileAvatar');
       avatar.replaceChildren();
       if (user.photo_url) {
@@ -1034,6 +1086,10 @@
     }
 
     function filterCategory(category, button) {
+      if (category === 'favorites' && currentCategory === 'favorites') {
+        category = 'all';
+        button = document.getElementById('allFilter');
+      }
       currentCategory = category;
       document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el === button));
       renderProducts();
@@ -1112,18 +1168,38 @@
     let galleryTouchStartX = null;
     const gallery = document.getElementById('modalSlider');
     let galleryTouchStartY = null;
+    let galleryTouchStartedAt = 0;
+    let galleryDragging = false;
+    const slidesTrack = document.getElementById('slidesTrack');
     gallery.addEventListener('touchstart', event => {
       galleryTouchStartX = event.changedTouches.length ? event.changedTouches[0].clientX : null;
       galleryTouchStartY = event.changedTouches.length ? event.changedTouches[0].clientY : null;
+      galleryTouchStartedAt = performance.now(); galleryDragging = false;
     }, { passive: true });
+    gallery.addEventListener('touchmove', event => {
+      if (galleryTouchStartX === null || !event.touches.length) return;
+      const deltaX = event.touches[0].clientX - galleryTouchStartX;
+      const deltaY = event.touches[0].clientY - galleryTouchStartY;
+      if (Math.abs(deltaX) < 5 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
+      galleryDragging = true;
+      event.preventDefault();
+      slidesTrack.style.transition = 'none';
+      slidesTrack.style.transform = 'translate3d(calc(-' + (currentSlideIdx * 100) + '% + ' + deltaX + 'px),0,0)';
+    }, { passive: false });
     gallery.addEventListener('touchend', event => {
-      if (galleryTouchStartX === null || !event.changedTouches.length) return;
+      if (galleryTouchStartX === null || !event.changedTouches.length) { galleryTouchStartX = null; galleryTouchStartY = null; return; }
       const deltaX = event.changedTouches[0].clientX - galleryTouchStartX;
       const deltaY = event.changedTouches[0].clientY - galleryTouchStartY;
+      const elapsed = Math.max(1, performance.now() - galleryTouchStartedAt);
+      const flick = Math.abs(deltaX) / elapsed > .32;
       galleryTouchStartX = null;
       galleryTouchStartY = null;
-      if (Math.abs(deltaX) > 42 && Math.abs(deltaX) > Math.abs(deltaY) * 1.25) nextSlide(deltaX < 0 ? 1 : -1);
+      slidesTrack.style.transition = '';
+      if (galleryDragging && Math.abs(deltaX) > Math.abs(deltaY) * 1.2 && (Math.abs(deltaX) > 42 || flick)) nextSlide(deltaX < 0 ? 1 : -1);
+      else updateSlidePosition(currentSlideIdx);
+      galleryDragging = false;
     }, { passive: true });
+    gallery.addEventListener('touchcancel', () => { galleryTouchStartX = null; galleryTouchStartY = null; galleryDragging = false; slidesTrack.style.transition = ''; updateSlidePosition(currentSlideIdx); }, { passive: true });
     document.querySelectorAll('.modal-content').forEach(sheet => {
       let startX = 0, startY = 0;
       sheet.addEventListener('touchstart', event => { if (!event.touches.length) return; startX = event.touches[0].clientX; startY = event.touches[0].clientY; }, { passive: true });
@@ -1158,7 +1234,7 @@
       setCardSlide(card, next);
     }, { passive:true });
     function updateSlidePosition(index) {
-      currentSlideIdx = index; document.getElementById('slidesTrack').style.transform = 'translateX(-' + (index * 100) + '%)';
+      currentSlideIdx = index; slidesTrack.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
       document.getElementById('dot0').classList.toggle('active', index === 0); document.getElementById('dot1').classList.toggle('active', index === 1);
     }
     function selectSize(element) { document.querySelectorAll('.size-chip').forEach(chip => chip.classList.remove('selected')); element.classList.add('selected'); }
@@ -1213,7 +1289,8 @@
         const mark = document.createElement('div'); mark.className = 'empty-cart-mark'; mark.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>';
         const title = document.createElement('strong'); title.textContent = 'Корзина пока отдыхает';
         const copy = document.createElement('p'); copy.textContent = 'Добавь вещь из подборки — здесь появится твой заказ.';
-        empty.append(mark, title, copy); container.append(empty); return;
+        const catalogButton = document.createElement('button'); catalogButton.className = 'primary-button catalog-empty-link'; catalogButton.type = 'button'; catalogButton.textContent = 'Перейти в каталог'; catalogButton.onclick = () => switchTab('products', document.getElementById('productsNav'));
+        empty.append(mark, title, copy, catalogButton); container.append(empty); return;
       }
       cart.forEach(item => {
         const product = productsData[item.productId]; const row = document.createElement('article'); row.className = 'cart-item';
@@ -1280,7 +1357,7 @@
       }, 180);
     }, 3200);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
-    renderProducts(); updateCartUI(); renderProfileIdentity(); updateReferralUI();
+    renderProducts(); updateCartUI(); renderProfileIdentity(); updateReferralUI(); createSnowfall();
   </script>
 </body>
 </html>
