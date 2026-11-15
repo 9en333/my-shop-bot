@@ -149,12 +149,14 @@
     .product-card:hover { transform: translateY(-5px); box-shadow: 0 18px 38px rgba(25,28,21,.10); }
     @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
     .product-media { position: relative; overflow: hidden; aspect-ratio: 1.07 / 1; border-radius: 18px; background: #e6e4dc; }
-    .product-image-button { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; padding: 0; border: 0; background: #111318; cursor: pointer; touch-action: pan-y; }
-    .product-image-track { display:flex; width:200%; height:100%; transform:translate3d(0,0,0); transition:transform .62s cubic-bezier(.2,.78,.18,1); will-change:transform; }
+    .product-image-button { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; padding: 0; border: 0; background: #111318; cursor: pointer; touch-action: pan-y; -webkit-tap-highlight-color:transparent; -webkit-user-drag:none; user-select:none; }
+    .product-image-button:active { transform:none; filter:none; }
+    .product-image-track { display:flex; width:200%; height:100%; transform:translate3d(0,0,0); transition:transform .95s cubic-bezier(.18,.78,.18,1); will-change:transform; }
     .product-image-track img { display:block; flex:0 0 50%; width:50%; height:100%; object-fit:cover; }
     .product-tag { position: absolute; top: 11px; left: 11px; padding: 7px 9px; border-radius: 99px; background: rgba(255,254,250,.9); color: var(--ink); font-size: 8px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; backdrop-filter: blur(9px); }
     .favorite-button { position: absolute; z-index: 1; top: 9px; right: 9px; width: 35px; height: 35px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,254,250,.88); cursor: pointer; transition: transform .2s var(--ease), background .2s; }
-    .favorite-button:hover { transform: scale(1.08); }
+    @media (hover:hover) { .favorite-button:hover { transform: scale(1.06); } }
+    .favorite-button:focus:not(:focus-visible) { outline:none; }
     .favorite-button .icon { width: 17px; height: 17px; }
     .favorite-button.active { color: #db5151; }
     .favorite-button.active .icon { fill: #db5151; }
@@ -217,8 +219,9 @@
     .checkout-fields { display: grid; gap: 12px; padding: 16px 19px 19px; }
     .field { display: grid; gap: 6px; }
     .field label { color: #666b61; font-size: 9px; font-weight: 850; letter-spacing: .06em; }
-    .field input { width: 100%; height: 43px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: #fbfaf6; color: var(--ink); font-size: 12px; outline: 0; transition: border-color .2s, box-shadow .2s; }
-    .field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(86,101,245,.1); }
+    .field input, .field select { width: 100%; min-height: 43px; padding: 0 12px; border: 1px solid var(--line); border-radius: 12px; background: #fbfaf6; color: var(--ink); font-size: 16px; outline: 0; transition: border-color .2s, box-shadow .2s; }
+    .field select { appearance:none; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--ink); box-shadow:0 0 0 3px rgba(255,255,255,.08); }
     .checkout-total { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 14px 19px; border-top: 1px solid var(--line); }
     .checkout-total span { color: var(--muted); font-size: 11px; }
     .checkout-total strong { font-size: 19px; letter-spacing: -.04em; }
@@ -401,7 +404,7 @@
     .editorial-band { overflow: hidden; }
     .editorial-copy p, .cart-item-meta, .payment-note, .secure-note { color: var(--muted); }
     .cart-item { border-color: var(--line); background: rgba(255,255,255,.025); }
-    .field input { border-color: var(--line); background: #0c0e12; color: var(--ink); }
+    .field input, .field select { border-color: var(--line); background: #0c0e12; color: var(--ink); }
     .field input::placeholder { color: #737987; }
     .field input:focus { border-color: rgba(169,150,255,.76); box-shadow: 0 0 0 3px rgba(169,150,255,.12); }
     .checkout-head, .checkout-total, .payment-row { border-color: var(--line); }
@@ -493,16 +496,16 @@
     .brand-name { font-size: 14px; letter-spacing: .08em; }
     .brand-caption, .topbar-note, .bag-button { display: none !important; }
     .icon-button { width: 38px; min-height: 38px; }
-    .store-status { display:grid; grid-template-columns:50px minmax(0,1fr) 31px; grid-template-rows:44px 46px; align-items:center; gap:8px 12px; min-height:116px; margin:12px 0 9px; padding:11px 14px; border:1px solid var(--line); border-radius:22px; background:linear-gradient(115deg,rgba(24,27,34,.98),rgba(13,15,19,.98)); box-shadow:inset 0 1px rgba(255,255,255,.035),0 10px 30px rgba(0,0,0,.25); }
+    .store-status { display:grid; grid-template-columns:50px minmax(0,1fr); grid-template-rows:44px 46px; align-items:center; gap:8px 12px; min-height:116px; margin:12px 0 9px; padding:11px 14px; border:1px solid rgba(255,255,255,.12); border-radius:19px; background:linear-gradient(125deg,#191b20 0%,#111318 56%,#17191d 100%); box-shadow:inset 0 1px rgba(255,255,255,.055),0 12px 32px rgba(0,0,0,.24); }
     .store-avatar { width: 50px; height: 50px; flex: 0 0 auto; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; object-fit: cover; box-shadow: 0 0 18px rgba(100,166,255,.16); }
     .store-status-copy { display:contents; }
-    .store-status-copy > strong { grid-column:2; grid-row:1; font-size:18px; font-weight:850; letter-spacing:-.035em; }
-    .store-status-message { grid-column:1/-1; grid-row:2; width:100%; min-height:46px; display:flex; align-items:center; justify-content:center; gap:10px; padding:7px 14px; border:1px solid rgba(179,194,218,.2); border-radius:15px; background:linear-gradient(100deg,rgba(150,165,190,.13),rgba(96,139,208,.12)); color:#e8f1ff; font-size:14px; font-weight:850; letter-spacing:.005em; text-shadow:0 0 15px rgba(113,169,255,.68); transition:opacity .2s ease; }
+    .store-status-copy > strong { grid-column:2; grid-row:1; font-size:19px; font-weight:850; letter-spacing:-.035em; text-shadow:0 0 22px rgba(255,255,255,.16); }
+    .store-status-message { grid-column:1/-1; grid-row:2; width:100%; min-height:46px; display:flex; align-items:center; justify-content:center; gap:10px; padding:7px 14px; border:1px solid rgba(255,255,255,.12); border-radius:13px; background:linear-gradient(100deg,rgba(255,255,255,.075),rgba(255,255,255,.025)); color:#f1f3f6; font-size:14px; font-weight:800; letter-spacing:.005em; text-shadow:0 0 12px rgba(255,255,255,.22); transition:opacity .48s ease; }
     .store-status-message i { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #43d7a5; box-shadow: 0 0 12px rgba(67,215,165,.7); }
-    .store-status-mark { grid-column:3; grid-row:1; display:grid; place-items:center; width:31px; height:31px; margin-left:auto; border:1px solid var(--line); border-radius:10px; color:#d9e7ff; font-size:9px; font-weight:900; letter-spacing:-.04em; }
-    .shop-guide-chip { width:100%; min-height:42px; display:flex; align-items:center; gap:10px; margin:0 0 13px; padding:0 13px; border:1px solid rgba(124,166,255,.2); border-radius:13px; background:linear-gradient(100deg,rgba(54,107,202,.12),rgba(255,255,255,.035)); color:#d9e6fb; text-align:left; font-size:11px; font-weight:800; }
-    .shop-guide-chip > span:first-child { color:#9ec2ff; text-shadow:0 0 12px rgba(98,156,255,.7); }
-    .guide-arrow { margin-left:auto; color:#93baff; font-size:15px; }
+    .store-status-mark { display:none; }
+    .shop-guide-chip { width:100%; min-height:42px; display:flex; align-items:center; gap:10px; margin:0 0 13px; padding:0 13px; border:1px solid rgba(255,255,255,.12); border-radius:13px; background:rgba(255,255,255,.035); color:var(--ink); text-align:left; font-size:11px; font-weight:800; }
+    .shop-guide-chip > span:first-child { color:inherit; opacity:.72; text-shadow:none; }
+    .guide-arrow { margin-left:auto; color:inherit; opacity:.55; font-size:15px; }
     .brand-name { color:#f5f8ff; text-shadow:0 0 10px rgba(141,183,255,.55),0 0 25px rgba(68,125,255,.32); }
     .theme-toggle-top { color:#d9e7ff; box-shadow:0 0 17px rgba(100,166,255,.1); }
     #storefront { display: block; }
@@ -526,9 +529,10 @@
     .sort-select { display: none; }
     .products-grid { grid-template-columns:1fr; gap:14px; }
     .product-card { overflow:hidden; padding:0; border:1px solid rgba(255,255,255,.105); border-radius:22px; background:linear-gradient(150deg,#15171d,#0f1014); box-shadow:0 10px 26px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.025); }
-    .product-card:hover { transform: translateY(-2px); border-color: rgba(67,127,255,.5); box-shadow: 0 14px 30px rgba(0,0,0,.34), 0 0 22px rgba(50,111,255,.12); }
+    .product-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.72); box-shadow: 0 14px 30px rgba(0,0,0,.34), 0 0 22px rgba(255,255,255,.10); }
+    @media (hover:none) { .product-card:hover { transform:none; } }
     .product-media { aspect-ratio:1.24 / 1; border-radius:21px 21px 0 0; background:#10131a; }
-    .product-image-button img { object-fit:cover; transition:opacity .25s ease,transform .65s cubic-bezier(.18,.72,.2,1); }
+    .product-image-button img { object-fit:cover; }
     .product-info { display:grid; gap:7px; padding:12px 14px 14px; }
     .product-type, .product-description { display: none; }
     .product-title { min-height:0; margin:0; color:#f4f5f7; font-size:16px; line-height:1.2; letter-spacing:-.035em; }
@@ -591,7 +595,7 @@
     [data-theme="light"] .profile-caption,[data-theme="light"] .profile-username,[data-theme="light"] .order-card-date,[data-theme="light"] .order-item,[data-theme="light"] .order-item-size { color:#667184; }
     [data-theme="light"] .order-history .order-card-total { color:#245fc7; }
     [data-theme="light"] .cart-item { background:#f1f4f9; }
-    [data-theme="light"] .field input,[data-theme="light"] .payment-card { background:#f5f7fb; color:#171b24; }
+    [data-theme="light"] .field input,[data-theme="light"] .field select,[data-theme="light"] .field textarea,[data-theme="light"] .payment-card { background:#f5f7fb; color:#171b24; }
     [data-theme="light"] .profile-setup-btn { color:#344055; background:rgba(37,82,150,.05); }
     [data-theme="light"] .referral-card { background:linear-gradient(120deg,rgba(49,102,195,.1),rgba(255,255,255,.8)); }
     [data-theme="light"] .referral-balance strong,[data-theme="light"] .referral-sheet-copy { color:#263b60; }
@@ -633,7 +637,18 @@
     .orders-page-head h1 { margin:5px 0 0; color:var(--ink); font-size:26px; letter-spacing:-.05em; }
     .orders-page-head .profile-order-count { min-width:32px; height:32px; }
     .order-item { display:grid; grid-template-columns:48px minmax(0,1fr) auto; align-items:center; gap:10px; color:#c1c7d2; font-size:10px; }
-    .order-item-thumb { width:48px; height:48px; border-radius:11px; object-fit:cover; background:#171a21; }
+    .order-item-thumb { width:72px; height:72px; border-radius:14px; object-fit:cover; background:#171a21; }
+    .order-item { grid-template-columns:72px minmax(0,1fr) auto; gap:12px; font-size:12px; }
+    .order-item-name { font-size:13px; font-weight:750; line-height:1.35; }
+    .order-card { padding:16px; border-radius:21px; }
+    .order-card-title { font-size:15px; letter-spacing:-.025em; }
+    .order-card-date { font-size:11px; }
+    .order-card-total { font-size:16px; }
+    .keyboard-dismiss { position:fixed; z-index:60; right:14px; bottom:calc(env(safe-area-inset-bottom) + 12px); display:none; min-height:40px; padding:0 16px; border:1px solid rgba(255,255,255,.2); border-radius:13px; background:#181a1f; color:#f6f7f9; box-shadow:0 8px 25px rgba(0,0,0,.3); font-size:12px; font-weight:800; }
+    body.keyboard-open .keyboard-dismiss { display:block; }
+    body.keyboard-open .bottom-nav { display:none !important; }
+    .field textarea { width:100%; min-height:84px; resize:vertical; padding:12px; border:1px solid var(--line); border-radius:12px; background:#0c0e12; color:var(--ink); font:inherit; font-size:16px; outline:0; }
+    [data-theme="light"] .keyboard-dismiss { border-color:rgba(30,42,65,.16); background:#fff; color:#171b24; }
     .order-item-copy { display:grid; gap:4px; min-width:0; }
     .order-item-name { overflow:hidden; color:inherit; text-overflow:ellipsis; }
     .profile-setup-btn { width:100%; min-height:40px; margin:0 0 15px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.04); color:var(--ink); font-size:11px; font-weight:800; }
@@ -641,7 +656,7 @@
     .field input,.search-box input,select { font-size:16px; }
     .shop-guide-chip { transition:background .2s ease,border-color .2s ease,transform .2s ease; }
     .shop-guide-chip:active { transform:scale(.99); }
-    .modal-slides-track { transition:transform .62s cubic-bezier(.2,.78,.18,1); will-change:transform; }
+    .modal-slides-track { transition:transform .95s cubic-bezier(.18,.78,.18,1); will-change:transform; }
     .modal-slider { width:calc(100% + 30px); margin-left:-15px; border-radius:16px; background:#11151c; }
     [data-theme="light"] .modal-slider { background:#e9eef6; }
     .modal-content { touch-action:pan-y; overscroll-behavior:contain; }
@@ -666,7 +681,7 @@
       .card-cta,.card-manager { min-height:44px; font-size:11px; }
       .bottom-nav-inner { grid-template-columns:repeat(4,minmax(0,1fr)); gap:2px; }
       .nav-item { min-height:54px; gap:4px; font-size:8px; }
-      .store-status { grid-template-columns:46px minmax(0,1fr) 29px; grid-template-rows:42px 48px; min-height:112px; gap:7px 10px; padding:10px 12px; }
+      .store-status { grid-template-columns:46px minmax(0,1fr); grid-template-rows:42px 48px; min-height:112px; gap:7px 10px; padding:10px 12px; }
       .store-avatar { width:46px; height:46px; }
       .store-status-message { min-height:48px; font-size:13px; }
       .shop-guide-chip { min-height:43px; margin-bottom:12px; font-size:11px; }
@@ -786,9 +801,10 @@
             <div class="checkout-head"><strong>Данные для доставки</strong><p>Менеджер получит их вместе с заказом</p></div>
             <div class="checkout-fields">
               <div class="field"><label for="inputCity">ГОРОД</label><input id="inputCity" type="text" placeholder="Например, Москва" autocomplete="address-level2" maxlength="100"></div>
-              <div class="field"><label for="inputPvz">СЛУЖБА И ПУНКТ ВЫДАЧИ</label><input id="inputPvz" type="text" placeholder="СДЭК, пункт №..." maxlength="100"></div>
-              <div class="field"><label for="inputAddress">АДРЕС ПУНКТА</label><input id="inputAddress" type="text" placeholder="Улица, дом или адрес ПВЗ" autocomplete="street-address" maxlength="250"></div>
+              <div class="field"><label for="inputDeliveryService">СПОСОБ ДОСТАВКИ</label><select id="inputDeliveryService" onchange="handleDeliveryServiceChange()"><option value="">Выбери способ доставки</option><option value="Яндекс Доставка">Яндекс доставка</option><option value="СДЭК">СДЭК</option><option value="Самовывоз (Ярославль)">Самовывоз (Ярославль)</option></select></div>
+              <div class="field"><label for="inputAddress">АДРЕС ПУНКТА ВЫДАЧИ</label><input id="inputAddress" type="text" placeholder="Улица, пункт выдачи или адрес" autocomplete="street-address" maxlength="250"></div>
               <div class="field"><label for="inputPhone">ТЕЛЕФОН ДЛЯ СВЯЗИ</label><input id="inputPhone" type="tel" placeholder="+7 999 000-00-00" autocomplete="tel" maxlength="40"></div>
+              <div class="field"><label for="inputComment">КОММЕНТАРИЙ</label><textarea id="inputComment" maxlength="1000" placeholder="Пожелания к заказу (необязательно)" enterkeyhint="done"></textarea></div>
             </div>
             <label id="referralApplyRow" class="checkout-total" style="display:none;cursor:pointer"><span>Использовать скидку 1 000 ₽ <input id="useReferralBalance" type="checkbox" onchange="updateCartUI()"></span><strong id="referralApplyHint">Доступно</strong></label>
             <div class="checkout-total"><span>Итого к оплате</span><strong id="cart-total-price">0 &#8381;</strong></div>
@@ -827,6 +843,7 @@
     <button class="nav-item" id="ordersNav" type="button" onclick="switchTab('orders', this)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-3-6 3z"/><path d="M9 8h6M9 12h6"/></svg>Заказы</button>
     <button class="nav-item" id="profileNav" type="button" onclick="switchTab('profile', this)"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/></svg>Профиль</button>
   </div></nav>
+  <button class="keyboard-dismiss" type="button" onclick="hideMobileKeyboard()">Готово</button>
 
   <div id="productModal" class="modal" onclick="outsideClose(event, 'productModal')" aria-hidden="true">
     <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle" onclick="event.stopPropagation()">
@@ -846,7 +863,7 @@
       </div>
       <div class="product-actions">
         <button id="modalAddToCartBtn" class="primary-button modal-add" type="button">В корзину <span aria-hidden="true">&#8594;</span></button>
-        <button id="managerContactBtn" class="manager-button" type="button" onclick="requestManagerContact()">Написать менеджеру</button>
+        <button id="managerContactBtn" class="manager-button" type="button" onclick="requestManagerContact()">Спросить о товаре</button>
       </div>
     </section>
   </div>
@@ -1177,7 +1194,7 @@
         const imageTrack = document.createElement('span'); imageTrack.className = 'product-image-track';
         product.images.forEach((src, imageIndex) => { const image = document.createElement('img'); image.src = src; image.alt = product.title + ', фото ' + (imageIndex + 1); image.loading = 'eager'; imageTrack.append(image); });
         imageButton.append(imageTrack); media.append(imageButton);
-        const favorite = document.createElement('button'); favorite.className = 'favorite-button' + (favorites.has(key) ? ' active' : ''); favorite.type = 'button'; favorite.setAttribute('aria-label', favorites.has(key) ? 'Убрать из избранного' : 'В избранное'); favorite.setAttribute('aria-pressed', String(favorites.has(key))); favorite.innerHTML = iconHeart(); favorite.onclick = () => toggleFavorite(key); media.append(favorite);
+        const favorite = document.createElement('button'); favorite.className = 'favorite-button' + (favorites.has(key) ? ' active' : ''); favorite.type = 'button'; favorite.setAttribute('aria-label', favorites.has(key) ? 'Убрать из избранного' : 'В избранное'); favorite.setAttribute('aria-pressed', String(favorites.has(key))); favorite.innerHTML = iconHeart(); favorite.onclick = () => { favorite.blur(); toggleFavorite(key); }; media.append(favorite);
         const dots = document.createElement('div'); dots.className = 'media-dots'; dots.setAttribute('aria-label', 'Фотографии товара');
         product.images.forEach((src, slideIndex) => {
           const dot = document.createElement('button'); dot.type = 'button'; dot.className = 'media-dot' + (slideIndex === 0 ? ' active' : ''); dot.setAttribute('aria-label', 'Фото ' + (slideIndex + 1));
@@ -1191,7 +1208,7 @@
         const price = document.createElement('strong'); price.className = 'product-price'; price.textContent = formatMoney(product.price);
         const add = document.createElement('button'); add.className = 'card-cta'; add.type = 'button'; add.textContent = 'В корзину'; add.setAttribute('aria-label', 'В корзину: ' + product.title); add.onclick = () => addCardProduct(key);
         const actions = document.createElement('div'); actions.className = 'product-card-actions';
-        const manager = document.createElement('button'); manager.className = 'card-manager'; manager.type = 'button'; manager.textContent = 'Написать менеджеру'; manager.onclick = requestManagerContact;
+        const manager = document.createElement('button'); manager.className = 'card-manager'; manager.type = 'button'; manager.textContent = 'Спросить о товаре'; manager.onclick = requestManagerContact;
         actions.append(add, manager);
         buyRow.append(price); info.append(title, buyRow, actions); card.append(media, info); grid.append(card);
       });
@@ -1337,7 +1354,7 @@
       const track = card && card.querySelector('.product-image-track');
       if (!product || !track || !product.images[index]) return;
       card.dataset.slideIndex = String(index);
-      track.style.transition = 'transform .62s cubic-bezier(.2,.78,.18,1)';
+      track.style.transition = 'transform .95s cubic-bezier(.18,.78,.18,1)';
       track.style.transform = 'translate3d(-' + (index * 50) + '%,0,0)';
       card.querySelectorAll('.media-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === index));
     }
@@ -1447,10 +1464,21 @@
       const modal = document.getElementById('paymentModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     }
     function getDeliveryFields() {
-      const fields = { city: document.getElementById('inputCity').value.trim(), pvz: document.getElementById('inputPvz').value.trim(), address: document.getElementById('inputAddress').value.trim(), phone: document.getElementById('inputPhone').value.trim() };
-      if (!fields.city || !fields.pvz || !fields.address || !fields.phone) { showToast('Заполни все поля доставки'); return null; }
+      const fields = { city: document.getElementById('inputCity').value.trim(), method: document.getElementById('inputDeliveryService').value, address: document.getElementById('inputAddress').value.trim(), phone: document.getElementById('inputPhone').value.trim(), comment: document.getElementById('inputComment').value.trim() };
+      if (!fields.city || !fields.method || !fields.address || !fields.phone) { showToast('Заполни город, доставку, адрес пункта и телефон'); return null; }
       if (fields.phone.replace(/\D/g, '').length < 7) { showToast('Проверь номер телефона'); document.getElementById('inputPhone').focus(); return null; }
       return fields;
+    }
+    function handleDeliveryServiceChange() {
+      const cityInput = document.getElementById('inputCity');
+      const isPickup = document.getElementById('inputDeliveryService').value === 'Самовывоз (Ярославль)';
+      if (isPickup) { cityInput.value = 'Ярославль'; cityInput.readOnly = true; }
+      else { if (cityInput.readOnly && cityInput.value === 'Ярославль') cityInput.value = ''; cityInput.readOnly = false; }
+    }
+    function hideMobileKeyboard() {
+      const active = document.activeElement;
+      if (active && typeof active.blur === 'function') active.blur();
+      document.body.classList.remove('keyboard-open');
     }
     async function finishOrder() {
       if (orderSending) return;
@@ -1461,7 +1489,7 @@
       const items = cart.flatMap(item => Array.from({ length: item.quantity }, () => ({ product_id: item.productId, size_index: item.sizeIndex })));
       const referralDiscount = document.getElementById('useReferralBalance').checked ? Math.min(1000, availableReferralBalance, totalPrice()) : 0;
       const order = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), createdAt: Date.now(), subtotal: totalPrice(), discount: referralDiscount, total: totalPrice() - referralDiscount, items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index })) };
-      const payload = JSON.stringify({ action: 'new_order', order_id: order.id, use_referral_balance: referralDiscount > 0, items, city: delivery.city, pvz: delivery.pvz, address: delivery.address, phone: delivery.phone });
+      const payload = JSON.stringify({ action: 'new_order', order_id: order.id, use_referral_balance: referralDiscount > 0, items, city: delivery.city, delivery_method: delivery.method, pvz: delivery.method, pickup_address: delivery.address, address: delivery.address, phone: delivery.phone, comment: delivery.comment });
       if (new TextEncoder().encode(payload).length > 4096) { showToast('Заказ получился слишком большим'); return; }
       orderSending = true;
       try { await saveOrderHistory(order); }
@@ -1475,6 +1503,9 @@
     }
 
     document.getElementById('searchInput').addEventListener('input', renderProducts);
+    document.addEventListener('focusin', event => { if (event.target.matches('input, textarea')) document.body.classList.add('keyboard-open'); });
+    document.addEventListener('focusout', () => setTimeout(() => { if (!document.activeElement.matches('input, textarea')) document.body.classList.remove('keyboard-open'); }, 120));
+    document.addEventListener('keydown', event => { if (event.key === 'Enter' && event.target.matches('textarea')) { event.preventDefault(); hideMobileKeyboard(); } });
     const serviceMessages = ['Отправка за 24 часа', 'Доставка по всей России', 'Надёжный магазин'];
     let serviceMessageIndex = 0;
     setInterval(() => {
@@ -1485,8 +1516,8 @@
         serviceMessageIndex = (serviceMessageIndex + 1) % serviceMessages.length;
         message.textContent = serviceMessages[serviceMessageIndex];
         message.parentElement.style.opacity = '1';
-      }, 180);
-    }, 3200);
+      }, 560);
+    }, 9000);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
     renderProducts(); updateCartUI(); renderProfileIdentity(); updateReferralUI(); createSnowfall();
   </script>
