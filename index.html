@@ -765,6 +765,27 @@
     [data-theme="light"] .shop-guide-chip { border-color:rgba(35,55,90,.15); background:rgba(255,255,255,.75); color:#293448; box-shadow:0 5px 18px rgba(35,55,90,.07); }
     [data-theme="light"] .guide-arrow { border-color:rgba(35,55,90,.16); }
     [data-theme="light"] .shop-guide-chip:hover { border-color:rgba(35,55,90,.28); background:#fff; box-shadow:0 0 22px rgba(35,55,90,.12); }
+    .catalog-controls { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px; }
+    .catalog-view-toggle { min-height:36px; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:0 10px; border:1px solid rgba(225,235,255,.14); border-radius:12px; background:rgba(255,255,255,.035); color:#d9deea; font-size:10px; font-weight:750; white-space:nowrap; box-shadow:0 5px 16px rgba(0,0,0,.12); transition:background .2s ease,border-color .2s ease,box-shadow .2s ease; }
+    .catalog-view-toggle .icon { width:15px; height:15px; }
+    .catalog-view-toggle:hover,.catalog-view-toggle[aria-pressed="true"] { border-color:rgba(255,255,255,.32); background:rgba(255,255,255,.09); box-shadow:0 0 18px rgba(255,255,255,.1); }
+    [data-theme="light"] .catalog-view-toggle { border-color:rgba(35,55,90,.16); background:rgba(255,255,255,.82); color:#293448; }
+    [data-theme="light"] .catalog-view-toggle:hover,[data-theme="light"] .catalog-view-toggle[aria-pressed="true"] { border-color:rgba(35,55,90,.28); background:#fff; box-shadow:0 0 16px rgba(35,55,90,.12); }
+    .products-grid.compact-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+    .products-grid.compact-grid .product-card { border-radius:16px; }
+    .products-grid.compact-grid .product-media { aspect-ratio:1 / 1; border-radius:15px 15px 0 0; }
+    .products-grid.compact-grid .product-info { gap:5px; padding:9px 9px 10px; }
+    .products-grid.compact-grid .product-title { display:-webkit-box; min-height:2.35em; overflow:hidden; font-size:13px; line-height:1.18; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+    .products-grid.compact-grid .product-price { font-size:17px; }
+    .products-grid.compact-grid .product-card-actions { grid-template-columns:1fr; gap:5px; margin-top:2px; }
+    .products-grid.compact-grid .card-cta,.products-grid.compact-grid .card-manager { min-height:34px; padding:0 6px; border-radius:10px; font-size:9px; line-height:1.15; }
+    .products-grid.compact-grid .favorite-button { top:7px; right:7px; width:28px; height:28px; }
+    @media (max-width:600px) {
+      .catalog-controls { grid-template-columns:minmax(0,1fr) auto; }
+      .products-grid.compact-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .products-grid.compact-grid .product-info { padding:8px 8px 9px; }
+      .products-grid.compact-grid .card-cta,.products-grid.compact-grid .card-manager { min-height:34px; font-size:9px; }
+    }
 </style>
 </head>
 <body>
@@ -791,7 +812,7 @@
     <div id="storefront">
       <section class="store-status" aria-label="Статус магазина">
         <img class="store-avatar" src="ava.jpg" alt="">
-        <div class="store-status-copy"><strong>Striver store</strong><span class="store-status-message" aria-live="polite"><span class="store-status-sticker" id="serviceSticker" aria-hidden="true">&#128230;</span><span id="serviceMessage">Отправка за 24 часа</span></span></div>
+        <div class="store-status-copy"><strong>Striver Store</strong><span class="store-status-message" aria-live="polite"><span class="store-status-sticker" id="serviceSticker" aria-hidden="true">&#128230;</span><span id="serviceMessage">Отправка за 24 часа</span></span></div>
         <span class="store-status-mark" aria-hidden="true">ST</span>
       <button class="shop-guide-chip" type="button" onclick="openInfoModal('usageModal')"><span aria-hidden="true">✦</span><span class="guide-label"> Как пользоваться магазином? </span><span class="guide-arrow" aria-hidden="true">↗</span></button></section>
       
@@ -810,6 +831,7 @@
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
                 <input id="searchInput" type="search" placeholder="Найти товар" autocomplete="off" aria-label="Поиск товаров">
               </label>
+              <button class="catalog-view-toggle" id="catalogViewToggle" type="button" onclick="toggleCatalogDensity()" aria-pressed="false" title="Компактный вид каталога"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="7" rx="1"/><rect x="14" y="4" width="6" height="7" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span id="catalogViewLabel">Компактно</span></button>
               <select class="sort-select" id="sortSelect" aria-label="Сортировка товаров" onchange="sortProducts(this.value)">
                 <option value="featured">Сначала выбранное</option><option value="price-up">Сначала дешевле</option><option value="price-down">Сначала дороже</option>
               </select>
@@ -938,6 +960,21 @@
     let cart = [];
     let favorites = new Set();
     let currentCategory = 'all';
+    let compactCatalog = false;
+    try { compactCatalog = localStorage.getItem('striver_catalog_density_v1') === 'compact'; } catch (_) {}
+    function updateCatalogDensityButton() {
+      const button = document.getElementById('catalogViewToggle');
+      const label = document.getElementById('catalogViewLabel');
+      if (!button || !label) return;
+      label.textContent = compactCatalog ? 'Крупно' : 'Компактно';
+      button.setAttribute('aria-pressed', String(compactCatalog));
+      button.title = compactCatalog ? 'Показать крупные карточки' : 'Показать компактный каталог';
+    }
+    function toggleCatalogDensity() {
+      compactCatalog = !compactCatalog;
+      try { localStorage.setItem('striver_catalog_density_v1', compactCatalog ? 'compact' : 'comfortable'); } catch (error) { console.warn('Catalog layout preference could not be saved', error); }
+      renderProducts();
+    }
     let currentSlideIdx = 0;
     let selectedProductKey = null;
     let nextCartItemId = 1;
@@ -1101,6 +1138,8 @@
 
     function renderProducts() {
       const grid = document.getElementById('productsGrid');
+      grid.classList.toggle('compact-grid', compactCatalog);
+      updateCatalogDensityButton();
       const query = document.getElementById('searchInput').value.trim().toLocaleLowerCase('ru');
       const sort = document.getElementById('sortSelect').value;
       let keys = productOrder.filter(key => {
