@@ -697,7 +697,7 @@
     .snowflake { position:absolute; top:-12vh; left:var(--x); color:rgba(235,244,255,var(--alpha)); font-size:var(--size); line-height:1; text-shadow:0 0 9px rgba(196,222,255,.55),0 0 22px rgba(118,174,255,.22); opacity:.8; will-change:transform; animation:snowfall var(--duration) linear var(--delay) infinite; }
     .catalog-empty-link { min-height:40px; margin-top:6px; padding:0 18px; font-size:10px; }
 
-    .store-status { min-height:0; margin:10px 0 16px; padding:8px 2px; border:0; border-radius:0; background:transparent; box-shadow:none; }
+    .store-status { position:relative; min-height:0; margin:10px 0 11px; padding:8px 2px; border:0; border-radius:0; background:transparent; box-shadow:none; }
     .store-status-message { min-width:0; min-height:44px; height:auto; justify-content:center; gap:9px; padding:7px 14px; border:1px solid rgba(225,235,255,.17); border-radius:15px; background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.035)); box-shadow:inset 0 1px rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.14); opacity:1; transition:opacity .38s ease,transform .38s ease,box-shadow .38s ease; white-space:nowrap; font-size:clamp(11px,3.5vw,14px); line-height:1.15; }
     .store-status-sticker { display:inline-grid; place-items:center; width:25px; height:25px; flex:0 0 25px; border:1px solid rgba(255,255,255,.1); border-radius:9px; background:rgba(255,255,255,.08); box-shadow:0 0 14px rgba(255,255,255,.12); font-size:16px; line-height:1; }
     .store-status-message.is-switching { opacity:0; transform:translateY(4px); }
@@ -752,13 +752,16 @@
       .products-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .product-media { aspect-ratio: .94 / 1; }
     }
-      .store-status-sticker { display:inline; width:auto; height:auto; flex:0 0 auto; border:0; border-radius:0; background:transparent; box-shadow:none; font-size:19px; line-height:1; }
+      .store-status-copy > strong { padding-right:130px; font-size:clamp(14px,4.4vw,16px); }
+    .store-status-sticker { display:inline; width:auto; height:auto; flex:0 0 auto; border:0; border-radius:0; background:transparent; box-shadow:none; font-size:19px; line-height:1; }
     [data-theme="light"] .store-status-sticker { border:0; background:transparent; box-shadow:none; }
-    .shop-guide-chip { width:fit-content; max-width:100%; min-height:40px; justify-self:center; margin:2px auto 15px; padding:0 15px; gap:9px; border:1px solid rgba(220,230,248,.16); border-radius:999px; background:rgba(255,255,255,.025); color:#e8ebf2; font-size:12px; font-weight:650; letter-spacing:.015em; text-align:center; box-shadow:0 5px 20px rgba(0,0,0,.12); transition:background .25s ease,border-color .25s ease,box-shadow .25s ease,color .25s ease; }
-    .shop-guide-chip > span:first-child { display:inline-grid; place-items:center; width:20px; height:20px; opacity:.75; font-size:15px; }
-    .guide-arrow { display:inline-grid; place-items:center; width:20px; height:20px; margin-left:2px; border:1px solid rgba(255,255,255,.12); border-radius:50%; color:inherit; opacity:.7; font-size:12px; }
+    .shop-guide-chip { position:absolute; z-index:3; top:7px; right:0; width:124px; min-height:40px; display:flex; align-items:center; justify-content:center; gap:5px; margin:0; padding:3px 6px; border:1px solid rgba(220,230,248,.16); border-radius:13px; background:rgba(255,255,255,.035); color:#e8ebf2; font-size:9px; font-weight:700; letter-spacing:.01em; line-height:1.1; text-align:left; box-shadow:0 5px 20px rgba(0,0,0,.12); transition:background .25s ease,border-color .25s ease,box-shadow .25s ease,color .25s ease; }
+    .shop-guide-chip > span:first-child { display:inline-grid; place-items:center; width:14px; height:14px; flex:0 0 14px; opacity:.75; font-size:12px; }
+    .guide-label { display:block; min-width:0; flex:1 1 auto; white-space:normal; }
+    .guide-arrow { display:inline-grid; place-items:center; width:14px; height:14px; flex:0 0 14px; margin-left:0; border:1px solid rgba(255,255,255,.12); border-radius:50%; color:inherit; opacity:.7; font-size:12px; }
     .shop-guide-chip:hover { border-color:rgba(255,255,255,.3); background:rgba(255,255,255,.07); box-shadow:0 0 26px rgba(255,255,255,.12); color:#fff; }
     .shop-guide-chip:active { transform:none; }
+    [data-theme="light"] .store-status-copy > strong { color:#171b24; text-shadow:0 0 16px rgba(36,95,199,.12); }
     [data-theme="light"] .shop-guide-chip { border-color:rgba(35,55,90,.15); background:rgba(255,255,255,.75); color:#293448; box-shadow:0 5px 18px rgba(35,55,90,.07); }
     [data-theme="light"] .guide-arrow { border-color:rgba(35,55,90,.16); }
     [data-theme="light"] .shop-guide-chip:hover { border-color:rgba(35,55,90,.28); background:#fff; box-shadow:0 0 22px rgba(35,55,90,.12); }
@@ -790,8 +793,8 @@
         <img class="store-avatar" src="ava.jpg" alt="">
         <div class="store-status-copy"><strong>Striver store</strong><span class="store-status-message" aria-live="polite"><span class="store-status-sticker" id="serviceSticker" aria-hidden="true">&#128230;</span><span id="serviceMessage">Отправка за 24 часа</span></span></div>
         <span class="store-status-mark" aria-hidden="true">ST</span>
-      </section>
-      <button class="shop-guide-chip" type="button" onclick="openInfoModal('usageModal')"><span aria-hidden="true">✦</span> Как пользоваться магазином? <span class="guide-arrow" aria-hidden="true">↗</span></button>
+      <button class="shop-guide-chip" type="button" onclick="openInfoModal('usageModal')"><span aria-hidden="true">✦</span><span class="guide-label"> Как пользоваться магазином? </span><span class="guide-arrow" aria-hidden="true">↗</span></button></section>
+      
 
       <main>
         <section class="section" id="catalog" aria-label="Каталог">
@@ -1212,6 +1215,19 @@
       document.getElementById('modalAddToCartBtn').onclick = () => addSelectedProduct();
       updateSlidePosition(0);
       const modal = document.getElementById('productModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    }
+    function openInfoModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (!modal) {
+        console.error('Requested info modal was not found:', modalId);
+        return false;
+      }
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const content = modal.querySelector('.modal-content');
+      if (content) content.scrollTop = 0;
+      return true;
     }
     function closeModalDirect(modalId) {
       const modal = document.getElementById(modalId); modal.classList.remove('active'); modal.setAttribute('aria-hidden', 'true');
