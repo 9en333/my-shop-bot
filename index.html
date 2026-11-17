@@ -698,8 +698,11 @@
     .catalog-empty-link { min-height:40px; margin-top:6px; padding:0 18px; font-size:10px; }
 
     .store-status { min-height:0; margin:10px 0 16px; padding:8px 2px; border:0; border-radius:0; background:transparent; box-shadow:none; }
-    .store-status-message { min-width:0; min-height:34px; height:auto; padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; opacity:1 !important; transition:none !important; white-space:nowrap; font-size:clamp(11px,3.5vw,14px); line-height:1.15; }
-    .store-status-message > span { min-width:0; white-space:nowrap; }
+    .store-status-message { min-width:0; min-height:44px; height:auto; justify-content:center; gap:9px; padding:7px 14px; border:1px solid rgba(225,235,255,.17); border-radius:15px; background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.035)); box-shadow:inset 0 1px rgba(255,255,255,.07),0 8px 22px rgba(0,0,0,.14); opacity:1; transition:opacity .38s ease,transform .38s ease,box-shadow .38s ease; white-space:nowrap; font-size:clamp(11px,3.5vw,14px); line-height:1.15; }
+    .store-status-sticker { display:inline-grid; place-items:center; width:25px; height:25px; flex:0 0 25px; border:1px solid rgba(255,255,255,.1); border-radius:9px; background:rgba(255,255,255,.08); box-shadow:0 0 14px rgba(255,255,255,.12); font-size:16px; line-height:1; }
+    .store-status-message.is-switching { opacity:0; transform:translateY(4px); }
+    [data-theme="light"] .store-status-message { border-color:rgba(36,95,199,.18); background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(236,242,251,.86)); color:#245fc7; }
+    [data-theme="light"] .store-status-sticker { border-color:rgba(36,95,199,.12); background:rgba(36,95,199,.08); box-shadow:0 0 14px rgba(36,95,199,.12); }
     @media (max-width:600px) { .store-status { grid-template-rows:42px 38px; } }
     @media (hover:hover) and (pointer:fine) {
       .product-card:hover { transform:translateY(-4px); border-color:rgba(255,255,255,.12); box-shadow:0 0 0 1px rgba(255,255,255,.12),0 18px 42px rgba(0,0,0,.42),0 0 38px rgba(255,255,255,.34),0 0 76px rgba(255,255,255,.18); }
@@ -708,7 +711,10 @@
     .product-image-button:active, .app-shell .product-image-button:active { transform:none !important; filter:none !important; box-shadow:none !important; }
     .product-image-button img { pointer-events:none; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
     .product-media { -webkit-touch-callout:none; }
+    .product-card { transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease; }
+    .product-card.is-touching { transform:none !important; border-color:rgba(255,255,255,.28); box-shadow:0 0 0 1px rgba(255,255,255,.16),0 14px 34px rgba(0,0,0,.38),0 0 34px rgba(255,255,255,.32),0 0 68px rgba(255,255,255,.18); }
     @media (hover:none) { .product-card:hover { transform:none; border-color:rgba(255,255,255,.105); box-shadow:0 10px 26px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.025); } }
+    .app-shell .product-card.is-touching { transform:none !important; border-color:rgba(255,255,255,.28); box-shadow:0 0 0 1px rgba(255,255,255,.16),0 14px 34px rgba(0,0,0,.38),0 0 34px rgba(255,255,255,.32),0 0 68px rgba(255,255,255,.18); }
     [data-theme="light"] .snowflake { color:rgba(75,119,181,var(--alpha)); text-shadow:0 0 8px rgba(255,255,255,.9),0 0 18px rgba(91,147,222,.22); }
     @keyframes snowfall { 0% { transform:translate3d(0,-8vh,0) rotate(0deg); } 25% { transform:translate3d(var(--drift),28vh,0) rotate(100deg); } 55% { transform:translate3d(calc(var(--drift) * -.55),62vh,0) rotate(220deg); } 80% { transform:translate3d(var(--drift),92vh,0) rotate(320deg); } 100% { transform:translate3d(0,116vh,0) rotate(420deg); } }
     @media (prefers-reduced-motion:reduce) { .snowflake { animation-duration:30s !important; opacity:.24; } }
@@ -772,7 +778,7 @@
     <div id="storefront">
       <section class="store-status" aria-label="Статус магазина">
         <img class="store-avatar" src="ava.jpg" alt="">
-        <div class="store-status-copy"><strong>Striver store</strong><span class="store-status-message"><i></i><span id="serviceMessage">Отправка за 24 часа</span></span></div>
+        <div class="store-status-copy"><strong>Striver store</strong><span class="store-status-message" aria-live="polite"><span class="store-status-sticker" id="serviceSticker" aria-hidden="true">📦</span><span id="serviceMessage">Отправка за 24 часа</span></span></div>
         <span class="store-status-mark" aria-hidden="true">ST</span>
       </section>
       <button class="shop-guide-chip" type="button" onclick="openInfoModal('usageModal')"><span aria-hidden="true">✦</span> Как пользоваться магазином? <span class="guide-arrow" aria-hidden="true">↗</span></button>
@@ -1263,6 +1269,22 @@
     }
     let cardTouchStart = null;
     const productGrid = document.getElementById('productsGrid');
+    let touchGlowTimer = null;
+    productGrid.addEventListener('pointerdown', event => {
+      const imageButton = event.target.closest('.product-image-button');
+      const card = imageButton && imageButton.closest('.product-card');
+      if (!card) return;
+      if (touchGlowTimer) clearTimeout(touchGlowTimer);
+      card.classList.add('is-touching');
+    });
+    function clearProductTouchGlow(event) {
+      if (!event.target || !event.target.closest) return;
+      const card = event.target.closest('.product-card');
+      if (!card) return;
+      touchGlowTimer = window.setTimeout(() => card.classList.remove('is-touching'), 420);
+    }
+    productGrid.addEventListener('pointerup', clearProductTouchGlow);
+    productGrid.addEventListener('pointercancel', clearProductTouchGlow);
     productGrid.addEventListener('touchstart', event => { if (event.changedTouches.length) { const imageArea=event.target.closest('.product-image-button'); const card=imageArea ? imageArea.closest('.product-card') : null; cardTouchStart = { x:event.changedTouches[0].clientX, y:event.changedTouches[0].clientY, card, index:Number(card && card.dataset.slideIndex || 0), dragging:false }; } }, { passive:true });
     productGrid.addEventListener('touchmove', event => {
       if (!cardTouchStart || !cardTouchStart.card || !event.touches.length) return;
@@ -1409,14 +1431,34 @@
     document.addEventListener('focusin', event => { if (event.target.matches('input, textarea')) document.body.classList.add('keyboard-open'); });
     document.addEventListener('focusout', () => setTimeout(() => { if (!document.activeElement.matches('input, textarea')) document.body.classList.remove('keyboard-open'); }, 120));
     document.addEventListener('keydown', event => { if (event.key === 'Enter' && event.target.matches('textarea')) { event.preventDefault(); hideMobileKeyboard(); } });
-    const serviceMessages = ['Отправка за 24 часа', 'Доставка по всей России', 'Надёжный магазин'];
+    const serviceMessages = [
+      { sticker: '📦', text: 'Отправка за 24 часа' },
+      { sticker: '🚚', text: 'Доставка по всей России' },
+      { sticker: '✨', text: 'Надёжный магазин' }
+    ];
     let serviceMessageIndex = 0;
-    window.setInterval(() => {
+    let serviceMessageChanging = false;
+    function rotateServiceMessage() {
+      const pill = document.querySelector('.store-status-message');
+      const sticker = document.getElementById('serviceSticker');
       const message = document.getElementById('serviceMessage');
-      if (!message || !serviceMessages.length) return;
-      serviceMessageIndex = (serviceMessageIndex + 1) % serviceMessages.length;
-      message.textContent = serviceMessages[serviceMessageIndex];
-    }, 2000);
+      if (!pill || !sticker || !message || serviceMessageChanging) return;
+      serviceMessageChanging = true;
+      pill.classList.add('is-switching');
+      window.setTimeout(() => {
+        serviceMessageIndex = (serviceMessageIndex + 1) % serviceMessages.length;
+        sticker.textContent = serviceMessages[serviceMessageIndex].sticker;
+        message.textContent = serviceMessages[serviceMessageIndex].text;
+        requestAnimationFrame(() => {
+          pill.classList.remove('is-switching');
+          window.setTimeout(() => {
+            serviceMessageChanging = false;
+            rotateServiceMessage();
+          }, 2000);
+        });
+      }, 420);
+    }
+    window.setTimeout(rotateServiceMessage, 2000);
     document.addEventListener('keydown', event => { if (event.key === 'Escape') document.querySelectorAll('.modal.active').forEach(modal => closeModalDirect(modal.id)); });
     renderProducts(); updateCartUI(); updateThemeToggle(); createSnowfall();
   </script>
