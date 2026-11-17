@@ -786,7 +786,10 @@
       .products-grid.compact-grid .product-info { padding:8px 8px 9px; }
       .products-grid.compact-grid .card-cta,.products-grid.compact-grid .card-manager { min-height:34px; font-size:9px; }
     }
-</style>
+    .availability-tabs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 12px; }
+    .availability-tab { min-height:42px; border:1px solid var(--line); border-radius:14px; background:var(--paper-strong); color:var(--muted); font:inherit; font-size:12px; font-weight:800; transition:background .2s ease,color .2s ease,box-shadow .2s ease,border-color .2s ease; }
+    .availability-tab.active { color:var(--ink); border-color:rgba(255,255,255,.32); box-shadow:0 0 18px rgba(255,255,255,.12); }
+    [data-theme="light"] .availability-tab.active { border-color:rgba(35,55,90,.28); box-shadow:0 0 14px rgba(52,112,210,.12); }</style>
 </head>
 <body>
   <div class="snow-layer" id="snowLayer" aria-hidden="true"></div>
@@ -836,6 +839,10 @@
                 <option value="featured">Сначала выбранное</option><option value="price-up">Сначала дешевле</option><option value="price-down">Сначала дороже</option>
               </select>
             </div>
+          </div>
+          <div class="availability-tabs" role="tablist" aria-label="Наличие товаров">
+            <button type="button" class="availability-tab active" data-availability="in_stock" aria-pressed="true" onclick="setAvailability('in_stock')">В наличии <span data-availability-count="in_stock"></span></button>
+            <button type="button" class="availability-tab" data-availability="preorder" aria-pressed="false" onclick="setAvailability('preorder')">Под заказ <span data-availability-count="preorder"></span></button>
           </div>
           <div class="products-grid" id="productsGrid" aria-live="polite"></div>
         </section>
@@ -945,14 +952,14 @@
     }
 
     const currency = '\u20BD';
-    const productSizes = ['41 (26 \u0441\u043c)', '42.5 (27 \u0441\u043c)', '43 (27.5 \u0441\u043c)'];
+    const productSizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
     const productsData = {
       sneakers: {
-        title: 'Nike Air Force 1 High (White)', price: 6990, type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
-        color: 'Белый', desc: 'Цвет: белый', short: 'Белый · 41, 42.5, 43', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
+        title: 'Nike Air Force 1 High (White)', price: 10000, sizePrices: [10000, 11000, 11000, 12000, 12000, 12000, 12000, 13000, 13000, 13000], availability: 'preorder', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
+        color: 'Белый', desc: 'Цвет: белый', short: 'Белый · размеры 36–45', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
       },
       jacket: {
-        title: 'Куртка Hollister 10s type', price: 4290, type: 'Куртка', tag: 'HOLLISTER', category: 'jacket',
+        title: 'Куртка Hollister 10s type', price: 4290, type: 'Куртка', tag: 'HOLLISTER', category: 'jacket', availability: 'in_stock',
         color: 'Тёмно-синий', desc: 'Цвет: тёмно-синий', short: 'Тёмно-синий', images: ['kyrtka_1.png', 'kyrtka_2.png'], hasSizes: false
       }
     };
@@ -960,6 +967,23 @@
     let cart = [];
     let favorites = new Set();
     let currentCategory = 'all';
+    let currentAvailability = 'in_stock';
+    function updateAvailabilityTabs() {
+      document.querySelectorAll('[data-availability]').forEach(button => {
+        const active = button.dataset.availability === currentAvailability;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      const counts = { in_stock: 0, preorder: 0 };
+      productOrder.forEach(key => { const value = productsData[key].availability || 'in_stock'; counts[value] = (counts[value] || 0) + 1; });
+      document.querySelectorAll('[data-availability-count]').forEach(node => { node.textContent = String(counts[node.dataset.availabilityCount] || 0); });
+    }
+    function setAvailability(value) {
+      if (value !== 'in_stock' && value !== 'preorder') return;
+      currentAvailability = value; currentCategory = 'all';
+      document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.id === 'allFilter'));
+      renderProducts();
+    }
     let compactCatalog = false;
     try { compactCatalog = localStorage.getItem('striver_catalog_density_v1') === 'compact'; } catch (_) {}
     function updateCatalogDensityButton() {
@@ -1142,14 +1166,16 @@
       updateCatalogDensityButton();
       const query = document.getElementById('searchInput').value.trim().toLocaleLowerCase('ru');
       const sort = document.getElementById('sortSelect').value;
+      updateAvailabilityTabs();
       let keys = productOrder.filter(key => {
         const product = productsData[key];
         const categoryMatch = currentCategory === 'all' || (currentCategory === 'favorites' ? favorites.has(key) : product.category === currentCategory);
         const searchMatch = !query || (product.title + ' ' + product.type + ' ' + product.short).toLocaleLowerCase('ru').includes(query);
-        return categoryMatch && searchMatch;
+        const availabilityMatch = currentCategory === 'favorites' ? true : (product.availability || 'in_stock') === currentAvailability;
+        return categoryMatch && availabilityMatch && searchMatch;
       });
-      if (sort === 'price-up') keys.sort((a, b) => productsData[a].price - productsData[b].price);
-      if (sort === 'price-down') keys.sort((a, b) => productsData[b].price - productsData[a].price);
+      if (sort === 'price-up') keys.sort((a, b) => Math.min(...(productsData[a].sizePrices || [productsData[a].price])) - Math.min(...(productsData[b].sizePrices || [productsData[b].price])));
+      if (sort === 'price-down') keys.sort((a, b) => Math.min(...(productsData[b].sizePrices || [productsData[b].price])) - Math.min(...(productsData[a].sizePrices || [productsData[a].price])));
       grid.replaceChildren();
       if (!keys.length) {
         const empty = document.createElement('div'); empty.className = 'no-results'; empty.textContent = 'Ничего не нашлось. Попробуй изменить запрос или фильтр.'; grid.append(empty); return;
@@ -1173,7 +1199,7 @@
         const info = document.createElement('div'); info.className = 'product-info';
         const title = document.createElement('h3'); title.className = 'product-title'; title.textContent = product.title;
         const buyRow = document.createElement('div'); buyRow.className = 'product-buy-row';
-        const price = document.createElement('strong'); price.className = 'product-price'; price.textContent = formatMoney(product.price);
+        const price = document.createElement('strong'); price.className = 'product-price'; price.textContent = product.sizePrices ? 'от ' + formatMoney(Math.min(...product.sizePrices)) : formatMoney(product.price);
         const add = document.createElement('button'); add.className = 'card-cta'; add.type = 'button'; add.textContent = 'В корзину'; add.setAttribute('aria-label', 'В корзину: ' + product.title); add.onclick = () => addCardProduct(key);
         const actions = document.createElement('div'); actions.className = 'product-card-actions';
         const manager = document.createElement('button'); manager.className = 'card-manager'; manager.type = 'button'; manager.textContent = 'Спросить о товаре'; manager.onclick = requestManagerContact;
@@ -1184,6 +1210,8 @@
     }
 
     function filterCategory(category, button) {
+      if (category === 'sneakers') currentAvailability = 'preorder';
+      else if (category === 'jacket') currentAvailability = 'in_stock';
       if (category === 'favorites' && currentCategory === 'favorites') {
         category = 'all';
         button = document.getElementById('allFilter');
@@ -1239,7 +1267,7 @@
       selectedProductKey = productKey; currentSlideIdx = 0;
       document.getElementById('modalType').textContent = product.type;
       document.getElementById('modalTitle').textContent = product.title;
-      document.getElementById('modalPrice').textContent = formatMoney(product.price);
+      document.getElementById('modalPrice').textContent = product.sizePrices ? 'от ' + formatMoney(Math.min(...product.sizePrices)) : formatMoney(product.price);
       document.getElementById('modalTag').textContent = product.tag;
       document.getElementById('modalDesc').textContent = product.desc;
       document.getElementById('modalSlide0').src = product.images[0];
@@ -1375,7 +1403,8 @@
       currentSlideIdx = index; slidesTrack.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
       document.getElementById('dot0').classList.toggle('active', index === 0); document.getElementById('dot1').classList.toggle('active', index === 1);
     }
-    function selectSize(element) { document.querySelectorAll('.size-chip').forEach(chip => chip.classList.remove('selected')); element.classList.add('selected'); }
+    function getProductPrice(product, sizeIndex) { return product && product.sizePrices && Number.isInteger(sizeIndex) ? product.sizePrices[sizeIndex] : (product ? product.price : 0); }
+    function selectSize(element) { document.querySelectorAll('.size-chip').forEach(chip => chip.classList.remove('selected')); element.classList.add('selected'); const product = productsData[selectedProductKey]; document.getElementById('modalPrice').textContent = formatMoney(getProductPrice(product, Number(element.dataset.index))); }
     function addSelectedProduct() {
       const key = selectedProductKey; const product = productsData[key]; if (!product) return;
       let sizeIndex = null;
@@ -1401,7 +1430,7 @@
       const product = productsData[productId];
       let line = cart.find(item => item.productId === productId && item.sizeIndex === sizeIndex);
       if (line) line.quantity += 1;
-      else cart.push({ id: nextCartItemId++, productId, sizeIndex, title: product.title, price: product.price, quantity: 1 });
+      else cart.push({ id: nextCartItemId++, productId, sizeIndex, title: product.title, price: getProductPrice(product, sizeIndex), quantity: 1 });
       updateCartUI();
     }
     function changeQuantity(itemId, delta) {
