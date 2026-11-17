@@ -62,6 +62,7 @@
       letter-spacing: -1px; transform: rotate(-5deg);
     }
     .brand-copy { display: grid; gap: 1px; }
+    .brand-mark svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
     .brand-name { font-size: 16px; font-weight: 950; letter-spacing: -.045em; }
     .brand-caption { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
     .topbar-note { color: var(--muted); font-size: 12px; font-weight: 600; }
@@ -800,7 +801,7 @@
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Striver — на главную">
-        <span class="brand-mark">ST</span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4 4 6 2 11l4 2v7h12v-7l4-2-2-5-4-2-2 3h-4L8 4Z"/><path d="M9 7c.5 2 1.5 3 3 3s2.5-1 3-3"/></svg></span>
         <span class="brand-copy"><span class="brand-name">Striver</span><span class="brand-caption">selected goods</span></span>
       </a>
       <div class="topbar-actions">
@@ -958,7 +959,7 @@
     const productSizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
     const productsData = {
       sneakers: {
-        title: 'Nike Air Force 1 High (White)', price: 10000, sizePrices: [10000, 11000, 11000, 12000, 12000, 12000, 12000, 13000, 13000, 13000], availability: 'both', defaultAvailability: 'preorder', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
+        title: 'Nike Air Force 1 High (White)', price: 6990, sizes: ['41', '42.5', '43'], availability: 'in_stock', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
         color: 'Белый', desc: 'Цвет: белый', short: 'Белый · размеры 36–45', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
       },
       jacket: {
@@ -966,7 +967,14 @@
         color: 'Тёмно-синий', desc: 'Цвет: тёмно-синий', short: 'Тёмно-синий', images: ['kyrtka_1.png', 'kyrtka_2.png'], hasSizes: false
       }
     };
-    const productOrder = ['sneakers', 'jacket'];
+    productsData.sneakers_preorder = {
+      ...productsData.sneakers,
+      price: 10000,
+      sizePrices: [10000, 11000, 11000, 12000, 12000, 12000, 12000, 13000, 13000, 13000],
+      sizes: productSizes,
+      availability: 'preorder'
+    };
+    const productOrder = ['sneakers', 'jacket', 'sneakers_preorder'];
     let cart = [];
     let favorites = new Set();
     let currentCategory = 'all';
@@ -1145,7 +1153,7 @@
           const name = document.createElement('span'); name.className = 'order-item-name'; name.textContent = product.title + (quantity > 1 ? ' × ' + quantity : '');
           const size = document.createElement('span'); size.className = 'order-item-size';
           const sizeIndex = sizeValue === 'null' ? null : Number(sizeValue);
-          size.textContent = (sizeIndex === null ? "\u0411\u0435\u0437 \u0440\u0430\u0437\u043c\u0435\u0440\u0430" : "\u0420\u0430\u0437\u043c\u0435\u0440 " + (productSizes[sizeIndex] || "")) + " \u00b7 " + (availabilityValue === "preorder" ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438");
+          size.textContent = (sizeIndex === null ? "\u0411\u0435\u0437 \u0440\u0430\u0437\u043c\u0435\u0440\u0430" : "\u0420\u0430\u0437\u043c\u0435\u0440 " + ((product.sizes || productSizes)[sizeIndex] || "")) + " \u00b7 " + (availabilityValue === "preorder" ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438");
           copy.append(name, size); row.append(image, copy); lines.append(row);
         });
         const status = document.createElement('div');
@@ -1181,7 +1189,20 @@
       if (sort === 'price-down') keys.sort((a, b) => Math.min(...(productsData[b].sizePrices || [productsData[b].price])) - Math.min(...(productsData[a].sizePrices || [productsData[a].price])));
       grid.replaceChildren();
       if (!keys.length) {
-        const empty = document.createElement('div'); empty.className = 'no-results'; empty.textContent = 'Ничего не нашлось. Попробуй изменить запрос или фильтр.'; grid.append(empty); return;
+        const empty = document.createElement('div'); empty.className = 'no-results';
+        const hasCategoryInSection = productOrder.some(key => {
+          const product = productsData[key];
+          return product.category === currentCategory && (product.availability === 'both' || product.availability === currentAvailability);
+        });
+        const unavailableCategory = currentCategory !== 'all' && currentCategory !== 'favorites' && !hasCategoryInSection;
+        empty.textContent = query
+          ? "\u041f\u043e \u044d\u0442\u043e\u043c\u0443 \u0437\u0430\u043f\u0440\u043e\u0441\u0443 \u0442\u043e\u0432\u0430\u0440\u044b \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u044b."
+          : unavailableCategory
+            ? "\u0414\u0430\u043d\u043d\u044b\u0439 \u0432\u0438\u0434 \u0442\u043e\u0432\u0430\u0440\u0430 \u0441\u0435\u0439\u0447\u0430\u0441 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0432 \u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u00ab" + (currentAvailability === 'preorder' ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438") + "\u00bb."
+            : currentCategory === 'favorites'
+              ? "\u0412 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u043c \u043f\u043e\u043a\u0430 \u043f\u0443\u0441\u0442\u043e."
+              : "\u0412 \u044d\u0442\u043e\u043c \u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u043f\u043e\u043a\u0430 \u043d\u0435\u0442 \u0442\u043e\u0432\u0430\u0440\u043e\u0432.";
+        grid.append(empty); return;
       }
       keys.forEach((key, index) => {
         const product = productsData[key];
@@ -1213,8 +1234,6 @@
     }
 
     function filterCategory(category, button) {
-      if (category === 'sneakers') currentAvailability = 'preorder';
-      else if (category === 'jacket') currentAvailability = 'in_stock';
       if (category === 'favorites' && currentCategory === 'favorites') {
         category = 'all';
         button = document.getElementById('allFilter');
@@ -1279,7 +1298,7 @@
       document.getElementById('modalSlide1').alt = product.title + ', фото 2';
       document.getElementById('modalSizesContainer').hidden = !product.hasSizes;
       const sizeBox = document.getElementById('modalSizes'); sizeBox.replaceChildren();
-      if (product.hasSizes) productSizes.forEach((label, index) => {
+      if (product.hasSizes) (product.sizes || productSizes).forEach((label, index) => {
         const chip = document.createElement('button'); chip.className = 'size-chip'; chip.type = 'button'; chip.textContent = label; chip.onclick = () => selectSize(chip); chip.dataset.index = index; sizeBox.append(chip);
       });
       document.getElementById('modalAddToCartBtn').onclick = () => addSelectedProduct();
@@ -1468,7 +1487,7 @@
         const thumb = document.createElement('div'); thumb.className = 'cart-thumb'; const image = document.createElement('img'); image.src = product.images[0]; image.alt = ''; thumb.append(image);
         const info = document.createElement('div'); const type = document.createElement('p'); type.className = 'cart-item-type'; type.textContent = product.type;
         const title = document.createElement('h3'); title.className = 'cart-item-title'; title.textContent = item.title;
-        const meta = document.createElement('div'); meta.className = 'cart-item-meta'; meta.textContent = (item.sizeIndex === null ? "\u0411\u0435\u0437 \u0440\u0430\u0437\u043c\u0435\u0440\u0430" : "\u0420\u0430\u0437\u043c\u0435\u0440 " + productSizes[item.sizeIndex]) + " \u00b7 " + (item.availability === "preorder" ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438"); info.append(type, title, meta);
+        const meta = document.createElement('div'); meta.className = 'cart-item-meta'; meta.textContent = (item.sizeIndex === null ? "\u0411\u0435\u0437 \u0440\u0430\u0437\u043c\u0435\u0440\u0430" : "\u0420\u0430\u0437\u043c\u0435\u0440 " + (product.sizes || productSizes)[item.sizeIndex]) + " \u00b7 " + (item.availability === "preorder" ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438"); info.append(type, title, meta);
         const side = document.createElement('div'); side.className = 'cart-item-side'; const price = document.createElement('strong'); price.className = 'cart-item-price'; price.textContent = formatMoney(item.price * item.quantity);
         const qty = document.createElement('div'); qty.className = 'qty-control';
         const minus = document.createElement('button'); minus.type = 'button'; minus.setAttribute('aria-label', 'Уменьшить количество'); minus.textContent = '-'; minus.onclick = () => changeQuantity(item.id, -1);
