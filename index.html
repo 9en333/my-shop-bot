@@ -801,7 +801,9 @@
     .product-price,.cart-item-price,.order-card-total { font-weight:600; }
     .card-cta,.card-manager,.filter-chip,.availability-tab,.favorite-availability,.sort-select { font-family:"Onest",sans-serif; font-weight:500; }
     .product-title { font-family:"Onest",sans-serif; font-weight:400; letter-spacing:-.015em; line-height:1.32; }
-    .product-price { font-family:"Onest",sans-serif; font-weight:400; letter-spacing:-.02em; font-variant-numeric:tabular-nums; text-shadow:none; }
+    .product-price { font-family:inherit; font-size:23px; font-weight:600; letter-spacing:-.025em; font-variant-numeric:tabular-nums; color:#a9c9f5; text-shadow:none; }
+    [data-theme="light"] .product-price { color:#416ca8; }
+    .products-grid.compact-grid .product-price { font-size:18px; }
     .favorite-availability,.favorite-availability.preorder { border-color:rgba(141,184,244,.2); background:rgba(141,184,244,.08); color:#a9c9f5; }
     [data-theme="light"] .favorite-availability,[data-theme="light"] .favorite-availability.preorder { border-color:rgba(52,112,205,.16); background:rgba(52,112,205,.07); color:#416ca8; }
     .orders-page-head { margin:14px 0 17px; padding:17px 18px; border:1px solid var(--line); border-radius:21px; background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.025)); }
@@ -830,13 +832,6 @@
     [data-theme="light"] .order-status.sent { color:#168362; }
     .empty-favorites { display:grid; justify-items:center; gap:13px; }
     .empty-favorites .catalog-empty-link { justify-self:center; }
-    body.favorites-view #storefront { display:none; }
-    #tab-favorites { display:none; }
-    #tab-favorites.active { display:block; }
-    .favorites-page-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 17px; padding:17px 18px; border:1px solid var(--line); border-radius:21px; background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.025)); }
-    .favorites-page-head span { color:var(--muted); font-size:9px; font-weight:500; letter-spacing:.12em; }
-    .favorites-page-head h1 { margin:5px 0 0; font-size:23px; font-weight:500; letter-spacing:-.025em; }
-    [data-theme="light"] .favorites-page-head { background:linear-gradient(135deg,#fff,#f3f6fb); }
     @media (max-width:600px) {
       .order-card { padding:14px; }
       .order-item { grid-template-columns:68px minmax(0,1fr); gap:10px; }
@@ -903,11 +898,6 @@
         </section>
       </main>
     </div>
-
-      <section class="tab-content" id="tab-favorites" aria-label="Избранное">
-        <div class="favorites-page-head"><div><span>STRIVER • SAVED</span><h1>Избранное</h1></div><button class="outline-button" type="button" onclick="goToCatalog()">← Каталог</button></div>
-        <div class="products-grid" id="favoritesGrid" aria-live="polite"></div>
-      </section>
 
       <section class="tab-content" id="tab-cart">
         <div class="cart-heading"><div><p class="section-kicker">Твой выбор</p><h1 class="section-title">Корзина<span id="cartHeadingCount"></span></h1></div><button class="outline-button" type="button" onclick="switchTab('products', document.getElementById('productsNav'))">&#8592; В каталог</button></div>
@@ -1047,8 +1037,9 @@
     }
     function setAvailability(value) {
       if (value !== 'in_stock' && value !== 'preorder') return;
-      currentAvailability = value; currentCategory = 'all';
-      document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.id === 'allFilter'));
+      currentAvailability = value;
+      if (currentCategory !== 'favorites') currentCategory = 'all';
+      document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', currentCategory === 'all' && el.id === 'allFilter'));
       renderProducts();
     }
     let compactCatalog = false;
@@ -1228,10 +1219,9 @@
       if (Number.isFinite(nextStatusChange)) orderStatusTimer = setTimeout(renderProfileOrders, Math.max(0, nextStatusChange));
     }
 
-    function renderProducts(gridId = 'productsGrid', categoryOverride = currentCategory) {
-      const grid = document.getElementById(gridId);
-      if (!grid) return;
-      const listingCategory = categoryOverride;
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      const listingCategory = currentCategory;
       grid.classList.toggle('compact-grid', compactCatalog);
       updateCatalogDensityButton();
       const query = document.getElementById('searchInput').value.trim().toLocaleLowerCase('ru');
@@ -1254,7 +1244,9 @@
           return product.category === listingCategory && (product.availability === 'both' || product.availability === currentAvailability);
         });
         const unavailableCategory = listingCategory !== 'all' && listingCategory !== 'favorites' && !hasCategoryInSection;
-        empty.textContent = query
+        empty.textContent = listingCategory === 'favorites' && favorites.size === 0
+          ? "\u0417\u0434\u0435\u0441\u044c \u043f\u043e\u043a\u0430 \u043f\u0443\u0441\u0442\u043e."
+          : query
           ? "\u041f\u043e \u044d\u0442\u043e\u043c\u0443 \u0437\u0430\u043f\u0440\u043e\u0441\u0443 \u0442\u043e\u0432\u0430\u0440\u044b \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u044b."
           : unavailableCategory
             ? "\u0414\u0430\u043d\u043d\u044b\u0439 \u0432\u0438\u0434 \u0442\u043e\u0432\u0430\u0440\u0430 \u0441\u0435\u0439\u0447\u0430\u0441 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0432 \u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u00ab" + (currentAvailability === 'preorder' ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438") + "\u00bb."
@@ -1302,25 +1294,25 @@
     }
 
     function filterCategory(category, button) {
-      if (category === 'favorites') {
-        switchTab('favorites');
-        renderProducts('favoritesGrid', 'favorites');
-        return;
+      if (category === 'favorites' && currentCategory === 'favorites') {
+        category = 'all';
+        button = document.getElementById('allFilter');
       }
       currentCategory = category;
       document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el === button));
       renderProducts();
+      if (category === 'favorites') switchTab('products', document.getElementById('productsNav'));
     }
     function goToCatalog() {
       currentCategory = 'all';
-      filterCategory('all', document.getElementById('allFilter'));
+      document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el.id === 'allFilter'));
+      renderProducts();
       switchTab('products', document.getElementById('productsNav'));
     }
     function sortProducts() { renderProducts(); }
     function toggleFavorite(key) {
       if (favorites.has(key)) favorites.delete(key); else favorites.add(key);
       renderProducts();
-      if (document.body.classList.contains('favorites-view')) renderProducts('favoritesGrid', 'favorites');
       showToast(favorites.has(key) ? 'Добавлено в избранное' : 'Убрано из избранного');
     }
 
@@ -1329,22 +1321,17 @@
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       if (tabName === 'cart') {
         document.body.classList.add('cart-view');
-        document.body.classList.remove('orders-view', 'favorites-view');
+        document.body.classList.remove('orders-view');
         document.getElementById('tab-cart').classList.add('active');
         document.getElementById('cartNav').classList.add('active');
       } else if (tabName === 'orders') {
-        document.body.classList.remove('cart-view', 'favorites-view');
+        document.body.classList.remove('cart-view');
         document.body.classList.add('orders-view');
         document.getElementById('tab-orders').classList.add('active');
         document.getElementById('ordersNav').classList.add('active');
         renderProfileOrders().catch(error => { console.error('Order history render failed', error); showToast('Не удалось загрузить заказы'); });
-      } else if (tabName === 'favorites') {
-        document.body.classList.remove('cart-view', 'orders-view');
-        document.body.classList.add('favorites-view');
-        document.getElementById('tab-favorites').classList.add('active');
-        renderProducts('favoritesGrid', 'favorites');
       } else {
-        document.body.classList.remove('cart-view', 'orders-view', 'favorites-view');
+        document.body.classList.remove('cart-view', 'orders-view');
         document.getElementById('tab-cart').classList.remove('active');
         document.getElementById('tab-orders').classList.remove('active');
         document.getElementById('productsNav').classList.add('active');
