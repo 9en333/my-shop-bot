@@ -32,7 +32,7 @@
       padding: 0 0 calc(88px + env(safe-area-inset-bottom));
       background: var(--paper);
       color: var(--ink);
-      font-family: "Inter", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Onest", "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -799,9 +799,9 @@
     .brand-name,.store-status-copy > strong { font-weight:700; }
     .product-title,.section-title,.cart-item-title,.order-card-title,.orders-page-head h1 { font-weight:600; }
     .product-price,.cart-item-price,.order-card-total { font-weight:600; }
-    .card-cta,.card-manager,.filter-chip,.availability-tab,.favorite-availability,.sort-select { font-weight:600; }
-    .product-title { font-family:"Inter",sans-serif; font-weight:500; letter-spacing:-.015em; line-height:1.3; }
-    .product-price { font-family:"Inter",sans-serif; font-weight:500; letter-spacing:-.015em; font-variant-numeric:tabular-nums; text-shadow:none; }
+    .card-cta,.card-manager,.filter-chip,.availability-tab,.favorite-availability,.sort-select { font-family:"Onest",sans-serif; font-weight:500; }
+    .product-title { font-family:"Onest",sans-serif; font-weight:400; letter-spacing:-.015em; line-height:1.32; }
+    .product-price { font-family:"Onest",sans-serif; font-weight:400; letter-spacing:-.02em; font-variant-numeric:tabular-nums; text-shadow:none; }
     .favorite-availability,.favorite-availability.preorder { border-color:rgba(141,184,244,.2); background:rgba(141,184,244,.08); color:#a9c9f5; }
     [data-theme="light"] .favorite-availability,[data-theme="light"] .favorite-availability.preorder { border-color:rgba(52,112,205,.16); background:rgba(52,112,205,.07); color:#416ca8; }
     .orders-page-head { margin:14px 0 17px; padding:17px 18px; border:1px solid var(--line); border-radius:21px; background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.025)); }
@@ -830,6 +830,13 @@
     [data-theme="light"] .order-status.sent { color:#168362; }
     .empty-favorites { display:grid; justify-items:center; gap:13px; }
     .empty-favorites .catalog-empty-link { justify-self:center; }
+    body.favorites-view #storefront { display:none; }
+    #tab-favorites { display:none; }
+    #tab-favorites.active { display:block; }
+    .favorites-page-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 17px; padding:17px 18px; border:1px solid var(--line); border-radius:21px; background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.025)); }
+    .favorites-page-head span { color:var(--muted); font-size:9px; font-weight:500; letter-spacing:.12em; }
+    .favorites-page-head h1 { margin:5px 0 0; font-size:23px; font-weight:500; letter-spacing:-.025em; }
+    [data-theme="light"] .favorites-page-head { background:linear-gradient(135deg,#fff,#f3f6fb); }
     @media (max-width:600px) {
       .order-card { padding:14px; }
       .order-item { grid-template-columns:68px minmax(0,1fr); gap:10px; }
@@ -838,20 +845,20 @@
     }</style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="snow-layer" id="snowLayer" aria-hidden="true"></div>
   <div class="app-shell">
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Striver — на главную">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4 4 6 2 11l4 2v7h12v-7l4-2-2-5-4-2-2 3h-4L8 4Z"/><path d="M9 7c.5 2 1.5 3 3 3s2.5-1 3-3"/></svg></span>
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2.8 2.45 6.75 6.75 2.45-6.75 2.45L12 21.2l-2.45-6.75L2.8 12l6.75-2.45L12 2.8Z"/><path d="m19 2 .8 2.2L22 5l-2.2.8L19 8l-.8-2.2L16 5l2.2-.8L19 2Z"/></svg></span>
         <span class="brand-copy"><span class="brand-name">Striver</span><span class="brand-caption">selected goods</span></span>
       </a>
       <div class="topbar-actions">
         <button class="icon-button theme-toggle-top" id="themeToggleTop" type="button" aria-label="Переключить тему" onclick="toggleTheme()"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.6 8.6 0 0 1 8.7 3.8 8.7 8.7 0 1 0 20.2 15.3Z"/></svg></button>
         <button class="icon-button" type="button" aria-label="Показать избранное" onclick="filterCategory('favorites', document.getElementById('favoritesFilter'))">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.75h10A1.75 1.75 0 0 1 18.75 6.5v14l-6.75-4-6.75 4v-14A1.75 1.75 0 0 1 7 4.75Z"/><path d="m12 7.5.8 1.8 1.9.2-1.4 1.3.4 1.9-1.7-1-1.7 1 .4-1.9-1.4-1.3 1.9-.2.8-1.8Z"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.1-8.8 10.4-8.8 10.4S3.2 13.9 3.2 8.8a4.7 4.7 0 0 1 8.8-2.3 4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
         </button>
         <button class="bag-button" type="button" onclick="switchTab('cart', document.getElementById('cartNav'))">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
@@ -896,6 +903,11 @@
         </section>
       </main>
     </div>
+
+      <section class="tab-content" id="tab-favorites" aria-label="Избранное">
+        <div class="favorites-page-head"><div><span>STRIVER • SAVED</span><h1>Избранное</h1></div><button class="outline-button" type="button" onclick="goToCatalog()">← Каталог</button></div>
+        <div class="products-grid" id="favoritesGrid" aria-live="polite"></div>
+      </section>
 
       <section class="tab-content" id="tab-cart">
         <div class="cart-heading"><div><p class="section-kicker">Твой выбор</p><h1 class="section-title">Корзина<span id="cartHeadingCount"></span></h1></div><button class="outline-button" type="button" onclick="switchTab('products', document.getElementById('productsNav'))">&#8592; В каталог</button></div>
@@ -1216,8 +1228,10 @@
       if (Number.isFinite(nextStatusChange)) orderStatusTimer = setTimeout(renderProfileOrders, Math.max(0, nextStatusChange));
     }
 
-    function renderProducts() {
-      const grid = document.getElementById('productsGrid');
+    function renderProducts(gridId = 'productsGrid', categoryOverride = currentCategory) {
+      const grid = document.getElementById(gridId);
+      if (!grid) return;
+      const listingCategory = categoryOverride;
       grid.classList.toggle('compact-grid', compactCatalog);
       updateCatalogDensityButton();
       const query = document.getElementById('searchInput').value.trim().toLocaleLowerCase('ru');
@@ -1225,9 +1239,9 @@
       updateAvailabilityTabs();
       let keys = productOrder.filter(key => {
         const product = productsData[key];
-        const categoryMatch = currentCategory === 'all' || (currentCategory === 'favorites' ? favorites.has(key) : product.category === currentCategory);
+        const categoryMatch = listingCategory === 'all' || (listingCategory === 'favorites' ? favorites.has(key) : product.category === listingCategory);
         const searchMatch = !query || (product.title + ' ' + product.type + ' ' + product.short).toLocaleLowerCase('ru').includes(query);
-        const availabilityMatch = currentCategory === 'favorites' ? true : ((product.availability || 'in_stock') === 'both' || (product.availability || 'in_stock') === currentAvailability);
+        const availabilityMatch = listingCategory === 'favorites' ? true : ((product.availability || 'in_stock') === 'both' || (product.availability || 'in_stock') === currentAvailability);
         return categoryMatch && availabilityMatch && searchMatch;
       });
       if (sort === 'price-up') keys.sort((a, b) => Math.min(...(productsData[a].sizePrices || [productsData[a].price])) - Math.min(...(productsData[b].sizePrices || [productsData[b].price])));
@@ -1237,21 +1251,21 @@
         const empty = document.createElement('div'); empty.className = 'no-results';
         const hasCategoryInSection = productOrder.some(key => {
           const product = productsData[key];
-          return product.category === currentCategory && (product.availability === 'both' || product.availability === currentAvailability);
+          return product.category === listingCategory && (product.availability === 'both' || product.availability === currentAvailability);
         });
-        const unavailableCategory = currentCategory !== 'all' && currentCategory !== 'favorites' && !hasCategoryInSection;
+        const unavailableCategory = listingCategory !== 'all' && listingCategory !== 'favorites' && !hasCategoryInSection;
         empty.textContent = query
           ? "\u041f\u043e \u044d\u0442\u043e\u043c\u0443 \u0437\u0430\u043f\u0440\u043e\u0441\u0443 \u0442\u043e\u0432\u0430\u0440\u044b \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u044b."
           : unavailableCategory
             ? "\u0414\u0430\u043d\u043d\u044b\u0439 \u0432\u0438\u0434 \u0442\u043e\u0432\u0430\u0440\u0430 \u0441\u0435\u0439\u0447\u0430\u0441 \u043e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u0432 \u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u00ab" + (currentAvailability === 'preorder' ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438") + "\u00bb."
-            : currentCategory === 'favorites'
+          : listingCategory === 'favorites'
               ? "\u0412 \u0438\u0437\u0431\u0440\u0430\u043d\u043d\u043e\u043c \u043f\u043e\u043a\u0430 \u043f\u0443\u0441\u0442\u043e."
               : "\u0412 \u044d\u0442\u043e\u043c \u0440\u0430\u0437\u0434\u0435\u043b\u0435 \u043f\u043e\u043a\u0430 \u043d\u0435\u0442 \u0442\u043e\u0432\u0430\u0440\u043e\u0432.";
-        if (currentCategory === 'favorites' && favorites.size === 0) {
+        if (listingCategory === 'favorites' && favorites.size === 0) {
           empty.classList.add('empty-favorites');
           const catalogButton = document.createElement('button'); catalogButton.type = 'button'; catalogButton.className = 'primary-button catalog-empty-link';
           catalogButton.textContent = "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u0432 \u043a\u0430\u0442\u0430\u043b\u043e\u0433";
-          catalogButton.onclick = () => filterCategory('all', document.getElementById('allFilter'));
+          catalogButton.onclick = goToCatalog;
           empty.append(catalogButton);
         }
         grid.append(empty); return;
@@ -1274,7 +1288,7 @@
         media.append(dots);
         const info = document.createElement('div'); info.className = 'product-info';
         const title = document.createElement('h3'); title.className = 'product-title'; title.textContent = product.title;
-        const availabilityBadge = currentCategory === 'favorites' ? document.createElement('span') : null;
+        const availabilityBadge = listingCategory === 'favorites' ? document.createElement('span') : null;
         if (availabilityBadge) { availabilityBadge.className = 'favorite-availability ' + (product.availability === 'preorder' ? 'preorder' : 'in-stock'); availabilityBadge.textContent = product.availability === 'preorder' ? "\u041f\u043e\u0434 \u0437\u0430\u043a\u0430\u0437" : "\u0412 \u043d\u0430\u043b\u0438\u0447\u0438\u0438"; }
         const buyRow = document.createElement('div'); buyRow.className = 'product-buy-row';
         const price = document.createElement('strong'); price.className = 'product-price'; price.textContent = product.sizePrices ? 'от ' + formatMoney(Math.min(...product.sizePrices)) : formatMoney(product.price);
@@ -1288,19 +1302,25 @@
     }
 
     function filterCategory(category, button) {
-      if (category === 'favorites' && currentCategory === 'favorites') {
-        category = 'all';
-        button = document.getElementById('allFilter');
+      if (category === 'favorites') {
+        switchTab('favorites');
+        renderProducts('favoritesGrid', 'favorites');
+        return;
       }
       currentCategory = category;
       document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el === button));
       renderProducts();
-      if (category === 'favorites') switchTab('products', document.getElementById('productsNav'));
+    }
+    function goToCatalog() {
+      currentCategory = 'all';
+      filterCategory('all', document.getElementById('allFilter'));
+      switchTab('products', document.getElementById('productsNav'));
     }
     function sortProducts() { renderProducts(); }
     function toggleFavorite(key) {
       if (favorites.has(key)) favorites.delete(key); else favorites.add(key);
       renderProducts();
+      if (document.body.classList.contains('favorites-view')) renderProducts('favoritesGrid', 'favorites');
       showToast(favorites.has(key) ? 'Добавлено в избранное' : 'Убрано из избранного');
     }
 
@@ -1309,17 +1329,22 @@
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       if (tabName === 'cart') {
         document.body.classList.add('cart-view');
-        document.body.classList.remove('orders-view');
+        document.body.classList.remove('orders-view', 'favorites-view');
         document.getElementById('tab-cart').classList.add('active');
         document.getElementById('cartNav').classList.add('active');
       } else if (tabName === 'orders') {
-        document.body.classList.remove('cart-view');
+        document.body.classList.remove('cart-view', 'favorites-view');
         document.body.classList.add('orders-view');
         document.getElementById('tab-orders').classList.add('active');
         document.getElementById('ordersNav').classList.add('active');
         renderProfileOrders().catch(error => { console.error('Order history render failed', error); showToast('Не удалось загрузить заказы'); });
-      } else {
+      } else if (tabName === 'favorites') {
         document.body.classList.remove('cart-view', 'orders-view');
+        document.body.classList.add('favorites-view');
+        document.getElementById('tab-favorites').classList.add('active');
+        renderProducts('favoritesGrid', 'favorites');
+      } else {
+        document.body.classList.remove('cart-view', 'orders-view', 'favorites-view');
         document.getElementById('tab-cart').classList.remove('active');
         document.getElementById('tab-orders').classList.remove('active');
         document.getElementById('productsNav').classList.add('active');
@@ -1533,7 +1558,7 @@
         const mark = document.createElement('div'); mark.className = 'empty-cart-mark'; mark.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>';
         const title = document.createElement('strong'); title.textContent = 'Корзина пока отдыхает';
         const copy = document.createElement('p'); copy.textContent = 'Добавь вещь из подборки — здесь появится твой заказ.';
-        const catalogButton = document.createElement('button'); catalogButton.className = 'primary-button catalog-empty-link'; catalogButton.type = 'button'; catalogButton.textContent = 'Перейти в каталог'; catalogButton.onclick = () => switchTab('products', document.getElementById('productsNav'));
+        const catalogButton = document.createElement('button'); catalogButton.className = 'primary-button catalog-empty-link'; catalogButton.type = 'button'; catalogButton.textContent = 'Перейти в каталог'; catalogButton.onclick = goToCatalog;
         empty.append(mark, title, copy, catalogButton); container.append(empty); return;
       }
       cart.forEach(item => {
