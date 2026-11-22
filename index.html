@@ -573,14 +573,9 @@
     .profile-subnav button.active { color:#fff; border-color:rgba(100,166,255,.55); background:rgba(52,124,255,.18); box-shadow:0 0 18px rgba(52,124,255,.16); }
     .profile-avatar { overflow:hidden; }
     .profile-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-    .referral-card { margin:0 0 16px; padding:14px; border:1px solid rgba(160,178,205,.18); border-radius:17px; background:linear-gradient(120deg,rgba(150,165,190,.13),rgba(255,255,255,.035)); box-shadow:0 0 24px rgba(100,166,255,.08); }
-    .referral-balance { display:flex; justify-content:space-between; align-items:center; color:#aeb8c9; font-size:10px; }
-    .referral-balance strong { color:#dceaff; font-size:18px; text-shadow:0 0 15px rgba(100,166,255,.4); }
-    .referral-actions { display:flex; gap:8px; margin-top:11px; }
-    .referral-actions button { flex:1; min-height:35px; border:1px solid rgba(115,167,255,.32); border-radius:11px; background:rgba(52,124,255,.12); color:#e3efff; font-size:9px; font-weight:800; }
     .profile-pane[hidden], .profile-card[hidden] { display:none !important; }
     .profile-theme { width:100%; min-height:40px; margin:0 0 16px; border:1px solid var(--line); border-radius:12px; background:rgba(255,255,255,.035); color:var(--ink); font-size:10px; font-weight:800; }
-    .referral-sheet-copy { color:#bdc4d0; font-size:12px; line-height:1.65; }
+    .guide-copy { color:#bdc4d0; font-size:12px; line-height:1.65; }
     [data-theme="light"] { color-scheme:light; --paper:#f1f3f8; --paper-strong:#fff; --ink:#171b24; --muted:#697284; --line:rgba(30,42,65,.14); --blue:#2869d9; --shadow:0 22px 55px rgba(25,28,40,.12); }
     [data-theme="light"] body { background:radial-gradient(ellipse at 50% -12%,rgba(93,140,255,.13),transparent 36%),var(--paper); }
     [data-theme="light"] .product-card,[data-theme="light"] .cart-panel,[data-theme="light"] .checkout-panel,[data-theme="light"] .profile-card,[data-theme="light"] .order-card { background:linear-gradient(145deg,#fff,#f5f7fb); }
@@ -596,9 +591,7 @@
     [data-theme="light"] .cart-item { background:#f1f4f9; }
     [data-theme="light"] .field input,[data-theme="light"] .field select,[data-theme="light"] .field textarea,[data-theme="light"] .payment-card { background:#f5f7fb; color:#171b24; }
     [data-theme="light"] .profile-setup-btn { color:#344055; background:rgba(37,82,150,.05); }
-    [data-theme="light"] .referral-card { background:linear-gradient(120deg,rgba(49,102,195,.1),rgba(255,255,255,.8)); }
-    [data-theme="light"] .referral-balance strong,[data-theme="light"] .referral-sheet-copy { color:#263b60; }
-    [data-theme="light"] .referral-actions button { color:#245fc7; }
+    [data-theme="light"] .guide-copy { color:#263b60; }
     [data-theme="light"] .modal-close-btn,[data-theme="light"] .slider-arrow { background:#f1f3f8; color:#171b24; }
     [data-theme="light"] .nav-item { color:#697284; }
     [data-theme="light"] .nav-item.active { color:#245fc7; text-shadow:0 0 12px rgba(52,124,255,.3); }
@@ -610,20 +603,6 @@
     .modal-slider { background:radial-gradient(ellipse at 50% 45%,rgba(66,83,112,.34),transparent 72%),#171a21; touch-action:pan-y; }
     [data-theme="light"] .modal-slider { background:radial-gradient(ellipse at 50% 45%,rgba(115,151,205,.2),transparent 72%),#eef2f8; }
     .modal-slide { background:transparent; }
-    .referral-card { position:relative; overflow:hidden; padding:16px; border:1px solid rgba(144,181,255,.22); border-radius:22px; background:radial-gradient(ellipse at 100% 0%,rgba(68,126,255,.28),transparent 48%),linear-gradient(145deg,#171b25,#0d1017 72%); box-shadow:inset 0 1px rgba(255,255,255,.07),0 14px 34px rgba(0,0,0,.24),0 0 28px rgba(54,117,255,.09); }
-    .referral-card::after { position:absolute; top:-54px; right:-35px; width:150px; height:150px; content:""; border:1px solid rgba(150,190,255,.13); border-radius:50%; box-shadow:0 0 0 16px rgba(100,166,255,.035),0 0 0 34px rgba(100,166,255,.025); pointer-events:none; }
-    .referral-card-head { position:relative; z-index:1; display:flex; align-items:center; gap:10px; color:#a9b4c7; font-size:9px; font-weight:850; letter-spacing:.13em; text-transform:uppercase; }
-    .referral-card-mark { display:grid; place-items:center; width:32px; height:32px; border:1px solid rgba(135,179,255,.28); border-radius:11px; background:rgba(61,126,255,.14); color:#b9d3ff; font-size:16px; box-shadow:0 0 18px rgba(77,141,255,.16); }
-    .referral-card-title { position:relative; z-index:1; display:block; margin:14px 0 2px; color:#f5f8ff; font-size:29px; font-weight:900; letter-spacing:-.055em; text-shadow:0 0 22px rgba(102,164,255,.25); }
-    .referral-card-copy { position:relative; z-index:1; margin:0; color:#a4aec0; font-size:10px; line-height:1.5; }
-    .referral-card .referral-actions { position:relative; z-index:1; margin-top:14px; }
-    .referral-card .referral-actions button { min-height:38px; border-color:rgba(129,174,255,.25); background:rgba(255,255,255,.045); color:#e8f0ff; }
-    [data-theme="light"] .referral-card { border-color:rgba(50,105,200,.18); background:radial-gradient(ellipse at 100% 0%,rgba(95,151,255,.2),transparent 48%),linear-gradient(145deg,#fff,#eaf1ff); box-shadow:inset 0 1px #fff,0 14px 34px rgba(40,77,133,.12),0 0 24px rgba(65,125,220,.08); }
-    [data-theme="light"] .referral-card-head { color:#66758e; }
-    [data-theme="light"] .referral-card-mark { color:#2763be; background:rgba(61,126,255,.1); }
-    [data-theme="light"] .referral-card-title { color:#19345d; text-shadow:0 0 20px rgba(70,130,225,.15); }
-    [data-theme="light"] .referral-card-copy { color:#66758e; }
-    [data-theme="light"] .referral-card .referral-actions button { color:#2458a9; border-color:rgba(50,105,200,.2); background:rgba(255,255,255,.72); }
     [data-theme="light"] .bottom-nav #cartNav .icon { color:#65748c; stroke:#65748c; }
     [data-theme="light"] .bottom-nav #cartNav.active .icon { color:#245fc7; stroke:#245fc7; }
     [data-theme="light"] .empty-cart-mark { background:rgba(54,112,205,.12); color:#1d3151; }
@@ -830,6 +809,51 @@
     [data-theme="light"] .order-card-total { color:#416ca8; }
     [data-theme="light"] .order-status { color:#9a6b28; }
     [data-theme="light"] .order-status.sent { color:#168362; }
+    .profile-page-heading { margin:17px 2px 15px; }
+    .profile-page-heading > span,.profile-panel-heading > div > span { color:var(--muted); font-size:9px; font-weight:600; letter-spacing:.15em; }
+    .profile-page-heading h1 { margin:5px 0 3px; color:var(--ink); font-size:27px; font-weight:600; letter-spacing:-.04em; }
+    .profile-page-heading p { margin:0; color:var(--muted); font-size:11px; }
+    .profile-hero-card,.profile-action-panel,.profile-settings-panel { overflow:hidden; border:1px solid var(--line); border-radius:21px; background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.02)); box-shadow:0 12px 30px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.035); }
+    .profile-hero-card { position:relative; margin-bottom:12px; padding:16px; }
+    .profile-hero-card::before { position:absolute; top:-62px; right:-42px; width:160px; height:160px; border:1px solid rgba(141,184,244,.13); border-radius:50%; box-shadow:0 0 0 17px rgba(141,184,244,.025),0 0 0 36px rgba(141,184,244,.018); content:""; pointer-events:none; }
+    .profile-identity-row { position:relative; display:flex; align-items:center; gap:12px; min-width:0; }
+    .profile-identity-row .profile-avatar { width:62px; height:62px; border-color:rgba(160,195,255,.42); font-size:24px; }
+    .profile-identity-row .profile-card-copy { flex:1; }
+    .profile-card-copy .profile-caption { font-size:8px; letter-spacing:.15em; }
+    .profile-card-copy strong { font-size:16px; font-weight:600; }
+    .profile-username { font-size:11px; }
+    .profile-live-badge { flex:none; padding:6px 9px; border:1px solid rgba(80,203,166,.22); border-radius:99px; background:rgba(80,203,166,.07); color:#67d9b5; font-size:9px; font-weight:600; }
+    .profile-id-row { position:relative; display:flex; align-items:center; gap:9px; margin-top:15px; padding-top:12px; border-top:1px solid var(--line); }
+    .profile-id-row > span { color:var(--muted); font-size:10px; }
+    .profile-id-row > strong { margin-left:auto; color:var(--ink); font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:11px; font-weight:500; }
+    .profile-copy-button { display:grid; width:30px; height:30px; place-items:center; border:1px solid var(--line); border-radius:10px; background:rgba(255,255,255,.04); color:var(--ink); }
+    .profile-copy-button .icon { width:15px; height:15px; }
+    .profile-copy-button:disabled { opacity:.4; }
+    .profile-stat-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin:0 0 12px; }
+    .profile-stat-card { display:grid; min-width:0; gap:7px; padding:13px; border:1px solid var(--line); border-radius:17px; background:var(--paper-strong); color:var(--ink); text-align:left; }
+    .profile-stat-card > span { color:var(--muted); font-size:10px; }
+    .profile-stat-card > strong { overflow:hidden; font-size:22px; font-weight:600; letter-spacing:-.04em; text-overflow:ellipsis; white-space:nowrap; }
+    .profile-stat-card > small { display:flex; justify-content:space-between; color:var(--muted); font-size:9px; }
+    .profile-stat-card > small b { color:#a9c9f5; font-size:12px; font-weight:500; }
+    [data-theme="light"] .profile-stat-card > small b { color:#416ca8; }
+    .profile-action-panel,.profile-settings-panel { margin-bottom:12px; padding:14px; }
+    .profile-panel-heading { display:flex; align-items:center; justify-content:space-between; margin:0 1px 8px; }
+    .profile-panel-heading h2 { margin:4px 0 0; color:var(--ink); font-size:16px; font-weight:600; letter-spacing:-.025em; }
+    .profile-panel-spark { color:#b8d3ff; font-size:20px; text-shadow:0 0 15px rgba(141,184,244,.5); }
+    .profile-action-row,.profile-setting-row { display:flex; width:100%; align-items:center; gap:11px; min-height:57px; padding:9px 1px; border:0; border-top:1px solid var(--line); background:transparent; color:var(--ink); text-align:left; }
+    .profile-action-icon,.profile-setting-icon { display:grid; width:34px; height:34px; flex:none; place-items:center; border:1px solid rgba(141,184,244,.16); border-radius:12px; background:rgba(141,184,244,.07); color:#b6d0f6; font-size:17px; }
+    [data-theme="light"] .profile-action-icon,[data-theme="light"] .profile-setting-icon { color:#416ca8; }
+    .profile-action-row > span:nth-child(2),.profile-setting-row > span:nth-child(2) { display:grid; flex:1; gap:3px; min-width:0; }
+    .profile-action-row strong,.profile-setting-row strong { font-size:11px; font-weight:600; }
+    .profile-action-row small,.profile-setting-row small { color:var(--muted); font-size:9px; }
+    .profile-action-row > b { color:var(--muted); font-size:21px; font-weight:400; }
+    .profile-setting-row > b { flex:none; color:#a9c9f5; font-size:9px; font-weight:600; }
+    [data-theme="light"] .profile-setting-row > b { color:#416ca8; }
+    .profile-footer-note { display:flex; justify-content:space-between; padding:3px 4px 8px; color:var(--muted); font-size:8px; }
+    .profile-footer-note span:first-child { font-weight:600; letter-spacing:.12em; }
+    [data-theme="light"] .profile-hero-card,[data-theme="light"] .profile-action-panel,[data-theme="light"] .profile-settings-panel { background:linear-gradient(145deg,#fff,#f3f6fb); box-shadow:0 12px 30px rgba(25,45,78,.07),inset 0 1px #fff; }
+    [data-theme="light"] .profile-live-badge { color:#168362; }
+    @media (max-width:360px) { .profile-identity-row .profile-avatar { width:54px; height:54px; } .profile-live-badge { padding:5px 7px; font-size:8px; } .profile-stat-card { padding:11px; } }
     .empty-favorites { display:grid; justify-items:center; gap:13px; }
     .empty-favorites .catalog-empty-link { justify-self:center; }
     @media (max-width:600px) {
@@ -926,15 +950,34 @@
         <div class="order-history" id="orderHistoryList" aria-live="polite"></div>
       </section>
       <section class="tab-content" id="tab-profile" aria-labelledby="profileTitle">
-        <div class="orders-page-head"><h1 id="profileTitle">Профиль</h1></div>
-        <div class="profile-card">
-          <span class="profile-avatar" id="profileInitial" aria-hidden="true">Г</span>
-          <div class="profile-card-copy"><strong id="profileName">Гость</strong><span class="profile-username" id="profileUsername" hidden></span></div>
-        </div>
-        <div class="profile-card" id="profileBalanceCard" hidden>
-          <div class="profile-card-copy"><span class="profile-caption">БОНУСНЫЙ БАЛАНС</span><strong id="profileBalance"></strong></div>
-        </div>
-        <button class="outline-button" type="button" onclick="switchTab('orders', document.getElementById('ordersNav'))">Мои заказы →</button>
+        <div class="profile-page-heading"><span>STRIVER · PERSONAL</span><h1 id="profileTitle">Профиль</h1><p>Твои данные и быстрый доступ к магазину</p></div>
+        <section class="profile-hero-card" aria-label="Аккаунт Telegram">
+          <div class="profile-identity-row">
+            <span class="profile-avatar" id="profileInitial" aria-hidden="true">Г</span>
+            <div class="profile-card-copy"><span class="profile-caption">АККАУНТ TELEGRAM</span><strong id="profileName">Гость</strong><span class="profile-username" id="profileUsername" hidden></span></div>
+            <span class="profile-live-badge" id="profileState">Telegram</span>
+          </div>
+          <div class="profile-id-row"><span>Telegram ID</span><strong id="profileId">—</strong><button class="profile-copy-button" id="profileCopyButton" type="button" onclick="copyTelegramId()" aria-label="Скопировать Telegram ID" disabled><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button></div>
+        </section>
+        <section class="profile-stat-grid" aria-label="Сводка магазина">
+          <button class="profile-stat-card" type="button" onclick="switchTab('orders', document.getElementById('ordersNav'))"><span>Мои заказы</span><strong id="profileStatOrders">0</strong><small>Открыть историю <b>↗</b></small></button>
+          <div class="profile-stat-card"><span>Покупки всего</span><strong id="profileStatSpent">0 ₽</strong><small>По истории заказов</small></div>
+          <button class="profile-stat-card" type="button" onclick="openFavorites()"><span>Избранное</span><strong id="profileStatFavorites">0</strong><small>Сохранённые товары <b>↗</b></small></button>
+          <button class="profile-stat-card" type="button" onclick="switchTab('cart', document.getElementById('cartNav'))"><span>В корзине</span><strong id="profileStatCart">0</strong><small>Товаров сейчас <b>↗</b></small></button>
+        </section>
+        <section class="profile-action-panel" aria-label="Быстрые действия">
+          <div class="profile-panel-heading"><div><span>МАГАЗИН</span><h2>Быстрый доступ</h2></div><span class="profile-panel-spark" aria-hidden="true">✦</span></div>
+          <button class="profile-action-row" type="button" onclick="switchTab('orders', document.getElementById('ordersNav'))"><span class="profile-action-icon">▤</span><span><strong>История заказов</strong><small>Состав и статус покупок</small></span><b>›</b></button>
+          <button class="profile-action-row" type="button" onclick="openFavorites()"><span class="profile-action-icon">♡</span><span><strong>Избранные вещи</strong><small>Вернуться к сохранённым товарам</small></span><b>›</b></button>
+          <button class="profile-action-row" type="button" onclick="openInfoModal('usageModal')"><span class="profile-action-icon">✦</span><span><strong>Как пользоваться магазином</strong><small>Короткая инструкция по заказу</small></span><b>›</b></button>
+          <button class="profile-action-row" type="button" onclick="requestManagerContact()"><span class="profile-action-icon">↗</span><span><strong>Связаться с менеджером</strong><small>Вопрос по товару или заказу</small></span><b>›</b></button>
+        </section>
+        <section class="profile-settings-panel" aria-label="Настройки">
+          <div class="profile-panel-heading"><div><span>ПОД ТЕБЯ</span><h2>Настройки</h2></div></div>
+          <button class="profile-setting-row" type="button" onclick="toggleTheme()"><span class="profile-setting-icon">◐</span><span><strong>Оформление</strong><small>Сменить светлую или тёмную тему</small></span><b id="profileThemeValue">Тёмная</b></button>
+          <button class="profile-setting-row" type="button" onclick="toggleSnowfall()"><span class="profile-setting-icon">❄</span><span><strong>Снежинки</strong><small>Анимация на фоне магазина</small></span><b id="profileSnowValue">Включены</b></button>
+        </section>
+        <div class="profile-footer-note"><span>STRIVER STORE</span><span>Твой выбор — в одном месте</span></div>
       </section>
 
   </div>
@@ -991,7 +1034,7 @@
     <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="usageTitle" onclick="event.stopPropagation()">
       <button class="modal-close-btn" type="button" aria-label="Закрыть" onclick="closeModalDirect('usageModal')">&#10005;</button>
       <p class="section-kicker">STRIVER GUIDE</p><h2 class="modal-title" id="usageTitle">Как пользоваться магазином?</h2>
-      <div class="referral-sheet-copy"><p><b>1. Выбери вещь.</b> Фото листаются свайпом, нажми на карточку, чтобы открыть детали.</p><p><b>2. Выбери размер,</b> если он указан, и добавь товар в корзину.</p><p><b>3. Открой корзину.</b> Укажи город, пункт выдачи и телефон для связи.</p><p><b>4. Нажми «Перейти к оплате»</b> и подтверди заказ. Бот отправит его менеджеру в Telegram.</p><p>История оформленных заказов доступна в нижнем меню.</p></div>
+      <div class="guide-copy"><p><b>1. Выбери вещь.</b> Фото листаются свайпом, нажми на карточку, чтобы открыть детали.</p><p><b>2. Выбери размер,</b> если он указан, и добавь товар в корзину.</p><p><b>3. Открой корзину.</b> Укажи город, пункт выдачи и телефон для связи.</p><p><b>4. Нажми «Перейти к оплате»</b> и подтверди заказ. Бот отправит его менеджеру в Telegram.</p><p>История оформленных заказов доступна в нижнем меню.</p></div>
       <button class="dark-button modal-add" type="button" onclick="closeModalDirect('usageModal')">Понятно</button>
     </section>
   </div>
@@ -1001,6 +1044,8 @@
   <script>
     let themeMode = 'dark';
     try { themeMode = localStorage.getItem('striver_theme_v1') === 'light' ? 'light' : 'dark'; } catch (_) {}
+    let snowEnabled = true;
+    try { snowEnabled = localStorage.getItem('striver_snow_v1') !== 'off'; } catch (_) {}
     document.documentElement.dataset.theme = themeMode;
     const themeColor = themeMode === 'light' ? '#f1f3f8' : '#090a0d';
     const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
@@ -1035,6 +1080,10 @@
     const productOrder = ['sneakers', 'jacket', 'sneakers_preorder'];
     let cart = [];
     let favorites = new Set();
+    try {
+      const savedFavorites = JSON.parse(localStorage.getItem('striver_favorites_v1') || '[]');
+      if (Array.isArray(savedFavorites)) favorites = new Set(savedFavorites.filter(key => productOrder.includes(key)));
+    } catch (error) { console.warn('Saved favorites could not be read', error); }
     let currentCategory = 'all';
     let currentAvailability = 'in_stock';
     function updateAvailabilityTabs() {
@@ -1077,7 +1126,6 @@
     let orderStatusTimer = null;
     const ORDER_HISTORY_PREFIX = 'striver_order_';
     const ORDER_HISTORY_LOCAL_KEY = 'striver_orders_local_v1';
-    const appParams = new URLSearchParams(window.location.search);
     function updateThemeToggle() {
       const toggle = document.getElementById('themeToggleTop');
       if (toggle) {
@@ -1097,10 +1145,13 @@
         if (tg && typeof tg.setBackgroundColor === 'function') tg.setBackgroundColor(themeColor);
       } catch (error) { console.warn('Telegram theme color update failed', error); }
       updateThemeToggle();
+      updateProfileSettings();
     }
     function createSnowfall() {
       const layer = document.getElementById('snowLayer');
-      if (!layer || layer.childElementCount) return;
+      if (!layer) return;
+      layer.style.display = snowEnabled ? '' : 'none';
+      if (!snowEnabled || layer.childElementCount) return;
       const flakes = ['❄', '❅', '❆', '✧'];
       for (let i = 0; i < 30; i += 1) {
         const flake = document.createElement('span');
@@ -1115,6 +1166,20 @@
         flake.style.setProperty('--drift', ((Math.random() - 0.5) * 70) + 'px');
         layer.append(flake);
       }
+    }
+    function toggleSnowfall() {
+      snowEnabled = !snowEnabled;
+      try { localStorage.setItem('striver_snow_v1', snowEnabled ? 'on' : 'off'); } catch (error) { console.warn('Snowfall preference could not be saved', error); }
+      const layer = document.getElementById('snowLayer');
+      if (layer && !snowEnabled) layer.replaceChildren();
+      createSnowfall();
+      updateProfileSettings();
+    }
+    function updateProfileSettings() {
+      const themeLabel = document.getElementById('profileThemeValue');
+      const snowLabel = document.getElementById('profileSnowValue');
+      if (themeLabel) themeLabel.textContent = themeMode === 'dark' ? 'Тёмная' : 'Светлая';
+      if (snowLabel) snowLabel.textContent = snowEnabled ? 'Включены' : 'Выключены';
     }
     function formatMoney(value) { return new Intl.NumberFormat('ru-RU').format(value) + ' ' + currency; }
     function countItems() { return cart.reduce((sum, item) => sum + item.quantity, 0); }
@@ -1166,6 +1231,7 @@
         const history = localOrderHistoryRead().filter(item => item.id !== order.id);
         localStorage.setItem(ORDER_HISTORY_LOCAL_KEY, JSON.stringify([order, ...history].slice(0, 50)));
       }
+      refreshProfileOrderStats().catch(error => console.warn('Profile order statistics could not be refreshed', error));
     }
     function formatOrderDate(timestamp) {
       return new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(new Date(timestamp));
@@ -1180,6 +1246,10 @@
       const container = document.getElementById('orderHistoryList');
       const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => productsData[item.product_id]));
       document.getElementById('profileOrderCount').textContent = String(validOrders.length);
+      const profileOrderStat = document.getElementById('profileStatOrders');
+      const profileSpentStat = document.getElementById('profileStatSpent');
+      if (profileOrderStat) profileOrderStat.textContent = String(validOrders.length);
+      if (profileSpentStat) profileSpentStat.textContent = formatMoney(validOrders.reduce((sum, order) => sum + (Number(order.total) || 0), 0));
       container.replaceChildren();
       if (!validOrders.length) {
         const empty = document.createElement('div'); empty.className = 'order-empty';
@@ -1243,7 +1313,7 @@
         const product = productsData[key];
         const categoryMatch = listingCategory === 'all' || (listingCategory === 'favorites' ? favorites.has(key) : product.category === listingCategory);
         const searchMatch = !query || (product.title + ' ' + product.type + ' ' + product.short).toLocaleLowerCase('ru').includes(query);
-        const availabilityMatch = (product.availability || 'in_stock') === currentAvailability;
+        const availabilityMatch = (product.availability || 'in_stock') === 'both' || (product.availability || 'in_stock') === currentAvailability;
         return categoryMatch && availabilityMatch && searchMatch;
       });
       if (sort === 'price-up') keys.sort((a, b) => Math.min(...(productsData[a].sizePrices || [productsData[a].price])) - Math.min(...(productsData[b].sizePrices || [productsData[b].price])));
@@ -1321,10 +1391,17 @@
       renderProducts();
       switchTab('products', document.getElementById('productsNav'));
     }
+    function openFavorites() {
+      currentCategory = 'all';
+      filterCategory('favorites', document.getElementById('favoritesFilter'));
+    }
     function sortProducts() { renderProducts(); }
     function toggleFavorite(key) {
       if (favorites.has(key)) favorites.delete(key); else favorites.add(key);
+      try { localStorage.setItem('striver_favorites_v1', JSON.stringify(Array.from(favorites))); }
+      catch (error) { console.warn('Favorites could not be saved', error); }
       renderProducts();
+      updateProfileLiveStats();
       showToast(favorites.has(key) ? 'Добавлено в избранное' : 'Убрано из избранного');
     }
 
@@ -1332,14 +1409,56 @@
       const user = tg?.initDataUnsafe?.user;
       const name = [user?.first_name, user?.last_name].filter(Boolean).join(' ') || user?.username || 'Гость';
       document.getElementById('profileName').textContent = name;
-      document.getElementById('profileInitial').textContent = Array.from(name)[0];
+      const avatar = document.getElementById('profileInitial');
+      const initial = Array.from(name)[0] || 'S';
+      avatar.replaceChildren();
+      if (user?.photo_url) {
+        const image = document.createElement('img'); image.src = user.photo_url; image.alt = '';
+        image.onerror = () => { avatar.replaceChildren(); avatar.textContent = initial; };
+        avatar.append(image);
+      } else avatar.textContent = initial;
       const username = document.getElementById('profileUsername');
-      username.hidden = !user?.username;
+      username.hidden = !(user?.username || user?.id);
       username.textContent = user?.username ? '@' + user.username : '';
-      const balance = appParams.get('referral_balance');
-      const showBalance = /^\d+$/.test(balance) && Number.isSafeInteger(Number(balance));
-      document.getElementById('profileBalanceCard').hidden = !showBalance;
-      if (showBalance) document.getElementById('profileBalance').textContent = formatMoney(Number(balance));
+      if (!user?.username && user?.id) username.textContent = 'Профиль Telegram';
+      const profileId = document.getElementById('profileId');
+      const copyButton = document.getElementById('profileCopyButton');
+      profileId.textContent = user?.id ? String(user.id) : 'Открой в Telegram';
+      copyButton.disabled = !user?.id;
+      document.getElementById('profileState').textContent = user?.id ? 'Подключён' : 'Гость';
+      updateProfileLiveStats();
+      updateProfileSettings();
+      refreshProfileOrderStats().catch(error => console.warn('Profile statistics unavailable', error));
+    }
+    function updateProfileLiveStats() {
+      const favoritesStat = document.getElementById('profileStatFavorites');
+      const cartStat = document.getElementById('profileStatCart');
+      if (favoritesStat) favoritesStat.textContent = String(favorites.size);
+      if (cartStat) cartStat.textContent = String(countItems());
+    }
+    async function refreshProfileOrderStats() {
+      const history = await readOrderHistory();
+      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => productsData[item.product_id]));
+      const orderStat = document.getElementById('profileStatOrders');
+      const spentStat = document.getElementById('profileStatSpent');
+      if (orderStat) orderStat.textContent = String(validOrders.length);
+      if (spentStat) spentStat.textContent = formatMoney(validOrders.reduce((sum, order) => sum + (Number(order.total) || 0), 0));
+    }
+    async function copyTelegramId() {
+      const id = tg?.initDataUnsafe?.user?.id;
+      if (!id) { showToast('Открой магазин через Telegram, чтобы увидеть свой ID'); return; }
+      try {
+        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(String(id));
+        else {
+          const field = document.createElement('textarea'); field.value = String(id); field.style.position = 'fixed'; field.style.opacity = '0'; document.body.append(field); field.select();
+          const copied = document.execCommand('copy'); field.remove();
+          if (!copied) throw new Error('Clipboard API is unavailable');
+        }
+        showToast('Telegram ID скопирован');
+      } catch (error) {
+        console.warn('Could not copy Telegram ID', error);
+        showToast('Не удалось скопировать ID');
+      }
     }
 
     function switchTab(tabName, btnElement) {
@@ -1563,13 +1682,13 @@
 
     function updateCartUI() {
       const count = countItems(); const total = totalPrice();
-      const discount = 0;
       document.getElementById('cart-badge').textContent = count;
       document.getElementById('cart-badge').style.display = count ? 'inline-grid' : 'none';
       document.getElementById('topCartCount').textContent = count;
       document.getElementById('cartHeadingCount').textContent = count ? ' (' + count + ')' : '';
       document.getElementById('cartPanelCount').textContent = count ? count + ' ' + (count === 1 ? 'позиция' : 'позиций') : 'Пока пусто';
-      document.getElementById('cart-total-price').textContent = formatMoney(total - discount);
+      document.getElementById('cart-total-price').textContent = formatMoney(total);
+      updateProfileLiveStats();
       updateThemeToggle();
       const container = document.getElementById('cart-items-container'); container.replaceChildren();
       if (!count) {
@@ -1599,8 +1718,7 @@
     function openPaymentModal() {
       if (!countItems()) { showToast('Сначала добавь товар в корзину'); return; }
       if (!getDeliveryFields()) return;
-      const discount = 0;
-      document.getElementById('payTotalVal').textContent = formatMoney(totalPrice() - discount);
+      document.getElementById('payTotalVal').textContent = formatMoney(totalPrice());
       const modal = document.getElementById('paymentModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     }
     function getDeliveryFields() {
@@ -1627,9 +1745,9 @@
       const quantity = countItems();
       if (!quantity || quantity > 20) { showToast('В одном заказе можно отправить до 20 товаров'); return; }
       const items = cart.flatMap(item => Array.from({ length: item.quantity }, () => ({ product_id: item.productId, size_index: item.sizeIndex, availability: item.availability })));
-      const referralDiscount = 0;
-      const order = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), createdAt: Date.now(), subtotal: totalPrice(), discount: referralDiscount, total: totalPrice() - referralDiscount, items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index, availability: item.availability })) };
-      const payload = JSON.stringify({ action: 'new_order', order_id: order.id, use_referral_balance: referralDiscount > 0, items, city: delivery.city, delivery_method: delivery.method, pvz: delivery.method, pickup_address: delivery.address, address: delivery.address, phone: delivery.phone, comment: delivery.comment });
+      const subtotal = totalPrice();
+      const order = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), createdAt: Date.now(), subtotal, total: subtotal, items: items.map(item => ({ product_id: item.product_id, size_index: item.size_index, availability: item.availability })) };
+      const payload = JSON.stringify({ action: 'new_order', order_id: order.id, items, city: delivery.city, delivery_method: delivery.method, pvz: delivery.method, pickup_address: delivery.address, address: delivery.address, phone: delivery.phone, comment: delivery.comment });
       if (new TextEncoder().encode(payload).length > 4096) { showToast('Заказ получился слишком большим'); return; }
       orderSending = true;
       try { await saveOrderHistory(order); }
