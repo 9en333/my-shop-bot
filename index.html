@@ -903,6 +903,74 @@
       .order-item-thumb { width:68px; height:68px; }
       .order-card-total { font-size:15px; }
     }</style>
+  <style>
+    /* Softer geometry across the app */
+    .store-status,.shop-guide-chip,.search-box,.sort-select,.catalog-view-toggle,.availability-tab,
+    .product-card,.cart-panel,.checkout-panel,.cart-item,.profile-hero-card,.profile-action-panel,
+    .profile-settings-panel,.profile-stat-card,.order-card,.payment-card,.modal-content,.modal-slider,
+    .recently-viewed-item,.empty-cart,.no-results,.toast,.field input,.field select,.field textarea,
+    .size-chip,.profile-copy-button,.profile-action-icon,.profile-setting-icon {
+      border-radius:22px;
+    }
+    .product-media { border-radius:22px 22px 0 0; }
+    .card-cta,.card-manager,.outline-button,.primary-button,.dark-button,.profile-theme,
+    .profile-subnav button,.keyboard-dismiss { border-radius:18px; }
+    .profile-hero-card,.profile-action-panel,.profile-settings-panel { padding:17px; }
+    .profile-identity-row { display:grid; grid-template-columns:58px minmax(0,1fr); align-items:center; gap:7px 12px; }
+    .profile-identity-row .profile-avatar { grid-column:1; grid-row:1 / span 2; width:58px; height:58px; }
+    .profile-identity-row .profile-card-copy { grid-column:2; grid-row:1; min-width:0; gap:4px; padding-right:2px; }
+    .profile-card-copy .profile-caption { display:block; max-width:100%; font-size:8px; line-height:1.45; letter-spacing:.105em; overflow-wrap:anywhere; }
+    .profile-card-copy strong { display:block; max-width:100%; overflow:visible; font-size:16px; line-height:1.28; white-space:normal; overflow-wrap:anywhere; }
+    .profile-username { display:block; max-width:100%; line-height:1.45; overflow-wrap:anywhere; }
+    .profile-live-badge { grid-column:2; grid-row:2; justify-self:start; max-width:100%; white-space:normal; line-height:1.35; overflow-wrap:anywhere; }
+    .profile-id-row { flex-wrap:wrap; gap:8px; padding-top:13px; }
+    .profile-id-row > span { max-width:45%; line-height:1.4; overflow-wrap:anywhere; }
+    .profile-id-row > strong { min-width:0; max-width:48%; overflow-wrap:anywhere; word-break:break-word; }
+    .profile-stat-card { min-height:104px; align-content:start; gap:8px; padding:15px; }
+    .profile-stat-card > span,.profile-stat-card > small { max-width:100%; line-height:1.45; white-space:normal; overflow-wrap:anywhere; }
+    .profile-stat-card > strong { max-width:100%; font-size:21px; line-height:1.25; white-space:normal; overflow-wrap:anywhere; }
+    .profile-stat-card > small { display:block; }
+    .profile-action-row,.profile-setting-row { min-width:0; gap:10px; padding:11px 2px; }
+    .profile-action-row > span:nth-child(2),.profile-setting-row > span:nth-child(2) { min-width:0; overflow-wrap:anywhere; }
+    .profile-action-row strong,.profile-setting-row strong { display:block; line-height:1.4; overflow-wrap:anywhere; }
+    .profile-action-row small,.profile-setting-row small { display:block; line-height:1.5; overflow-wrap:anywhere; }
+    .profile-setting-row > b { max-width:74px; white-space:normal; text-align:right; line-height:1.35; overflow-wrap:anywhere; }
+    .profile-panel-heading { gap:12px; }
+    .profile-panel-heading h2 { line-height:1.3; overflow-wrap:anywhere; }
+    .profile-page-heading { padding:0 5px; }
+    .profile-page-heading > span { display:block; line-height:1.5; overflow-wrap:anywhere; }
+    .profile-page-heading h1 { line-height:1.2; }
+    .profile-page-heading p { max-width:34ch; line-height:1.55; overflow-wrap:anywhere; }
+    [data-theme="light"] .profile-stat-card { border-radius:22px; }
+    @media (max-width:390px) {
+      .profile-hero-card,.profile-action-panel,.profile-settings-panel { padding:14px; }
+      .profile-stat-grid { gap:8px; }
+      .profile-stat-card { min-height:100px; padding:12px; }
+      .profile-stat-card > span { font-size:9px; }
+      .profile-stat-card > strong { font-size:19px; }
+      .profile-action-icon,.profile-setting-icon { width:32px; height:32px; border-radius:14px; }
+      .profile-live-badge { font-size:8px; }
+      .profile-id-row > span { max-width:42%; font-size:9px; }
+      .profile-id-row > strong { max-width:50%; font-size:10px; }
+    }
+    .price-filter { min-width:0; min-height:36px; padding:0 34px 0 12px; border:1px solid rgba(225,235,255,.14); border-radius:18px; appearance:none; background:rgba(255,255,255,.035) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='m2 4 4 4 4-4' fill='none' stroke='%23aeb4c0' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center; color:var(--ink); font:500 10px "Onest",sans-serif; }
+    .price-filter:focus-visible,.size-guide summary:focus-visible { outline:2px solid rgba(143,193,255,.75); outline-offset:2px; }
+    [data-theme="light"] .price-filter { border-color:rgba(35,55,90,.16); background-color:rgba(255,255,255,.82); color:#293448; }
+    .size-guide { margin-top:12px; overflow:hidden; border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.025); }
+    .size-guide summary { min-height:42px; display:flex; align-items:center; padding:0 13px; color:var(--ink); cursor:pointer; font-size:11px; font-weight:600; list-style:none; }
+    .size-guide summary::-webkit-details-marker { display:none; }
+    .size-guide summary::after { content:"+"; margin-left:auto; color:var(--muted); font-size:17px; font-weight:400; }
+    .size-guide[open] summary::after { content:"−"; }
+    .size-guide > p { margin:0; padding:0 13px 11px; color:var(--muted); font-size:10px; line-height:1.55; }
+    .size-guide-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; padding:0 12px 12px; }
+    .size-guide-grid span { padding:7px 9px; border:1px solid var(--line); border-radius:14px; color:var(--ink); font-size:9px; font-variant-numeric:tabular-nums; text-align:center; }
+    [data-theme="light"] .size-guide { background:rgba(35,55,90,.025); }
+    @media (max-width:760px) {
+      .catalog-controls { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+      .catalog-controls .search-box { grid-column:1 / -1; }
+      .catalog-controls .price-filter,.catalog-controls .catalog-view-toggle { width:100%; min-height:40px; }
+    }
+  </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
@@ -949,6 +1017,7 @@
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg>
                 <input id="searchInput" type="search" placeholder="Найти товар" autocomplete="off" aria-label="Поиск товаров">
               </label>
+              <select class="price-filter" id="priceFilter" aria-label="Фильтр по цене" onchange="renderProducts()"><option value="all">Любая цена</option><option value="under5000">До 5 000 ₽</option><option value="5000to9999">5 000–9 999 ₽</option><option value="10000plus">От 10 000 ₽</option></select>
               <button class="catalog-view-toggle" id="catalogViewToggle" type="button" onclick="toggleCatalogDensity()" aria-pressed="false" title="Компактный вид каталога"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="7" rx="1"/><rect x="14" y="4" width="6" height="7" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span id="catalogViewLabel">Компактно</span></button>
               <select class="sort-select" id="sortSelect" aria-label="Сортировка товаров" onchange="sortProducts(this.value)">
                 <option value="featured">Сначала выбранное</option><option value="price-up">Сначала дешевле</option><option value="price-down">Сначала дороже</option>
@@ -1050,6 +1119,11 @@
         <div class="size-label">Выбери размер</div>
         <div class="modal-sizes" id="modalSizes"></div>
         <p class="size-help">Размер указан вместе с примерной длиной стельки.</p>
+        <details class="size-guide">
+          <summary>Как подобрать размер</summary>
+          <p>Измерь обе стопы вечером, стоя на листе бумаги. Сравни длину большей стопы с таблицей. Посадка зависит от модели — если сомневаешься, уточни размер у менеджера.</p>
+          <div class="size-guide-grid"><span>36 · 23 см</span><span>37 · 23,5 см</span><span>38 · 24 см</span><span>39 · 24,5 см</span><span>40 · 25 см</span><span>41 · 26 см</span><span>42 · 26,5 см</span><span>43 · 27,5 см</span><span>44 · 28 см</span><span>45 · 29 см</span></div>
+        </details>
       </div>
       <div class="product-actions">
         <button id="modalAddToCartBtn" class="primary-button modal-add" type="button">В корзину <span aria-hidden="true">&#8594;</span></button>
@@ -1371,13 +1445,16 @@
       updateCatalogDensityButton();
       const query = document.getElementById('searchInput').value.trim().toLocaleLowerCase('ru');
       const sort = document.getElementById('sortSelect').value;
+      const priceRange = document.getElementById('priceFilter')?.value || 'all';
       updateAvailabilityTabs();
       let keys = productOrder.filter(key => {
         const product = productsData[key];
         const categoryMatch = listingCategory === 'all' || (listingCategory === 'favorites' ? favorites.has(key) : product.category === listingCategory);
         const searchMatch = !query || (product.title + ' ' + product.type + ' ' + product.short).toLocaleLowerCase('ru').includes(query);
         const availabilityMatch = (product.availability || 'in_stock') === 'both' || (product.availability || 'in_stock') === currentAvailability;
-        return categoryMatch && availabilityMatch && searchMatch;
+        const lowestPrice = Math.min(...(product.sizePrices || [product.price]));
+        const priceMatch = priceRange === 'all' || (priceRange === 'under5000' && lowestPrice < 5000) || (priceRange === '5000to9999' && lowestPrice >= 5000 && lowestPrice < 10000) || (priceRange === '10000plus' && lowestPrice >= 10000);
+        return categoryMatch && availabilityMatch && searchMatch && priceMatch;
       });
       if (sort === 'price-up') keys.sort((a, b) => Math.min(...(productsData[a].sizePrices || [productsData[a].price])) - Math.min(...(productsData[b].sizePrices || [productsData[b].price])));
       if (sort === 'price-down') keys.sort((a, b) => Math.min(...(productsData[b].sizePrices || [productsData[b].price])) - Math.min(...(productsData[a].sizePrices || [productsData[a].price])));
@@ -1391,6 +1468,8 @@
         const unavailableCategory = listingCategory !== 'all' && listingCategory !== 'favorites' && !hasCategoryInSection;
         empty.textContent = listingCategory === 'favorites'
           ? "\u0417\u0434\u0435\u0441\u044c \u043f\u043e\u043a\u0430 \u043f\u0443\u0441\u0442\u043e."
+          : priceRange !== 'all'
+          ? "В выбранном диапазоне цены пока нет товаров."
           : query
           ? "\u041f\u043e \u044d\u0442\u043e\u043c\u0443 \u0437\u0430\u043f\u0440\u043e\u0441\u0443 \u0442\u043e\u0432\u0430\u0440\u044b \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u044b."
           : unavailableCategory
