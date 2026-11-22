@@ -1066,6 +1066,27 @@
       #tab-profile .profile-action-row small { font-size:7px; }
     }
     @media (prefers-reduced-motion:reduce) { #tab-profile .profile-stat-card,#tab-profile .profile-action-row,#tab-profile .profile-setting-row { transition:none; } }
+    #tab-profile .profile-settings-panel { padding:17px; }
+    #tab-profile .profile-settings-panel .profile-panel-heading { margin:0 3px 11px; }
+    #tab-profile .profile-setting-row { min-height:70px; margin:8px 2px; padding:10px 12px; border:1px solid rgba(255,255,255,.095); border-radius:19px; background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018)); }
+    #tab-profile .profile-setting-row > span:nth-child(2) { gap:4px; }
+    #tab-profile .profile-setting-icon { width:38px; height:38px; border-radius:15px; background:rgba(89,145,222,.13); box-shadow:0 0 16px rgba(89,145,222,.08); }
+    #tab-profile .profile-setting-row > b { max-width:88px; margin-left:3px; padding:7px 11px; border-color:rgba(143,193,255,.24); background:rgba(89,145,222,.12); box-shadow:0 0 14px rgba(89,145,222,.09); text-align:center; }
+    #tab-profile .profile-setting-row:active { background:rgba(89,145,222,.09); }
+    .favorites-toggle.is-selected { border-color:rgba(143,193,255,.45); background:rgba(89,145,222,.15); color:#b8d6ff; box-shadow:0 0 20px rgba(89,145,222,.2); }
+    @media (hover:none) {
+      .topbar-actions > .icon-button:hover { border-color:var(--line); background:transparent; box-shadow:none; }
+      .topbar-actions > .icon-button.favorites-toggle.is-selected:hover { border-color:rgba(143,193,255,.45); background:rgba(89,145,222,.15); box-shadow:0 0 20px rgba(89,145,222,.2); }
+    }
+    [data-theme="light"] #tab-profile .profile-setting-row { border-color:rgba(35,55,90,.12); background:linear-gradient(145deg,#fff,#f5f8fc); }
+    [data-theme="light"] #tab-profile .profile-setting-row > b { border-color:rgba(61,112,186,.18); background:rgba(61,112,186,.08); color:#416ca8; box-shadow:0 3px 10px rgba(35,55,90,.06); }
+    [data-theme="light"] .favorites-toggle.is-selected { border-color:rgba(61,112,186,.28); background:rgba(61,112,186,.1); color:#3567a8; box-shadow:0 0 16px rgba(61,112,186,.13); }
+    @media (max-width:390px) {
+      #tab-profile .profile-settings-panel { padding:14px; }
+      #tab-profile .profile-setting-row { min-height:68px; margin:7px 1px; padding:9px 10px; gap:8px; }
+      #tab-profile .profile-setting-icon { width:34px; height:34px; }
+      #tab-profile .profile-setting-row > b { max-width:78px; padding:6px 9px; }
+    }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1081,7 +1102,7 @@
       </a>
       <div class="topbar-actions">
         <button class="icon-button theme-toggle-top" id="themeToggleTop" type="button" aria-label="Переключить тему" onclick="toggleTheme()"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.6 8.6 0 0 1 8.7 3.8 8.7 8.7 0 1 0 20.2 15.3Z"/></svg></button>
-        <button class="icon-button" type="button" aria-label="Показать избранное" onclick="filterCategory('favorites', document.getElementById('favoritesFilter'))">
+        <button class="icon-button favorites-toggle" id="favoritesToggleButton" type="button" aria-label="Показать избранное" aria-pressed="false" onclick="toggleFavoritesView(this)">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.1-8.8 10.4-8.8 10.4S3.2 13.9 3.2 8.8a4.7 4.7 0 0 1 8.8-2.3 4.7 4.7 0 0 1 8.8 2.3Z"/></svg>
         </button>
         <button class="bag-button" type="button" onclick="switchTab('cart', document.getElementById('cartNav'))">
@@ -1536,6 +1557,12 @@
     function renderProducts() {
       const grid = document.getElementById('productsGrid');
       const listingCategory = currentCategory;
+      const favoritesToggle = document.getElementById('favoritesToggleButton');
+      const favoritesActive = listingCategory === 'favorites';
+      if (favoritesToggle) {
+        favoritesToggle.classList.toggle('is-selected', favoritesActive);
+        favoritesToggle.setAttribute('aria-pressed', String(favoritesActive));
+      }
       renderRecentlyViewed();
       grid.classList.toggle('compact-grid', compactCatalog);
       updateCatalogDensityButton();
@@ -1622,6 +1649,11 @@
       document.querySelectorAll('.filter-chip').forEach(el => el.classList.toggle('active', el === button));
       renderProducts();
       if (category === 'favorites') switchTab('products', document.getElementById('productsNav'));
+    }
+    function toggleFavoritesView(button) {
+      const nextCategory = currentCategory === 'favorites' ? 'all' : 'favorites';
+      filterCategory(nextCategory, document.getElementById(nextCategory === 'favorites' ? 'favoritesFilter' : 'allFilter'));
+      if (button) button.blur();
     }
     function goToCatalog() {
       currentCategory = 'all';
