@@ -954,10 +954,10 @@
         <section class="profile-hero-card" aria-label="Аккаунт Telegram">
           <div class="profile-identity-row">
             <span class="profile-avatar" id="profileInitial" aria-hidden="true">Г</span>
-            <div class="profile-card-copy"><span class="profile-caption">АККАУНТ TELEGRAM</span><strong id="profileName">Гость</strong><span class="profile-username" id="profileUsername" hidden></span></div>
-            <span class="profile-live-badge" id="profileState">Telegram</span>
+            <div class="profile-card-copy"><span class="profile-caption" id="profileCaption">АККАУНТ ПОКУПАТЕЛЯ</span><strong id="profileName">Покупатель</strong><span class="profile-username" id="profileUsername" hidden></span></div>
+            <span class="profile-live-badge" id="profileState">Гостевой режим</span>
           </div>
-          <div class="profile-id-row"><span>Telegram ID</span><strong id="profileId">—</strong><button class="profile-copy-button" id="profileCopyButton" type="button" onclick="copyTelegramId()" aria-label="Скопировать Telegram ID" disabled><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button></div>
+          <div class="profile-id-row"><span id="profileIdCaption">Код профиля</span><strong id="profileId">—</strong><button class="profile-copy-button" id="profileCopyButton" type="button" onclick="copyProfileIdentifier()" aria-label="Скопировать код профиля"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button></div>
         </section>
         <section class="profile-stat-grid" aria-label="Сводка магазина">
           <button class="profile-stat-card" type="button" onclick="switchTab('orders', document.getElementById('ordersNav'))"><span>Мои заказы</span><strong id="profileStatOrders">0</strong><small>Открыть историю <b>↗</b></small></button>
@@ -1405,27 +1405,49 @@
       showToast(favorites.has(key) ? 'Добавлено в избранное' : 'Убрано из избранного');
     }
 
+    let guestProfileCache = null;
+    function getGuestProfile() {
+      if (guestProfileCache) return guestProfileCache;
+      try {
+        const saved = JSON.parse(localStorage.getItem('striver_guest_profile_v1') || 'null');
+        if (saved && typeof saved.code === 'string' && /^S-[A-Z0-9]{6}$/.test(saved.code)) {
+          guestProfileCache = saved;
+          return guestProfileCache;
+        }
+      } catch (error) { console.warn('Guest profile could not be read', error); }
+      const code = 'S-' + Math.random().toString(36).slice(2, 8).toUpperCase().padEnd(6, '0');
+      guestProfileCache = { code };
+      try { localStorage.setItem('striver_guest_profile_v1', JSON.stringify(guestProfileCache)); }
+      catch (error) { console.warn('Guest profile could not be saved', error); }
+      return guestProfileCache;
+    }
     function renderProfile() {
-      const user = tg?.initDataUnsafe?.user;
-      const name = [user?.first_name, user?.last_name].filter(Boolean).join(' ') || user?.username || 'Гость';
+      const telegramUser = tg?.initDataUnsafe?.user || null;
+      const guest = getGuestProfile();
+      const name = telegramUser
+        ? ([telegramUser.first_name, telegramUser.last_name].filter(Boolean).join(' ') || telegramUser.username || 'Покупатель')
+        : 'Покупатель';
       document.getElementById('profileName').textContent = name;
       const avatar = document.getElementById('profileInitial');
       const initial = Array.from(name)[0] || 'S';
       avatar.replaceChildren();
-      if (user?.photo_url) {
-        const image = document.createElement('img'); image.src = user.photo_url; image.alt = '';
+      if (telegramUser?.photo_url) {
+        const image = document.createElement('img'); image.src = telegramUser.photo_url; image.alt = '';
         image.onerror = () => { avatar.replaceChildren(); avatar.textContent = initial; };
         avatar.append(image);
       } else avatar.textContent = initial;
       const username = document.getElementById('profileUsername');
-      username.hidden = !(user?.username || user?.id);
-      username.textContent = user?.username ? '@' + user.username : '';
-      if (!user?.username && user?.id) username.textContent = 'Профиль Telegram';
+      username.hidden = false;
+      username.textContent = telegramUser?.username ? '@' + telegramUser.username : telegramUser?.id ? 'Профиль Telegram' : 'Локальный профиль · без входа';
+      document.getElementById('profileCaption').textContent = telegramUser ? 'АККАУНТ TELEGRAM' : 'АККАУНТ ПОКУПАТЕЛЯ';
       const profileId = document.getElementById('profileId');
       const copyButton = document.getElementById('profileCopyButton');
-      profileId.textContent = user?.id ? String(user.id) : 'Открой в Telegram';
-      copyButton.disabled = !user?.id;
-      document.getElementById('profileState').textContent = user?.id ? 'Подключён' : 'Гость';
+      const identifier = telegramUser?.id ? String(telegramUser.id) : guest.code;
+      document.getElementById('profileIdCaption').textContent = telegramUser?.id ? 'Telegram ID' : 'Код профиля';
+      profileId.textContent = identifier;
+      copyButton.disabled = false;
+      copyButton.setAttribute('aria-label', telegramUser?.id ? 'Скопировать Telegram ID' : 'Скопировать код профиля');
+      document.getElementById('profileState').textContent = telegramUser ? 'Telegram' : 'Без регистрации';
       updateProfileLiveStats();
       updateProfileSettings();
       refreshProfileOrderStats().catch(error => console.warn('Profile statistics unavailable', error));
@@ -1444,17 +1466,17 @@
       if (orderStat) orderStat.textContent = String(validOrders.length);
       if (spentStat) spentStat.textContent = formatMoney(validOrders.reduce((sum, order) => sum + (Number(order.total) || 0), 0));
     }
-    async function copyTelegramId() {
-      const id = tg?.initDataUnsafe?.user?.id;
-      if (!id) { showToast('Открой магазин через Telegram, чтобы увидеть свой ID'); return; }
+    async function copyProfileIdentifier() {
+      const telegramId = tg?.initDataUnsafe?.user?.id;
+      const identifier = telegramId ? String(telegramId) : getGuestProfile().code;
       try {
-        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(String(id));
+        if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(identifier);
         else {
-          const field = document.createElement('textarea'); field.value = String(id); field.style.position = 'fixed'; field.style.opacity = '0'; document.body.append(field); field.select();
+          const field = document.createElement('textarea'); field.value = identifier; field.style.position = 'fixed'; field.style.opacity = '0'; document.body.append(field); field.select();
           const copied = document.execCommand('copy'); field.remove();
           if (!copied) throw new Error('Clipboard API is unavailable');
         }
-        showToast('Telegram ID скопирован');
+        showToast(telegramId ? 'Telegram ID скопирован' : 'Код профиля скопирован');
       } catch (error) {
         console.warn('Could not copy Telegram ID', error);
         showToast('Не удалось скопировать ID');
