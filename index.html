@@ -1774,6 +1774,13 @@
       const webApp = window.Telegram?.WebApp || tg;
       const unsafeUser = webApp?.initDataUnsafe?.user;
       if (unsafeUser && (unsafeUser.id || unsafeUser.username || unsafeUser.first_name)) return unsafeUser;
+      const launchParams = new URLSearchParams(window.location.search);
+      const launcherUser = {
+        first_name: launchParams.get('tg_first_name') || '',
+        last_name: launchParams.get('tg_last_name') || '',
+        username: launchParams.get('tg_username') || ''
+      };
+      if (launcherUser.first_name || launcherUser.last_name || launcherUser.username) return launcherUser;
       const signedInitData = webApp?.initData;
       if (!signedInitData) return null;
       try {
