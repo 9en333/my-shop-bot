@@ -1802,7 +1802,7 @@
         }
       }
       const telegramUser = unsafeUser || signedUser || {};
-      const mergedUser = { ...launcherUser, ...telegramUser, photo_url: telegramUser.photo_url || launcherUser.photo_url };
+      const mergedUser = { ...launcherUser, ...telegramUser, photo_url: launcherUser.photo_url || telegramUser.photo_url };
       return mergedUser.id || mergedUser.username || mergedUser.first_name || mergedUser.last_name ? mergedUser : null;
     }
     function getGuestProfile() {
