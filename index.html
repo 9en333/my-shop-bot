@@ -1773,7 +1773,6 @@
     function readTelegramUser() {
       const webApp = window.Telegram?.WebApp || tg;
       const unsafeUser = webApp?.initDataUnsafe?.user;
-      if (unsafeUser && (unsafeUser.id || unsafeUser.username || unsafeUser.first_name)) return unsafeUser;
       const launchParams = new URLSearchParams(window.location.search);
       const launcherUser = {
         first_name: launchParams.get('tg_first_name') || '',
@@ -1786,17 +1785,19 @@
         const base64Avatar = encodedAvatar.replace(/-/g, '+').replace(/_/g, '/');
         launcherUser.photo_url = 'data:image/jpeg;base64,' + base64Avatar + '='.repeat((4 - base64Avatar.length % 4) % 4);
       }
-      if (launcherUser.first_name || launcherUser.last_name || launcherUser.username) return launcherUser;
       const signedInitData = webApp?.initData;
-      if (!signedInitData) return null;
-      try {
-        const rawUser = new URLSearchParams(signedInitData).get('user');
-        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
-        return parsedUser && (parsedUser.id || parsedUser.username || parsedUser.first_name) ? parsedUser : null;
-      } catch (error) {
-        console.warn('Telegram profile data could not be parsed', error);
-        return null;
+      let signedUser = null;
+      if (signedInitData) {
+        try {
+          const rawUser = new URLSearchParams(signedInitData).get('user');
+          signedUser = rawUser ? JSON.parse(rawUser) : null;
+        } catch (error) {
+          console.warn('Telegram profile data could not be parsed', error);
+        }
       }
+      const telegramUser = unsafeUser || signedUser || {};
+      const mergedUser = { ...launcherUser, ...telegramUser, photo_url: telegramUser.photo_url || launcherUser.photo_url };
+      return mergedUser.id || mergedUser.username || mergedUser.first_name || mergedUser.last_name ? mergedUser : null;
     }
     function getGuestProfile() {
       if (guestProfileCache) return guestProfileCache;
