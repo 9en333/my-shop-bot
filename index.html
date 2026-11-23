@@ -1123,6 +1123,11 @@
     .modal-content::before { position:absolute; z-index:5; top:9px; left:50%; width:42px; height:4px; border-radius:99px; background:rgba(226,235,249,.28); box-shadow:0 0 12px rgba(255,255,255,.08); content:""; transform:translateX(-50%); pointer-events:none; }
     [data-theme="light"] .modal-content::before { background:rgba(67,82,105,.24); box-shadow:0 1px 2px rgba(20,35,55,.08); }
     .modal-close-btn { top:15px; }
+    .order-success-content { max-width:430px; padding:32px 24px 24px; text-align:center; }
+    .order-success-mark { width:66px; height:66px; display:grid; place-items:center; margin:8px auto 16px; border:1px solid rgba(67,215,165,.28); border-radius:24px; background:linear-gradient(145deg,rgba(67,215,165,.2),rgba(67,215,165,.07)); color:#67e2b6; box-shadow:0 0 34px rgba(67,215,165,.16),inset 0 1px rgba(255,255,255,.08); font-size:32px; }
+    .order-success-kicker { margin:0 0 8px; color:#75dcb7; font-size:10px; font-weight:700; letter-spacing:.16em; }
+    .order-success-title { margin:0 0 10px; color:var(--ink); font-size:25px; font-weight:600; letter-spacing:-.04em; }
+    .order-success-copy { max-width:320px; margin:0 auto 18px; color:var(--muted); font-size:13px; line-height:1.55; }
     .modal-slides-track { width:400%; transition:transform .58s cubic-bezier(.22,.78,.22,1); will-change:transform; }
     .modal-slide { flex:0 0 25%; min-width:0; width:25%; height:100%; object-fit:cover; user-select:none; -webkit-user-drag:none; }
     .modal-slider { touch-action:pan-y; background:#14171d; }
@@ -1314,6 +1319,16 @@
     </section>
   </div>
 
+  <div id="orderSuccessModal" class="modal order-success-modal" aria-hidden="true">
+    <section class="modal-content order-success-content" role="dialog" aria-modal="true" aria-labelledby="orderSuccessTitle">
+      <div class="order-success-mark" aria-hidden="true">✓</div>
+      <p class="order-success-kicker">STRIVER STORE · ГОТОВО</p>
+      <h2 class="order-success-title" id="orderSuccessTitle">Всё получилось</h2>
+      <p class="order-success-copy">Заказ сформирован. Нажми «Завершить», чтобы передать данные продавцу в Telegram.</p>
+      <button class="dark-button modal-add" type="button" onclick="completeOrderSend()">Завершить <span aria-hidden="true">&#8594;</span></button>
+    </section>
+  </div>
+
   <div id="usageModal" class="modal" onclick="outsideClose(event, 'usageModal')" aria-hidden="true">
     <section class="modal-content" role="dialog" aria-modal="true" aria-labelledby="usageTitle" onclick="event.stopPropagation()">
       <button class="modal-close-btn" type="button" aria-label="Закрыть" onclick="closeModalDirect('usageModal')">&#10005;</button>
@@ -1426,6 +1441,8 @@
     let selectedProductKey = null;
     let nextCartItemId = cart.reduce((max, item) => Math.max(max, item.id), 0) + 1;
     let orderSending = false;
+    let pendingOrderPayload = null;
+    let pendingOrderRecord = null;
     let toastTimer = null;
     let orderStatusTimer = null;
     const LEGACY_ORDER_HISTORY_PREFIX = 'striver_order_';
@@ -2011,7 +2028,7 @@
       sheet.addEventListener('touchstart', event => {
         if (!event.touches.length) return;
         const touch = event.touches[0];
-        const blocked = !!event.target.closest('button,input,select,textarea,summary');
+        const blocked = !!event.target.closest('button,input,select,textarea,summary') || !!sheet.closest('.order-success-modal');
         gesture = { x:touch.clientX, y:touch.clientY, startedAt:performance.now(), scrollTop:sheet.scrollTop, blocked };
       }, { passive:true });
       sheet.addEventListener('touchmove', event => {
@@ -2237,9 +2254,26 @@
       const payload = JSON.stringify({ action: 'new_order', order_id: order.id, items, city: delivery.city, delivery_method: delivery.method, pvz: delivery.method, pickup_address: delivery.address, address: delivery.address, phone: delivery.phone, comment: delivery.comment });
       if (new TextEncoder().encode(payload).length > 4096) { showToast('Заказ получился слишком большим'); return; }
       orderSending = true;
+      pendingOrderPayload = payload;
+      pendingOrderRecord = order;
+      closeModalDirect('paymentModal');
+      openInfoModal('orderSuccessModal');
+    }
+    function completeOrderSend() {
+      if (!pendingOrderPayload || !pendingOrderRecord || !tg || typeof tg.sendData !== 'function') return;
+      const payload = pendingOrderPayload;
+      const order = pendingOrderRecord;
+      pendingOrderPayload = null;
+      pendingOrderRecord = null;
       void saveOrderHistory(order).catch(error => console.error('Order history save failed', error));
-      try { tg.sendData(payload); cart = []; updateCartUI(); }
-      catch (error) { orderSending = false; console.error('Telegram sendData failed', error); showToast('Не удалось отправить заказ. Попробуй ещё раз'); }
+      try { tg.sendData(payload); cart = []; updateCartUI(); orderSending = false; }
+      catch (error) {
+        pendingOrderPayload = payload;
+        pendingOrderRecord = order;
+        orderSending = false;
+        console.error('Telegram sendData failed', error);
+        showToast('Не удалось отправить заказ. Нажми «Завершить» ещё раз');
+      }
     }
     function showToast(message) {
       const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('visible');
