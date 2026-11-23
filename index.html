@@ -1979,14 +1979,16 @@
       galleryTouchStartedAt = performance.now(); galleryDragging = false;
     }, { passive: true });
     gallery.addEventListener('touchmove', event => {
-      if (galleryTouchStartX === null || !event.touches.length) return;
+      if (galleryTouchStartX === null || event.touches.length !== 1) return;
       const deltaX = event.touches[0].clientX - galleryTouchStartX;
       const deltaY = event.touches[0].clientY - galleryTouchStartY;
       if (Math.abs(deltaX) < 5 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
       galleryDragging = true;
       event.preventDefault();
+      const width = Math.max(1, gallery.clientWidth);
+      const boundedDelta = Math.max(-width * .92, Math.min(width * .92, deltaX));
       slidesTrack.style.transition = 'none';
-      slidesTrack.style.transform = 'translate3d(calc(-' + slideOffset(currentSlideIdx, slideCount()) + '% + ' + deltaX + 'px),0,0)';
+      slidesTrack.style.transform = 'translate3d(calc(-' + slideOffset(currentSlideIdx, slideCount()) + '% + ' + boundedDelta + 'px),0,0)';
     }, { passive: false });
     gallery.addEventListener('touchend', event => {
       if (galleryTouchStartX === null || !event.changedTouches.length) { galleryTouchStartX = null; galleryTouchStartY = null; return; }
@@ -1994,10 +1996,11 @@
       const deltaY = event.changedTouches[0].clientY - galleryTouchStartY;
       const elapsed = Math.max(1, performance.now() - galleryTouchStartedAt);
       const flick = Math.abs(deltaX) / elapsed > .38;
+      const threshold = Math.max(30, gallery.clientWidth * .12);
       galleryTouchStartX = null;
       galleryTouchStartY = null;
       slidesTrack.style.transition = '';
-      if (galleryDragging && Math.abs(deltaX) > Math.abs(deltaY) * 1.15 && (Math.abs(deltaX) > 34 || (flick && Math.abs(deltaX) > 12))) nextSlide(deltaX < 0 ? 1 : -1);
+      if (galleryDragging && Math.abs(deltaX) > Math.abs(deltaY) * 1.15 && (Math.abs(deltaX) > threshold || (flick && Math.abs(deltaX) > 12))) nextSlide(deltaX < 0 ? 1 : -1);
       else updateSlidePosition(currentSlideIdx, true);
       galleryDragging = false;
     }, { passive: true });
@@ -2008,7 +2011,7 @@
       sheet.addEventListener('touchstart', event => {
         if (!event.touches.length) return;
         const touch = event.touches[0];
-        const blocked = !!event.target.closest('.modal-slider,button,input,select,textarea,summary');
+        const blocked = !!event.target.closest('button,input,select,textarea,summary');
         gesture = { x:touch.clientX, y:touch.clientY, startedAt:performance.now(), scrollTop:sheet.scrollTop, blocked };
       }, { passive:true });
       sheet.addEventListener('touchmove', event => {
