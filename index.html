@@ -1774,7 +1774,13 @@
       const webApp = window.Telegram?.WebApp || tg;
       const unsafeUser = webApp?.initDataUnsafe?.user;
       const launchParams = new URLSearchParams(window.location.search);
+      // Some Telegram clients preserve launcher parameters in the fragment instead.
+      const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#\??/, ''));
+      for (const key of ['tg_id', 'tg_first_name', 'tg_last_name', 'tg_username', 'tg_avatar']) {
+        if (!launchParams.has(key) && hashParams.has(key)) launchParams.set(key, hashParams.get(key));
+      }
       const launcherUser = {
+        id: Number(launchParams.get('tg_id')) || undefined,
         first_name: launchParams.get('tg_first_name') || '',
         last_name: launchParams.get('tg_last_name') || '',
         username: launchParams.get('tg_username') || '',
