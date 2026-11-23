@@ -1802,7 +1802,12 @@
         }
       }
       const telegramUser = unsafeUser || signedUser || {};
-      const mergedUser = { ...launcherUser, ...telegramUser, photo_url: launcherUser.photo_url || telegramUser.photo_url };
+      const mergedUser = {
+        ...launcherUser,
+        ...telegramUser,
+        photo_url: launcherUser.photo_url || telegramUser.photo_url,
+        telegram_photo_url: telegramUser.photo_url || ''
+      };
       return mergedUser.id || mergedUser.username || mergedUser.first_name || mergedUser.last_name ? mergedUser : null;
     }
     function getGuestProfile() {
@@ -1830,10 +1835,18 @@
       const avatar = document.getElementById('profileInitial');
       const initial = Array.from(name)[0] || 'S';
       avatar.replaceChildren();
-      if (telegramUser?.photo_url) {
-        const image = document.createElement('img'); image.src = telegramUser.photo_url; image.alt = '';
-        image.onerror = () => { avatar.replaceChildren(); avatar.textContent = initial; };
+      const avatarSources = [...new Set([telegramUser?.photo_url, telegramUser?.telegram_photo_url].filter(Boolean))];
+      if (avatarSources.length) {
+        const image = document.createElement('img');
+        image.alt = '';
+        let sourceIndex = 0;
+        image.onerror = () => {
+          sourceIndex += 1;
+          if (sourceIndex < avatarSources.length) image.src = avatarSources[sourceIndex];
+          else { avatar.replaceChildren(); avatar.textContent = initial; }
+        };
         avatar.append(image);
+        image.src = avatarSources[sourceIndex];
       } else avatar.textContent = initial;
       const username = document.getElementById('profileUsername');
       username.hidden = false;
