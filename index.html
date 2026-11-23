@@ -1778,8 +1778,14 @@
       const launcherUser = {
         first_name: launchParams.get('tg_first_name') || '',
         last_name: launchParams.get('tg_last_name') || '',
-        username: launchParams.get('tg_username') || ''
+        username: launchParams.get('tg_username') || '',
+        photo_url: ''
       };
+      const encodedAvatar = launchParams.get('tg_avatar');
+      if (encodedAvatar) {
+        const base64Avatar = encodedAvatar.replace(/-/g, '+').replace(/_/g, '/');
+        launcherUser.photo_url = 'data:image/jpeg;base64,' + base64Avatar + '='.repeat((4 - base64Avatar.length % 4) % 4);
+      }
       if (launcherUser.first_name || launcherUser.last_name || launcherUser.username) return launcherUser;
       const signedInitData = webApp?.initData;
       if (!signedInitData) return null;
