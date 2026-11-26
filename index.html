@@ -1543,6 +1543,42 @@
     }
     async function readOrderHistory() {
       const localHistory = localOrderHistoryRead();
+      if (tg?.initData) {
+        try {
+          const response = await fetch('/api/orders/history', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ init_data: tg.initData })
+          });
+          const remote = await response.json();
+          if (!response.ok || !remote.ok) throw new Error(remote.error || 'Order history request failed');
+          const cloudKeys = await cloudStorageCall('getKeys').catch(() => []);
+          const orderKeys = (cloudKeys || []).filter(key => key.startsWith(ORDER_HISTORY_PREFIX)).slice(-50);
+          const cloudValues = orderKeys.length ? await cloudStorageCall('getItems', orderKeys).catch(() => ({})) : {};
+          const deletedIds = new Set(remote.deleted_ids || []);
+          const clearBefore = Number(remote.cleared_at) || 0;
+          const cloudHistory = orderKeys.map(key => {
+            try { return JSON.parse((cloudValues || {})[key]); } catch (error) { return null; }
+          }).filter(order => order && Number.isFinite(order.createdAt) && Array.isArray(order.items));
+          const staleCloudKeys = orderKeys.filter(key => {
+            try {
+              const order = JSON.parse((cloudValues || {})[key]);
+              return order && (deletedIds.has(order.id) || Number(order.createdAt) <= clearBefore);
+            } catch (error) { return true; }
+          });
+          if (staleCloudKeys.length) void cloudStorageCall('removeItems', staleCloudKeys).catch(error => console.warn('Deleted cloud orders could not be purged', error));
+          const combined = new Map();
+          [...cloudHistory, ...localHistory, ...(remote.orders || [])].forEach(order => { if (order?.id) combined.set(order.id, order); });
+          const visible = Array.from(combined.values())
+            .filter(order => !deletedIds.has(order.id) && Number(order.createdAt) > clearBefore)
+            .sort((a, b) => b.createdAt - a.createdAt)
+            .slice(0, 50);
+          localStorage.setItem(ORDER_HISTORY_LOCAL_KEY, JSON.stringify(visible));
+          return visible;
+        } catch (error) {
+          console.warn('Server order history unavailable; using local storage', error);
+        }
+      }
       try {
         const keys = await cloudStorageCall('getKeys');
         const orderKeys = (keys || []).filter(key => key.startsWith(ORDER_HISTORY_PREFIX)).slice(-50);
@@ -2277,7 +2313,7 @@
     }
     function finishOrder() {
       if (orderSending) return;
-      if (!tg || typeof tg.sendData !== 'function') { showToast('Открой магазин через кнопку бота в Telegram'); return; }
+      if (!tg || (!tg.initData && typeof tg.sendData !== 'function')) { showToast('Открой магазин через кнопку бота в Telegram'); return; }
       const delivery = getDeliveryFields(); if (!delivery) { closeModalDirect('paymentModal'); return; }
       const quantity = countItems();
       if (!quantity || quantity > 20) { showToast('В одном заказе можно отправить до 20 товаров'); return; }
@@ -2292,20 +2328,38 @@
       closeModalDirect('paymentModal');
       openInfoModal('orderSuccessModal');
     }
-    function completeOrderSend() {
-      if (!pendingOrderPayload || !pendingOrderRecord || !tg || typeof tg.sendData !== 'function') return;
+    async function completeOrderSend() {
+      if (!pendingOrderPayload || !pendingOrderRecord || !tg) return;
       const payload = pendingOrderPayload;
       const order = pendingOrderRecord;
-      pendingOrderPayload = null;
-      pendingOrderRecord = null;
-      void saveOrderHistory(order).catch(error => console.error('Order history save failed', error));
-      try { tg.sendData(payload); cart = []; updateCartUI(); orderSending = false; }
+      try {
+        if (tg.initData) {
+          const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ init_data: tg.initData, order: JSON.parse(payload) })
+          });
+          const result = await response.json();
+          if (!response.ok || !result.ok) throw new Error(result.error || 'Order request failed');
+        } else if (typeof tg.sendData === 'function') {
+          tg.sendData(payload);
+        } else {
+          throw new Error('Telegram launch data is unavailable');
+        }
+        pendingOrderPayload = null;
+        pendingOrderRecord = null;
+        void saveOrderHistory(order).catch(error => console.error('Order history save failed', error));
+        cart = []; updateCartUI(); orderSending = false;
+        document.getElementById('orderSuccessTitle').textContent = 'Заказ передан';
+        document.querySelector('#orderSuccessModal .order-success-copy').textContent = 'Заказ оформлен, данные переданы продавцу. Менеджер свяжется с тобой.';
+        const doneButton = document.querySelector('#orderSuccessModal button.modal-add');
+        doneButton.textContent = 'Готово';
+        doneButton.onclick = () => closeModalDirect('orderSuccessModal');
+      }
       catch (error) {
-        pendingOrderPayload = payload;
-        pendingOrderRecord = order;
         orderSending = false;
-        console.error('Telegram sendData failed', error);
-        showToast('Не удалось отправить заказ. Нажми «Завершить» ещё раз');
+        console.error('Order submission failed', error);
+        showToast('Не удалось передать заказ. Попробуй ещё раз');
       }
     }
     function showToast(message) {
