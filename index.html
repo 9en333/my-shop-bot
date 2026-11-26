@@ -255,6 +255,8 @@
     .size-label { margin-bottom: 9px; color: var(--muted); font-size: 10px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
     .modal-sizes { display: flex; gap: 8px; flex-wrap: wrap; }
     .size-chip { min-height: 40px; padding: 0 13px; border: 1px solid var(--line); border-radius: 12px; background: transparent; cursor: pointer; font-size: 11px; font-weight: 850; transition: .2s; }
+    .size-unavailable { display: inline-block; padding: 9px 2px; color: var(--muted); font-size: 13px; }
+    .modal-add:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; }
     .size-chip:hover { border-color: var(--ink); }
     .size-chip.selected { border-color: var(--ink); background: var(--ink); color: #fff; }
     .size-help { margin: 8px 0 0; color: var(--muted); font-size: 9px; }
@@ -1357,7 +1359,7 @@
     const productsData = {
       sneakers: {
         title: 'Nike Air Force 1 High (White)', price: 6990,
-        sizes: ['40 (25 см)', '42.5 (27 см)', '36.5 (23.5 см)'], stockBySize: [3, null, null],
+        sizes: ['40 (25 см)', '42.5 (27 см)', '36.5 (23.5 см)'], stockBySize: [3, 1, 1],
         availability: 'in_stock', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
         color: 'Белый', desc: 'Цвет: белый', short: 'Белый · 40 (25 см), 42.5 (27 см), 36.5 (23.5 см)',
         images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
@@ -1996,9 +1998,28 @@
       try { localStorage.removeItem(RECENT_PRODUCTS_KEY); } catch (error) { console.warn('Recently viewed products could not be cleared', error); }
       renderRecentlyViewed();
     }
-    function openModal(productKey) {
+    async function refreshInventory() {
+      try {
+        const response = await fetch('/api/stock', { cache: 'no-store' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const result = await response.json();
+        if (!result.ok || !Array.isArray(result.items)) throw new Error('Invalid inventory response');
+        result.items.forEach(item => {
+          const product = productsData[item.product_id];
+          if (!product || !Number.isInteger(item.size_index) || item.size_index < 0) return;
+          product.stockBySize = product.stockBySize || [];
+          product.stockBySize[item.size_index] = Math.max(0, Number(item.quantity) || 0);
+        });
+        return true;
+      } catch (error) {
+        console.warn('Live stock could not be refreshed; the server still validates every order.', error);
+        return false;
+      }
+    }
+    async function openModal(productKey) {
       const product = productsData[productKey];
       if (!product) return;
+      await refreshInventory();
       recordRecentlyViewed(productKey);
       selectedProductKey = productKey; currentSlideIdx = 0;
       document.getElementById('modalType').textContent = product.type;
@@ -2017,13 +2038,24 @@
       slidesTrack.dataset.slideCount = String(product.images.length);
       document.getElementById('modalSizesContainer').hidden = !product.hasSizes;
       const sizeBox = document.getElementById('modalSizes'); sizeBox.replaceChildren();
+      let availableSizeCount = 0;
       if (product.hasSizes) (product.sizes || productSizes).forEach((label, index) => {
-        const chip = document.createElement('button'); chip.className = 'size-chip'; chip.type = 'button';
         const stock = product.stockBySize && product.stockBySize[index];
+        if (stock === 0) return;
+        availableSizeCount += 1;
+        const chip = document.createElement('button'); chip.className = 'size-chip'; chip.type = 'button';
         chip.textContent = stock == null ? label : label + ' · ' + stock + ' шт.';
         chip.onclick = () => selectSize(chip); chip.dataset.index = index; sizeBox.append(chip);
       });
-      document.getElementById('modalAddToCartBtn').onclick = () => addSelectedProduct();
+      if (product.hasSizes && availableSizeCount === 0) {
+        const empty = document.createElement('span'); empty.className = 'size-unavailable'; empty.textContent = 'Все размеры закончились'; sizeBox.append(empty);
+      }
+      const addButton = document.getElementById('modalAddToCartBtn');
+      addButton.disabled = product.hasSizes && availableSizeCount === 0;
+      if (addButton.firstChild && addButton.firstChild.nodeType === Node.TEXT_NODE) {
+        addButton.firstChild.nodeValue = addButton.disabled ? 'Нет в наличии ' : 'В корзину ';
+      }
+      addButton.onclick = () => addSelectedProduct();
       updateSlidePosition(0, false);
       const modal = document.getElementById('productModal'); modal.classList.add('active'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     }
@@ -2341,7 +2373,11 @@
             body: JSON.stringify({ init_data: tg.initData, order: JSON.parse(payload) })
           });
           const result = await response.json();
-          if (!response.ok || !result.ok) throw new Error(result.error || 'Order request failed');
+          if (!response.ok || !result.ok) {
+            const error = new Error(result.error || 'Order request failed');
+            error.status = response.status;
+            throw error;
+          }
         } else if (typeof tg.sendData === 'function') {
           tg.sendData(payload);
         } else {
@@ -2360,7 +2396,12 @@
       catch (error) {
         orderSending = false;
         console.error('Order submission failed', error);
-        showToast('Не удалось передать заказ. Попробуй ещё раз');
+        if (error.status === 409) {
+          await refreshInventory();
+          showToast('Этот размер уже заказали. Открой товар и выбери другой размер.');
+        } else {
+          showToast('Не удалось передать заказ. Попробуй ещё раз');
+        }
       }
     }
     function showToast(message) {
