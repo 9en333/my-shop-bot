@@ -1179,7 +1179,6 @@
             <div class="filter-list" role="group" aria-label="Категории товаров">
               <button class="filter-chip active" id="allFilter" type="button" onclick="filterCategory('all', this)">Все товары</button>
               <button class="filter-chip" type="button" onclick="filterCategory('sneakers', this)">Обувь</button>
-              <button class="filter-chip" type="button" onclick="filterCategory('jacket', this)">Верхняя одежда</button>
               <button class="filter-chip" id="favoritesFilter" type="button" onclick="filterCategory('favorites', this)" aria-label="Избранное">Избранное <span id="favoriteCount"></span></button>
             </div>
             <div class="catalog-controls">
@@ -1193,10 +1192,6 @@
                 <option value="featured">Сначала выбранное</option><option value="price-up">Сначала дешевле</option><option value="price-down">Сначала дороже</option>
               </select>
             </div>
-          </div>
-          <div class="availability-tabs" role="tablist" aria-label="Наличие товаров">
-            <button type="button" class="availability-tab active" data-availability="in_stock" aria-pressed="true" onclick="setAvailability('in_stock')">В наличии <span data-availability-count="in_stock"></span></button>
-            <button type="button" class="availability-tab" data-availability="preorder" aria-pressed="false" onclick="setAvailability('preorder')">Под заказ <span data-availability-count="preorder"></span></button>
           </div>
           <section class="recently-viewed" id="recentlyViewedSection" aria-label="Недавно просмотренные товары" hidden>
             <div class="recently-viewed-heading"><span>Недавно смотрели</span><button type="button" onclick="clearRecentlyViewed()">Очистить</button></div>
@@ -1361,23 +1356,20 @@
     const productSizes = ['36', '37', '38', '39', '40', '41', '42', '43', '44', '45'];
     const productsData = {
       sneakers: {
-        title: 'Nike Air Force 1 High (White)', price: 6990, sizes: ['41', '42.5', '43'], availability: 'in_stock', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
-        color: 'Белый', desc: 'Цвет: белый', short: 'Белый · размеры 36–45', images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
-      },
-      jacket: {
-        title: 'Куртка Hollister 10s type', price: 4290, type: 'Куртка', tag: 'HOLLISTER', category: 'jacket', availability: 'in_stock',
-        color: 'Тёмно-синий', desc: 'Цвет: тёмно-синий', short: 'Тёмно-синий', images: ['kyrtka_1.png', 'kyrtka_2.png'], hasSizes: false
+        title: 'Nike Air Force 1 High (White)', price: 6990,
+        sizes: ['40 (25 см)', '42.5 (27 см)', '36.5 (23.5 см)'], stockBySize: [3, null, null],
+        availability: 'in_stock', type: 'Кроссовки', tag: 'WHITE', category: 'sneakers',
+        color: 'Белый', desc: 'Цвет: белый', short: 'Белый · 40 (25 см), 42.5 (27 см), 36.5 (23.5 см)',
+        images: ['krosi_1.jpg', 'krosi_2.jpg'], hasSizes: true
       }
     };
-    productsData.sneakers_preorder = {
-      ...productsData.sneakers,
-      price: 10000,
-      sizePrices: [10000, 11000, 11000, 12000, 12000, 12000, 12000, 13000, 13000, 13000],
-      sizes: productSizes,
-      availability: 'preorder'
+    const legacyOrderProducts = {
+      jacket: { title: 'Куртка Hollister 10s type', images: ['kyrtka_1.png'], sizes: [], availability: 'in_stock' },
+      sneakers_preorder: { title: 'Nike Air Force 1 High (White)', images: ['krosi_1.jpg'], sizes: productSizes, availability: 'preorder' }
     };
-    const productOrder = ['sneakers', 'jacket', 'sneakers_preorder'];
-    const CART_STORAGE_KEY = 'striver_cart_v1';
+    function getOrderProductData(productId) { return productsData[productId] || legacyOrderProducts[productId] || null; }
+    const productOrder = ['sneakers'];
+    const CART_STORAGE_KEY = 'striver_cart_v2';
     function loadSavedCart() {
       try {
         const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
@@ -1624,7 +1616,7 @@
     async function renderProfileOrders() {
       const history = await readOrderHistory();
       const container = document.getElementById('orderHistoryList');
-      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => productsData[item.product_id]));
+      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => getOrderProductData(item.product_id)));
       document.getElementById('profileOrderCount').textContent = String(validOrders.length);
       const profileOrderStat = document.getElementById('profileStatOrders');
       const profileSpentStat = document.getElementById('profileStatSpent');
@@ -1652,11 +1644,12 @@
         const lines = document.createElement('div'); lines.className = 'order-items';
         const groups = new Map();
         order.items.forEach(item => {
-          const key = item.product_id + ':' + item.size_index + ':' + (item.availability || productsData[item.product_id].defaultAvailability || productsData[item.product_id].availability || 'in_stock');
+          const historyProduct = getOrderProductData(item.product_id);
+          const key = item.product_id + ':' + item.size_index + ':' + (item.availability || historyProduct.defaultAvailability || historyProduct.availability || 'in_stock');
           groups.set(key, (groups.get(key) || 0) + 1);
         });
         groups.forEach((quantity, key) => {
-          const [productId, sizeValue, availabilityValue] = key.split(':'); const product = productsData[productId];
+          const [productId, sizeValue, availabilityValue] = key.split(':'); const product = getOrderProductData(productId);
           const row = document.createElement('div'); row.className = 'order-item';
           const image = document.createElement('img'); image.className = 'order-item-thumb'; image.src = product.images[0]; image.alt = product.title; image.loading = 'lazy';
           const copy = document.createElement('div'); copy.className = 'order-item-copy';
@@ -1908,7 +1901,7 @@
     }
     async function refreshProfileOrderStats() {
       const history = await readOrderHistory();
-      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => productsData[item.product_id]));
+      const validOrders = history.filter(order => Array.isArray(order.items) && order.items.length && order.items.every(item => getOrderProductData(item.product_id)));
       const orderStat = document.getElementById('profileStatOrders');
       const spentStat = document.getElementById('profileStatSpent');
       if (orderStat) orderStat.textContent = String(validOrders.length);
@@ -2025,7 +2018,10 @@
       document.getElementById('modalSizesContainer').hidden = !product.hasSizes;
       const sizeBox = document.getElementById('modalSizes'); sizeBox.replaceChildren();
       if (product.hasSizes) (product.sizes || productSizes).forEach((label, index) => {
-        const chip = document.createElement('button'); chip.className = 'size-chip'; chip.type = 'button'; chip.textContent = label; chip.onclick = () => selectSize(chip); chip.dataset.index = index; sizeBox.append(chip);
+        const chip = document.createElement('button'); chip.className = 'size-chip'; chip.type = 'button';
+        const stock = product.stockBySize && product.stockBySize[index];
+        chip.textContent = stock == null ? label : label + ' · ' + stock + ' шт.';
+        chip.onclick = () => selectSize(chip); chip.dataset.index = index; sizeBox.append(chip);
       });
       document.getElementById('modalAddToCartBtn').onclick = () => addSelectedProduct();
       updateSlidePosition(0, false);
@@ -2239,12 +2235,17 @@
       const product = productsData[productId];
       const selectedAvailability = availability || (product.availability === 'both' ? currentAvailability : product.availability || 'in_stock');
       let line = cart.find(item => item.productId === productId && item.sizeIndex === sizeIndex && item.availability === selectedAvailability);
+      const stockLimit = sizeIndex !== null && product.stockBySize ? product.stockBySize[sizeIndex] : null;
+      if (stockLimit != null && line && line.quantity >= stockLimit) { showToast('Для этого размера доступно только ' + stockLimit + ' шт.'); return; }
       if (line) line.quantity += 1;
       else cart.push({ id: nextCartItemId++, productId, sizeIndex, availability: selectedAvailability, title: product.title, price: getProductPrice(product, sizeIndex), quantity: 1 });
       updateCartUI();
     }
     function changeQuantity(itemId, delta) {
       const line = cart.find(item => item.id === itemId); if (!line) return;
+      const product = productsData[line.productId];
+      const stockLimit = line.sizeIndex !== null && product && product.stockBySize ? product.stockBySize[line.sizeIndex] : null;
+      if (delta > 0 && stockLimit != null && line.quantity >= stockLimit) { showToast('Для этого размера доступно только ' + stockLimit + ' шт.'); return; }
       line.quantity += delta; if (line.quantity <= 0) cart = cart.filter(item => item.id !== itemId);
       updateCartUI();
     }
